@@ -1,24 +1,92 @@
-# README
+# Cheezecake Blog
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Life is good.
 
-Things you may want to cover:
+## Setup development environment
 
-* Ruby version
+1. Create `.env`, `database.yml`, from related `.example` files and set all needed variables:
 
-* System dependencies
+    ```bash
+    cp .env.example .env
+    cp config/database.yml.example config/database.yml
+    cp config/master.key.example config/master.key
+    ```
 
-* Configuration
+2. Create `docker-compose.override.yml` file with docker preferences for development environment:
 
-* Database creation
+    ```bash
+    cp docker-compose.development.yml docker-compose.override.yml
+    ```
 
-* Database initialization
+3. Install [docker for mac](https://docs.docker.com/docker-for-mac/install/#download-docker-for-mac), then run:
 
-* How to run the test suite
+    ```bash
+    docker-compose build
+    ```
 
-* Services (job queues, cache servers, search engines, etc.)
+4. Run the project:
 
-* Deployment instructions
+    ```bash
+    docker-compose up
+    docker-compose up -d # Detached mode: Run containers in the background
+    ```
 
-* ...
+5. Create development & test databases:
+
+    ```bash
+    docker-compose exec web rails db:create
+    ```
+
+6. Load schema & seeds:
+
+    ```bash
+    docker-compose exec web rails db:schema:load
+    docker-compose exec web rails db:seed
+    ```
+    
+## Commands to run before pushing to origin
+    
+1. Rubocop:
+
+    ```bash
+    rubocop
+    ```
+    
+2. ESLint:
+
+    ```bash
+    ./node_modules/.bin/eslint "app/javascript/**" --fix
+    ```
+    
+3. Rspec:
+
+    ```bash
+    rspec
+    ```
+    
+4. Cucumber:
+
+    ```bash
+    cucumber
+    ```
+
+5. Annotate:
+
+    ```bash
+    annotate
+    ```
+
+## Useful Commands
+
+1. Storybook:
+
+    ```bash
+    yarn run storybook
+    ```
+    
+2. Credentials:
+
+    ```bash
+    docker-compose exec web env EDITOR=vim rails credentials:show
+    docker-compose exec web env EDITOR=vim rails credentials:edit
+    ```
