@@ -37,3 +37,7 @@ yarn-debug.log*
 
 # Ignore credentials.
 /config/database.yml
+.env
+
+# Ignore docker container data files.
+/docker/postgres/data
