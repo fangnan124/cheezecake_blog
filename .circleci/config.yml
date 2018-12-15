@@ -1,11 +1,44 @@
-version: 2.0
+version: 2
 jobs:
   build:
     docker:
       - image: circleci/ruby:2.5.3-stretch-node-browsers
+        environment:
+          RAILS_ENV: test
+      - image: circleci/postgres:10.6
     steps:
+      - checkout
       - run:
-          name: The First Step
+          name: Copy config
           command: |
-            echo 'Hello World!'
-            echo 'This is the delivery pipeline'
+            cp ./config/database.yml.example ./config/database.yml
+            cp ./config/master.key.example ./config/master.key
+
+      # Restore bundle cache
+      - restore_cache:
+          keys:
+            - cheezecake-is-good-{{ checksum "Gemfile.lock" }}
+
+      - run:
+          name: Bundle Install
+          command: bundle check || bundle install --path gems
+
+      # Store bundle cache
+      - save_cache:
+          key: cheezecake-is-good-{{ checksum "Gemfile.lock" }}
+          paths:
+            - gems
+
+      - run:
+          name: Wait for DB
+          command: dockerize -wait tcp://localhost:5432 -timeout 1m
+
+      - run:
+          name: Database setup
+          command: |
+            bin/rails db:create db:migrate
+
+      - run:
+          name: Rspec
+          command: |
+            bundle exec rspec
