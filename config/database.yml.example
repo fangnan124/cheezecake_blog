@@ -14,7 +14,7 @@ development:
 
 test:
   <<: *default
-  username: <%= ENV['POSTGRES_USER'] || 'postgres' %>
-  password: <%= ENV['POSTGRES_PASSWORD'] || 'pass' %>
-  host: <%= ENV['DATABASE_HOST'] || 'localhost' %>
+  username: postgres
+  password: pass
+  host: <%= ENV['DATABASE_HOST'] || 'postgres' %>
   database: cheezecake_blog_test
