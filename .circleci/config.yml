@@ -40,6 +40,11 @@ jobs:
             bin/rails db:create db:migrate
 
       - run:
+          name: Rubocop
+          command: |
+            bundle exec rubocop
+
+      - run:
           name: Rspec
           command: |
             bundle exec rspec

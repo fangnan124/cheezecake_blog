@@ -1,0 +1,22 @@
+AllCops:
+  Exclude:
+    - db/**/*
+    - config/**/*
+    - script/**/*
+    - bin/**/*
+    - vendor/**/*
+    - tmp/**/*
+    - spec/**/*
+    - node_modules/**/*
+    - Gemfile
+    - Rakefile
+    - config.ru
+
+Style/Documentation:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/SymbolArray:
+  Enabled: false
