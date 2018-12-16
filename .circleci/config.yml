@@ -18,7 +18,7 @@ jobs:
       - restore_cache:
           name: Restore bundle cache
           keys:
-            - cheezecake-is-good-v2-{{ checksum "Gemfile.lock" }}
+            - cheezecake-is-good-v2-{{ checksum "Gemfile.lock" }} # to clear the cache, upgrade the version
 
       - run:
           name: Bundle install
