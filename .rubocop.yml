@@ -12,6 +12,7 @@ AllCops:
     - 'Gemfile'
     - 'Rakefile'
     - 'config.ru'
+    - 'gems/**/*'
 
 Style/Documentation:
   Enabled: false
