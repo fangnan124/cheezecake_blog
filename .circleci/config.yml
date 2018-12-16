@@ -18,17 +18,17 @@ jobs:
       - restore_cache:
           name: Restore bundle cache
           keys:
-            - cheezecake-is-good-{{ checksum "Gemfile.lock" }}
+            - cheezecake-is-good-v2-{{ checksum "Gemfile.lock" }} # to clear the cache, upgrade the version
 
       - run:
           name: Bundle install
-          command: bundle check || bundle install --path gems
+          command: bundle check || bundle install # default path is vendor/bundle
 
       - save_cache:
           name: Save bundle cache
-          key: cheezecake-is-good-{{ checksum "Gemfile.lock" }}
+          key: cheezecake-is-good-v2-{{ checksum "Gemfile.lock" }}
           paths:
-            - gems
+            - vendor/bundle
 
       - run:
           name: Wait for Database
@@ -38,6 +38,11 @@ jobs:
           name: Database setup
           command: |
             bin/rails db:create db:migrate
+
+      - run:
+          name: Rubocop
+          command: |
+            bundle exec rubocop -c .rubocop.yml
 
       - run:
           name: Rspec
