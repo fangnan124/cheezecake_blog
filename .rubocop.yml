@@ -1,17 +1,17 @@
 AllCops:
   TargetRubyVersion: 2.5
   Exclude:
-    - db/**/*
-    - config/**/*
-    - script/**/*
-    - bin/**/*
-    - vendor/**/*
-    - tmp/**/*
-    - spec/**/*
-    - node_modules/**/*
-    - Gemfile
-    - Rakefile
-    - config.ru
+    - 'db/**/*'
+    - 'config/**/*'
+    - 'script/**/*'
+    - 'bin/**/*'
+    - 'vendor/**/*'
+    - 'tmp/**/*'
+    - 'spec/**/*'
+    - 'node_modules/**/*'
+    - 'Gemfile'
+    - 'Rakefile'
+    - 'config.ru'
 
 Style/Documentation:
   Enabled: false
