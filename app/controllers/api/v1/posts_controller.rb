@@ -11,24 +11,17 @@ module Api
 
       def create
         @post = Post.new(post_params)
-
-        if @post.save
-          redirect_to api_v1_post_path(@post)
-        else
-          render_unprocessable_entity(@post)
-        end
+        @post.save!
+        redirect_to api_v1_post_path(@post)
       end
 
       def update
-        if @post.update(post_params)
-          redirect_to api_v1_post_path(@post), status: :see_other
-        else
-          render_unprocessable_entity(@post)
-        end
+        @post.update!(post_params)
+        redirect_to api_v1_post_path(@post), status: :see_other
       end
 
       def destroy
-        @post.destroy
+        @post.destroy!
         redirect_to api_v1_posts_path, status: :see_other
       end
 
