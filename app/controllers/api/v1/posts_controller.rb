@@ -4,7 +4,7 @@ module Api
       before_action :set_post, only: [:show, :update, :destroy]
 
       def index
-        @posts = Post.all
+        @posts = Post.all.order(updated_at: :desc)
       end
 
       def show; end

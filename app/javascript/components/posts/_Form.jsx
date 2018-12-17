@@ -1,6 +1,8 @@
 import React from "react";
 import { Button, Form } from 'semantic-ui-react'
 import { Container } from 'semantic-ui-react';
+import CKEditor from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import FormValidationMessage from '../FormValidationMessage';
 
 class _Form extends React.Component {
@@ -42,10 +44,10 @@ class _Form extends React.Component {
                     </Form.Field>
                     <Form.Field>
                         <label>Content</label>
-                        <input
-                            type="text"
-                            value={this.state.content}
-                            onChange={e => this.setState({ content: e.target.value })}
+                        <CKEditor
+                            editor={ ClassicEditor }
+                            data={this.state.content}
+                            onChange={ (_event, editor) => this.setState({ content: editor.getData() }) }
                         />
                         <FormValidationMessage errors={this.props.errors} property={"content"}/>
                     </Form.Field>
