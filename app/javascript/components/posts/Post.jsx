@@ -1,5 +1,9 @@
 import React from "react";
 import axios from "axios";
+import {
+    Container,
+    Header
+} from 'semantic-ui-react';
 
 class Post extends React.Component {
     constructor(props) {
@@ -29,10 +33,10 @@ class Post extends React.Component {
         const { post } = this.state.data;
         if (this.state.loading) return null;
         return (
-            <div>
-                <div>{ post.title }</div>
-                <div>{ post.content }</div>
-            </div>
+            <Container text style={{ marginTop: '7em' }}>
+                <Header as='h1'>{ post.title }</Header>
+                <p>{ post.content }</p>
+            </Container>
         );
     }
 }

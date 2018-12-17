@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { Redirect } from "react-router-dom";
-import Form from "./Form";
+import _Form from "./_Form";
 
 class Edit extends React.Component {
     constructor(props) {
@@ -45,7 +45,7 @@ class Edit extends React.Component {
         if (this.state.loading) return null;
         if (this.state.redirect) return <Redirect to={{ pathname: "/posts" }} />;
         return (
-            <Form
+            <_Form
                 submit={this.handleSubmit}
                 post={this.state.data.post}
                 errors={this.state.errors}
