@@ -1,7 +1,9 @@
 class ApiController < ActionController::API
-  def render_unprocessable_entity(object)
+  rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity
+
+  def render_unprocessable_entity(exception)
     render json: {
-      errors: object.errors.to_hash(true)
+      errors: exception.record.errors.to_hash(true)
     }, status: :unprocessable_entity
   end
 end
