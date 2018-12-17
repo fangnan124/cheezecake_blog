@@ -1,9 +1,6 @@
 import React from "react";
 import axios from "axios";
-import {
-    Container,
-    Header
-} from 'semantic-ui-react';
+import { Container, Header } from 'semantic-ui-react';
 
 class Post extends React.Component {
     constructor(props) {
@@ -35,7 +32,7 @@ class Post extends React.Component {
         return (
             <Container text style={{ marginTop: '7em' }}>
                 <Header as='h1'>{ post.title }</Header>
-                <p>{ post.content }</p>
+                <div dangerouslySetInnerHTML={{ __html: post.content }}/>
             </Container>
         );
     }

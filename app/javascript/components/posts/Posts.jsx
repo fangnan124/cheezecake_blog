@@ -50,10 +50,10 @@ class Posts extends React.Component {
                         this.state.data.posts.map(post => {
                             return (
                                 <Grid.Row key={ post.id }>
-                                    <Grid.Column>
+                                    <Grid.Column width={12}>
                                         <Link to={`/posts/${post.id}`}>{ post.title }</Link>
                                     </Grid.Column>
-                                    <Grid.Column>
+                                    <Grid.Column width={4}>
                                         <Link to={`/posts/${post.id}/edit`}>edit</Link>
                                         <a href="javascript:" onClick={() => this.delete(post.id)}>delete</a>
                                     </Grid.Column>
@@ -61,8 +61,8 @@ class Posts extends React.Component {
                             );
                         })
                     }
-                    <Link to={'/posts/new'}>New</Link>
                 </Grid>
+                <Link to={'/posts/new'}>New</Link>
             </Container>
         );
     }
