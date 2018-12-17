@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { Link, withRouter } from "react-router-dom";
+import {Container, Grid, List} from 'semantic-ui-react';
 
 class Posts extends React.Component {
     constructor(props) {
@@ -43,20 +44,26 @@ class Posts extends React.Component {
     render() {
         if (this.state.loading) return null;
         return (
-            <div>
-                {
-                    this.state.data.posts.map(post => {
-                        return (
-                            <div key={ post.id }>
-                                <Link to={`/posts/${post.id}`}>{ post.title }</Link>
-                                <Link to={`/posts/${post.id}/edit`}>edit</Link>
-                                <a href="javascript:" onClick={() => this.delete(post.id)}>delete</a>
-                            </div>
-                        );
-                    })
-                }
-                <Link to={'/posts/new'}>New</Link>
-            </div>
+            <Container text style={{ marginTop: '7em' }}>
+                <Grid columns={2} padded>
+                    {
+                        this.state.data.posts.map(post => {
+                            return (
+                                <Grid.Row key={ post.id }>
+                                    <Grid.Column>
+                                        <Link to={`/posts/${post.id}`}>{ post.title }</Link>
+                                    </Grid.Column>
+                                    <Grid.Column>
+                                        <Link to={`/posts/${post.id}/edit`}>edit</Link>
+                                        <a href="javascript:" onClick={() => this.delete(post.id)}>delete</a>
+                                    </Grid.Column>
+                                </Grid.Row>
+                            );
+                        })
+                    }
+                    <Link to={'/posts/new'}>New</Link>
+                </Grid>
+            </Container>
         );
     }
 }
