@@ -4,4 +4,6 @@ json.data do
     json.title   post.title
     json.content post.content
   end
+  json.currentPage @posts.current_page
+  json.totalPages @posts.total_pages
 end

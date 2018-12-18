@@ -1,8 +1,8 @@
 import React from "react";
 import axios from "axios";
-import { Container, Header } from 'semantic-ui-react';
+import { Header } from 'semantic-ui-react';
 
-class Post extends React.Component {
+class Show extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -30,12 +30,12 @@ class Post extends React.Component {
         const { post } = this.state.data;
         if (this.state.loading) return null;
         return (
-            <Container text style={{ marginTop: '7em' }}>
+            <div>
                 <Header as='h1'>{ post.title }</Header>
                 <div dangerouslySetInnerHTML={{ __html: post.content }}/>
-            </Container>
+            </div>
         );
     }
 }
 
-export default Post;
+export default Show;
