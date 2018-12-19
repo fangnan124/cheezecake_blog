@@ -4,10 +4,7 @@ module Api
       before_action :set_post, only: [:show, :update, :destroy]
 
       def index
-        @posts = Post.all
-                   .order(updated_at: :desc)
-                   .page(params[:page] || 1)
-                   .per(7)
+        @posts = Post.all.order(updated_at: :desc).page(params[:page] || 1).per(7)
       end
 
       def show; end

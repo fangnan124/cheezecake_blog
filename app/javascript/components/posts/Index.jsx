@@ -26,7 +26,12 @@ class Index extends React.Component {
         axios({
             method: "get",
             url: "/api/v1/posts",
-            params: { page: page }
+            params: { page: page },
+            headers: {
+                "access-token": localStorage.getItem("access-token"),
+                "client": localStorage.getItem("client"),
+                "uid": localStorage.getItem("uid")
+            }
         }).then(response => {
             const { data } = response.data;
             this.setState({ data, loading: false, modal: { id: '', open: false } });
