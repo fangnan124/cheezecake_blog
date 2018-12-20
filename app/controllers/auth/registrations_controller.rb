@@ -1,0 +1,4 @@
+module Auth
+  class RegistrationsController < DeviseTokenAuth::RegistrationsController
+  end
+end

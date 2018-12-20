@@ -33,7 +33,7 @@ class Login extends React.Component {
         this.setState({ loading: true })
         axios({
             method: 'post',
-            url: '/api/v1/auth/sign_in',
+            url: '/auth/sign_in',
             data: {
                 email: this.state.email,
                 password: this.state.password

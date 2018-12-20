@@ -12,7 +12,6 @@ class New extends React.Component {
         }
     }
 
-
     handleSubmit = (params) => {
         axios({
             method: 'post',

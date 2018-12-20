@@ -69,12 +69,13 @@ class Index extends React.Component {
     };
 
     render() {
-        if (this.state.loading) return null
+        const { data, loading, modal } = this.state;
+        if (loading) return null
         return (
             <div>
                 <Grid padded>
                     {
-                        this.state.data.posts.map(post => {
+                        data.posts.map(post => {
                             return (
                                 <Grid.Row key={ post.id }>
                                     <Grid.Column width={12}>
@@ -84,12 +85,18 @@ class Index extends React.Component {
                                         <div style={{ fontSize: 12 }}>2018/01/01</div>
                                     </Grid.Column>
                                     <Grid.Column width={2}>
-                                        <Link to={`/posts/${post.id}/edit`}>
-                                            <Icon name='edit outline'/>
-                                        </Link>
-                                        <a href="javascript:" onClick={() => this.open(post.id)}>
-                                            <Icon name='remove'/>
-                                        </a>
+                                        {
+                                            data.policy.edit && (
+                                                <div>
+                                                    <Link to={`/posts/${post.id}/edit`}>
+                                                        <Icon name='edit outline'/>
+                                                    </Link>
+                                                    <a href="javascript:" onClick={() => this.open(post.id)}>
+                                                        <Icon name='remove'/>
+                                                    </a>
+                                                </div>
+                                            )
+                                        }
                                     </Grid.Column>
                                 </Grid.Row>
                             )
@@ -99,33 +106,37 @@ class Index extends React.Component {
                         <Grid.Column width={14}>
                             <Pagination
                                 boundaryRange={0}
-                                defaultActivePage={this.state.data.currentPage}
+                                defaultActivePage={data.currentPage}
                                 ellipsisItem={null}
                                 firstItem={null}
                                 lastItem={null}
                                 siblingRange={1}
-                                totalPages={this.state.data.totalPages}
+                                totalPages={data.totalPages}
                                 onPageChange={this.pageChange}
                                 pointing
                                 secondary
                             />
                         </Grid.Column>
                         <Grid.Column width={2}>
-                            <Link to={'/posts/new'}>
-                                <Icon name='add'/>
-                                new
-                            </Link>
+                            {
+                                data.policy.new && (
+                                    <Link to={'/posts/new'}>
+                                        <Icon name='add'/>
+                                        new
+                                    </Link>
+                                )
+                            }
                         </Grid.Column>
                     </Grid.Row>
                 </Grid>
-                <Modal size={'mini'} open={this.state.modal.open} onClose={this.close} centered={false}>
+                <Modal size={'mini'} open={modal.open} onClose={this.close} centered={false}>
                     <Modal.Header>Delete Post</Modal.Header>
                     <Modal.Content>
                         <p>Are you sure you want to delete this post?</p>
                     </Modal.Content>
                     <Modal.Actions>
                         <Button negative onClick={this.close}>No</Button>
-                        <Button positive icon='checkmark' labelPosition='right' content='Yes' onClick={() => this.delete(this.state.modal.id)}/>
+                        <Button positive icon='checkmark' labelPosition='right' content='Yes' onClick={() => this.delete(modal.id)}/>
                     </Modal.Actions>
                 </Modal>
             </div>
