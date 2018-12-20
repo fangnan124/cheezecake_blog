@@ -69,7 +69,7 @@ class Index extends React.Component {
     };
 
     render() {
-        const { data, loading, modal } = this.state;
+        const { data, loading, modal } = this.state
         if (loading) return null
         return (
             <div>
