@@ -1,11 +1,11 @@
-import React from "react";
-import axios from "axios";
-import { Link, withRouter } from "react-router-dom";
-import { Grid, Icon, Modal, Button, Pagination } from 'semantic-ui-react';
+import React from 'react'
+import axios from 'axios'
+import { Link, withRouter } from 'react-router-dom'
+import { Grid, Icon, Modal, Button, Pagination } from 'semantic-ui-react'
 
 class Index extends React.Component {
     constructor(props) {
-        super(props);
+        super(props)
         this.state = {
             data: {},
             errors: {},
@@ -18,58 +18,58 @@ class Index extends React.Component {
     }
 
     componentDidMount() {
-        this.fetch();
+        this.fetch()
     }
 
     fetch = (page) => {
-        this.setState({ loading: true });
+        this.setState({ loading: true })
         axios({
-            method: "get",
-            url: "/api/v1/posts",
+            method: 'get',
+            url: '/api/v1/posts',
             params: { page: page },
             headers: {
-                "access-token": localStorage.getItem("access-token"),
-                "client": localStorage.getItem("client"),
-                "uid": localStorage.getItem("uid")
+                'access-token': localStorage.getItem('access-token'),
+                'client': localStorage.getItem('client'),
+                'uid': localStorage.getItem('uid')
             }
         }).then(response => {
-            const { data } = response.data;
-            this.setState({ data, loading: false, modal: { id: '', open: false } });
+            const { data } = response.data
+            this.setState({ data, loading: false, modal: { id: '', open: false } })
         }).catch(error => {
-            const { errors } = error.response.data;
-            this.setState({ errors, loading: false });
-        });
+            const { errors } = error.response.data
+            this.setState({ errors, loading: false })
+        })
     };
 
     delete = (id) => {
-        this.setState({ loading: true });
+        this.setState({ loading: true })
         axios({
-            method: "delete",
+            method: 'delete',
             url: `/api/v1/posts/${id}`
         }).then(response => {
-            const { data } = response.data;
-            this.setState({ data, loading: false });
+            const { data } = response.data
+            this.setState({ data, loading: false })
         }).catch(error => {
-            const { errors } = error.response.data;
-            this.setState({ errors, loading: false });
-        });
+            const { errors } = error.response.data
+            this.setState({ errors, loading: false })
+        })
     };
 
     open = (id) => {
-        this.setState({ modal: { id, open: true } });
+        this.setState({ modal: { id, open: true } })
     };
 
     close = () => {
-        this.setState({ modal: { open: false } });
+        this.setState({ modal: { open: false } })
     };
 
     pageChange = (_event, data) => {
-        const { activePage } = data;
-        this.fetch(activePage);
+        const { activePage } = data
+        this.fetch(activePage)
     };
 
     render() {
-        if (this.state.loading) return null;
+        if (this.state.loading) return null
         return (
             <div>
                 <Grid padded>
@@ -78,7 +78,7 @@ class Index extends React.Component {
                             return (
                                 <Grid.Row key={ post.id }>
                                     <Grid.Column width={12}>
-                                        <Link style={{ color: "black" }} to={`/posts/${post.id}`}>{ post.title }</Link>
+                                        <Link style={{ color: 'black' }} to={`/posts/${post.id}`}>{ post.title }</Link>
                                     </Grid.Column>
                                     <Grid.Column width={2}>
                                         <div style={{ fontSize: 12 }}>2018/01/01</div>
@@ -92,7 +92,7 @@ class Index extends React.Component {
                                         </a>
                                     </Grid.Column>
                                 </Grid.Row>
-                            );
+                            )
                         })
                     }
                     <Grid.Row>
@@ -118,7 +118,7 @@ class Index extends React.Component {
                         </Grid.Column>
                     </Grid.Row>
                 </Grid>
-                <Modal size={"mini"} open={this.state.modal.open} onClose={this.close} centered={false}>
+                <Modal size={'mini'} open={this.state.modal.open} onClose={this.close} centered={false}>
                     <Modal.Header>Delete Post</Modal.Header>
                     <Modal.Content>
                         <p>Are you sure you want to delete this post?</p>
@@ -129,8 +129,8 @@ class Index extends React.Component {
                     </Modal.Actions>
                 </Modal>
             </div>
-        );
+        )
     }
 }
 
-export default withRouter(Index);
+export default withRouter(Index)

@@ -1,22 +1,22 @@
-import React from "react";
+import React from 'react'
 import { Button, Form, Checkbox } from 'semantic-ui-react'
-import axios from "axios";
-import { Redirect } from "react-router-dom";
-import UserContext from "../contexts/UserContext";
+import axios from 'axios'
+import { Redirect } from 'react-router-dom'
+import UserContext from '../contexts/UserContext'
 
 class Login extends React.Component {
     static contextType = UserContext;
 
     constructor(props) {
-        super(props);
+        super(props)
 
-        let email = localStorage.getItem("user.email");
-        let rememberMe;
+        let email = localStorage.getItem('user.email')
+        let rememberMe
         if (email === undefined) {
-            email = '';
-            rememberMe = false;
+            email = ''
+            rememberMe = false
         } else {
-            rememberMe = true;
+            rememberMe = true
         }
 
         this.state = {
@@ -24,13 +24,13 @@ class Login extends React.Component {
             password: '',
             rememberMe: rememberMe,
             redirect: false
-        };
+        }
     }
 
     handleSubmit = (event) => {
-        event.preventDefault();
+        event.preventDefault()
 
-        this.setState({ loading: true });
+        this.setState({ loading: true })
         axios({
             method: 'post',
             url: '/api/v1/auth/sign_in',
@@ -39,36 +39,36 @@ class Login extends React.Component {
                 password: this.state.password
             }
         }).then(response => {
-            localStorage.setItem("access-token", response.headers["access-token"]);
-            localStorage.setItem("client", response.headers["client"]);
-            localStorage.setItem("uid", response.headers["uid"]);
+            localStorage.setItem('access-token', response.headers['access-token'])
+            localStorage.setItem('client', response.headers['client'])
+            localStorage.setItem('uid', response.headers['uid'])
 
             if (this.state.rememberMe) {
-                localStorage.setItem("user.email", this.state.email);
+                localStorage.setItem('user.email', this.state.email)
             } else {
-                localStorage.removeItem("user.email");
+                localStorage.removeItem('user.email')
             }
 
-            this.context.setUser(response.data.data);
+            this.context.setUser(response.data.data)
 
-            this.setState({ redirect: true });
+            this.setState({ redirect: true })
         }).catch(error => {
-            const { errors } = error.response.data;
-            this.setState({ errors, loading: false });
-        });
+            const { errors } = error.response.data
+            this.setState({ errors, loading: false })
+        })
     };
 
     pathname = () => {
-        const { location } = this.props;
+        const { location } = this.props
         if (location.state !== undefined) {
-            return location.state.from.pathname;
+            return location.state.from.pathname
         } else {
-            return '/';
+            return '/'
         }
     };
 
     render() {
-        if (this.state.redirect) return <Redirect to={{ pathname: this.pathname() }} />;
+        if (this.state.redirect) return <Redirect to={{ pathname: this.pathname() }} />
         return (
             <Form onSubmit={this.handleSubmit}>
                 <Form.Field>
@@ -91,7 +91,7 @@ class Login extends React.Component {
                     <Checkbox
                         label='remember me'
                         checked={this.state.rememberMe}
-                        onChange={e => this.setState({ rememberMe: !this.state.rememberMe })}
+                        onChange={() => this.setState({ rememberMe: !this.state.rememberMe })}
                     />
                 </Form.Field>
                 <Button type='submit'>Login</Button>
@@ -100,4 +100,4 @@ class Login extends React.Component {
     }
 }
 
-export default Login;
+export default Login

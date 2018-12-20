@@ -1,7 +1,7 @@
-import React from "react";
-import axios from "axios";
+import React from 'react'
+import axios from 'axios'
 
-const UserContext = React.createContext();
+const UserContext = React.createContext()
 
 export class UserProvider extends React.Component {
     state = {
@@ -16,17 +16,17 @@ export class UserProvider extends React.Component {
             method: 'get',
             url: '/api/v1/auth/validate_token',
             headers: {
-                "access-token": localStorage.getItem("access-token"),
-                "client": localStorage.getItem("client"),
-                "uid": localStorage.getItem("uid")
+                'access-token': localStorage.getItem('access-token'),
+                'client': localStorage.getItem('client'),
+                'uid': localStorage.getItem('uid')
             }
         }).then(response => {
-            localStorage.setItem("access-token", response.headers["access-token"]);
+            localStorage.setItem('access-token', response.headers['access-token'])
             this.setState({ user: response.data.data })
         }).catch(error => {
-            const { errors } = error.response.data;
-            this.setState({ errors, loading: false });
-        });
+            const { errors } = error.response.data
+            this.setState({ errors, loading: false })
+        })
     }
 
     render() {
@@ -48,4 +48,4 @@ export class UserConsumer extends React.Component {
     }
 }
 
-export default UserContext;
+export default UserContext

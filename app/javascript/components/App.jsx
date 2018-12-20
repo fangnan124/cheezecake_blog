@@ -1,7 +1,7 @@
-import React from "react";
-import Header from "./Header";
-import Main from "./Main";
-import { UserProvider } from "./contexts/UserContext";
+import React from 'react'
+import Header from './Header'
+import Main from './Main'
+import { UserProvider } from './contexts/UserContext'
 
 class App extends React.Component {
     render() {
@@ -12,8 +12,8 @@ class App extends React.Component {
                     <Main/>
                 </div>
             </UserProvider>
-        );
+        )
     }
 }
 
-export default App;
+export default App

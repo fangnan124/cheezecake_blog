@@ -1,12 +1,12 @@
-import React from "react";
-import Index from "./posts/Index";
-import Show from "./posts/Show";
-import New from "./posts/New";
-import Edit from "./posts/Edit";
-import Login from "./auth/Login";
-import { Switch, Route } from "react-router-dom";
-import { Container } from 'semantic-ui-react';
-import PrivateRoute from './PrivateRoute';
+import React from 'react'
+import Index from './posts/Index'
+import Show from './posts/Show'
+import New from './posts/New'
+import Edit from './posts/Edit'
+import Login from './auth/Login'
+import { Switch, Route } from 'react-router-dom'
+import { Container } from 'semantic-ui-react'
+import PrivateRoute from './PrivateRoute'
 
 class Main extends React.Component {
     render() {
@@ -21,8 +21,8 @@ class Main extends React.Component {
                     <Route exact path="/" component={Index}/>
                 </Switch>
             </Container>
-        );
+        )
     }
 }
 
-export default Main;
+export default Main

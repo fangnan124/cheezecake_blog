@@ -1,8 +1,8 @@
-import React from "react";
-import { Menu, Container, Image } from 'semantic-ui-react';
-import { Link, withRouter } from "react-router-dom";
-import UserContext, { UserConsumer } from "./contexts/UserContext";
-import axios from "axios";
+import React from 'react'
+import { Menu, Container, Image } from 'semantic-ui-react'
+import { Link, withRouter } from 'react-router-dom'
+import UserContext, { UserConsumer } from './contexts/UserContext'
+import axios from 'axios'
 
 class Header extends React.Component {
     static contextType = UserContext;
@@ -12,20 +12,20 @@ class Header extends React.Component {
             method: 'delete',
             url: '/api/v1/auth/sign_out',
             headers: {
-                "access-token": localStorage.getItem("access-token"),
-                "client": localStorage.getItem("client"),
-                "uid": localStorage.getItem("uid")
+                'access-token': localStorage.getItem('access-token'),
+                'client': localStorage.getItem('client'),
+                'uid': localStorage.getItem('uid')
             }
-        }).then(response => {
-            localStorage.removeItem("access-token");
-            localStorage.removeItem("client");
-            localStorage.removeItem("uid");
-            this.context.setUser(null);
+        }).then(() => {
+            localStorage.removeItem('access-token')
+            localStorage.removeItem('client')
+            localStorage.removeItem('uid')
+            this.context.setUser(null)
             this.props.history.push('/')
         }).catch(error => {
-            const { errors } = error.response.data;
-            this.setState({ errors, loading: false });
-        });
+            const { errors } = error.response.data
+            this.setState({ errors, loading: false })
+        })
     };
 
     render() {
@@ -34,7 +34,7 @@ class Header extends React.Component {
                 <Container>
                     <Image src='/cheezecake.png' width={50}/>
                     <Menu.Item header>
-                        <Link to={'/'} style={{ color: "black" }}>
+                        <Link to={'/'} style={{ color: 'black' }}>
                             Cheezecake Blog
                         </Link>
                     </Menu.Item>
@@ -47,10 +47,11 @@ class Header extends React.Component {
                         { ({ user }) => {
                             return user ? (
                                 [
-                                    <Menu.Item active={false}>
+                                    <Menu.Item active={false} key='email'>
                                         { user.email }
                                     </Menu.Item>,
                                     <Menu.Item
+                                        key='logout'
                                         name='logout'
                                         active={false}
                                         onClick={this.logout}
@@ -67,8 +68,8 @@ class Header extends React.Component {
                     </UserConsumer>
                 </Container>
             </Menu>
-        );
+        )
     }
 }
 
-export default withRouter(Header);
+export default withRouter(Header)
