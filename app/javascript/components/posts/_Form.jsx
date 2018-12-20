@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react'
 import { Button, Form } from 'semantic-ui-react'
-import CKEditor from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import FormValidationMessage from '../FormValidationMessage';
+import CKEditor from '@ckeditor/ckeditor5-react'
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
+import FormValidationMessage from '../FormValidationMessage'
 
 class _Form extends React.Component {
     static defaultProps = {
@@ -13,19 +13,19 @@ class _Form extends React.Component {
     };
 
     constructor(props) {
-        super(props);
+        super(props)
         this.state = {
             title: props.post.title,
             content: props.post.content
-        };
+        }
     }
 
     handleSubmit = (event) => {
-        event.preventDefault();
+        event.preventDefault()
         this.props.submit({
             title: this.state.title,
             content: this.state.content
-        });
+        })
     };
 
     render() {
@@ -38,7 +38,7 @@ class _Form extends React.Component {
                         value={this.state.title}
                         onChange={e => this.setState({ title: e.target.value })}
                     />
-                    <FormValidationMessage errors={this.props.errors} property={"title"}/>
+                    <FormValidationMessage errors={this.props.errors} property={'title'}/>
                 </Form.Field>
                 <Form.Field>
                     <label>Content</label>
@@ -47,7 +47,7 @@ class _Form extends React.Component {
                         data={this.state.content}
                         onChange={ (_event, editor) => this.setState({ content: editor.getData() }) }
                     />
-                    <FormValidationMessage errors={this.props.errors} property={"content"}/>
+                    <FormValidationMessage errors={this.props.errors} property={'content'}/>
                 </Form.Field>
                 <Button type='submit'>Save</Button>
             </Form>
@@ -55,4 +55,4 @@ class _Form extends React.Component {
     }
 }
 
-export default _Form;
+export default _Form

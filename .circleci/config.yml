@@ -30,6 +30,21 @@ jobs:
           paths:
             - vendor/bundle
 
+      - restore_cache:
+          name: Restore yarn cache
+          keys:
+            - cheezecake-is-good-v2-{{ checksum "yarn.lock" }} # to clear the cache, upgrade the version
+
+      - run:
+          name: Yarn install
+          command: yarn install --cache-folder ~/.cache/yarn
+
+      - save_cache:
+          name: Save yarn cache
+          key: cheezecake-is-good-v2-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+
       - run:
           name: Wait for Database
           command: dockerize -wait tcp://localhost:5432 -timeout 1m
@@ -43,6 +58,11 @@ jobs:
           name: Rubocop
           command: |
             bundle exec rubocop -c .rubocop.yml
+
+      - run:
+          name: ESlint
+          command: |
+            ./node_modules/.bin/eslint "app/javascript/**"
 
       - run:
           name: Rspec
