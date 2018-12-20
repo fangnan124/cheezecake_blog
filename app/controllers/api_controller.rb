@@ -1,7 +1,9 @@
 class ApiController < ActionController::API
+  include Pundit
   include DeviseTokenAuth::Concerns::SetUserByToken
 
   rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity
+  rescue_from Pundit::NotAuthorizedError, with: :render_not_authorized_error
 
   def render_unprocessable_entity(exception)
     render json: {
@@ -39,5 +41,11 @@ class ApiController < ActionController::API
 
   def render_validate_token_error
     puts 'render_validate_token_error'
+  end
+
+  def render_not_authorized_error
+    render json: {
+      errors: ['Not authorized']
+    }
   end
 end

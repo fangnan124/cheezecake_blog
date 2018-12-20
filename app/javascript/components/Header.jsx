@@ -10,7 +10,7 @@ class Header extends React.Component {
     logout = () => {
         axios({
             method: 'delete',
-            url: '/api/v1/auth/sign_out',
+            url: '/auth/sign_out',
             headers: {
                 'access-token': localStorage.getItem('access-token'),
                 'client': localStorage.getItem('client'),

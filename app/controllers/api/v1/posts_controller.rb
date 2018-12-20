@@ -11,16 +11,19 @@ module Api
 
       def create
         @post = Post.new(post_params)
+        authorize @post
         @post.save!
         redirect_to api_v1_post_path(@post)
       end
 
       def update
+        authorize @post
         @post.update!(post_params)
         redirect_to api_v1_post_path(@post), status: :see_other
       end
 
       def destroy
+        authorize @post
         @post.destroy!
         redirect_to api_v1_posts_path, status: :see_other
       end
