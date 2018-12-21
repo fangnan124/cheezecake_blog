@@ -1,3 +1,5 @@
 version: "3"
 services:
-  # describe development only containers here
+  web:
+    ports:
+      - 3030:3000

@@ -7,8 +7,9 @@ services:
     env_file: .env
     volumes:
       - .:/cheezecake_blog
+      - static_files:/cheezecake_blog/public
     ports:
-      - 3030:3000
+      - 3000:3000
     stdin_open: true
     tty: true
 
@@ -19,3 +20,6 @@ services:
       - 5432:5432
     volumes:
       - ./docker/postgres/data:/var/lib/postgresql/data
+
+volumes:
+  static_files:
