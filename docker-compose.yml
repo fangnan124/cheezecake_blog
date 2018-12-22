@@ -4,6 +4,7 @@ services:
     build:
       context: .
       dockerfile: ./docker/web/Dockerfile
+      image: cheezecake:0.1
     env_file: .env
     volumes:
       - .:/cheezecake_blog

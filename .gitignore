@@ -42,3 +42,5 @@ yarn-debug.log*
 # Ignore docker container data files.
 /docker/postgres/data
 docker-compose.override.yml
+
+deploy.rb
