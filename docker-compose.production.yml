@@ -7,6 +7,7 @@ services:
 
   nginx:
     image: nginx
+    container_name: cheezecake_nginx
     links:
       - web
     volumes:
