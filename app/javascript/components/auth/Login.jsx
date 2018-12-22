@@ -49,9 +49,9 @@ class Login extends React.Component {
                 localStorage.removeItem('user.email')
             }
 
-            axios.defaults.headers.common['access-token'] = response.headers['access-token'];
-            axios.defaults.headers.common['client'] = response.headers['client'];
-            axios.defaults.headers.common['uid'] = response.headers['uid'];
+            axios.defaults.headers.common['access-token'] = response.headers['access-token']
+            axios.defaults.headers.common['client'] = response.headers['client']
+            axios.defaults.headers.common['uid'] = response.headers['uid']
 
             this.context.setUser(response.data.data)
 
