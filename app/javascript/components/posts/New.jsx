@@ -16,7 +16,12 @@ class New extends React.Component {
         axios({
             method: 'post',
             url: '/api/v1/posts',
-            data: params
+            data: params,
+            headers: {
+                'access-token': localStorage.getItem('access-token'),
+                'client': localStorage.getItem('client'),
+                'uid': localStorage.getItem('uid')
+            }
         }).then(() => {
             this.setState({ redirect: true })
         }).catch(error => {
