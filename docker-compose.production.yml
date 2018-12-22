@@ -1,5 +1,10 @@
 version: "3"
 services:
+  web:
+    volumes:
+      - .:/cheezecake_blog
+      - static_files:/cheezecake_blog/public
+
   nginx:
     image: nginx
     links:
@@ -12,3 +17,6 @@ services:
     ports:
       - 80:80
       - 443:443
+
+volumes:
+  static_files:
