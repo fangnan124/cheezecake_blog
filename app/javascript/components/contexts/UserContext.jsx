@@ -21,7 +21,7 @@ export class UserProvider extends React.Component {
                 'uid': localStorage.getItem('uid')
             }
         }).then(response => {
-            localStorage.setItem('access-token', response.headers['access-token'])
+            // localStorage.setItem('access-token', response.headers['access-token'])
             this.setState({ user: response.data.data })
         }).catch(error => {
             const { errors } = error.response.data
