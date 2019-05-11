@@ -10,7 +10,10 @@ else
   bundle install
   yarn install
 fi
-#rm -f tmp/pids/server.pid
+
+if [ -f /webapp/tmp/pids/server.pid ]; then
+  rm -f /webapp/tmp/pids/server.pid
+fi
 
 #if [ $RAILS_ENV = "development" ]; then
 #  bundle exec rails webpacker:clobber

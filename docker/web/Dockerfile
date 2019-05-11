@@ -32,9 +32,6 @@ WORKDIR /cheezecake_blog
 COPY . /cheezecake_blog
 RUN bundle install
 
-RUN mkdir -p /home/ec2-user/cheezecake_blog/shared
-COPY /home/ec2-user/cheezecake_blog/shared /home/ec2-user/cheezecake_blog/shared
-
 # Entrypoint
 COPY ./docker/web/docker-entrypoint.sh /
 ENTRYPOINT ["sh", "/docker-entrypoint.sh"]
