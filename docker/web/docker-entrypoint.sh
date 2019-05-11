@@ -11,8 +11,8 @@ else
   yarn install
 fi
 
-if [ -f /webapp/tmp/pids/server.pid ]; then
-  rm -f /webapp/tmp/pids/server.pid
+if [ -f /cheezecake_blog/tmp/pids/server.pid ]; then
+  rm -f /cheezecake_blog/tmp/pids/server.pid
 fi
 
 #if [ $RAILS_ENV = "development" ]; then
