@@ -29,7 +29,7 @@ class Index extends React.Component {
             params: { page: page }
         }).then(response => {
             const { data } = response.data
-            this.setState({ data, loading: false, modal: { id: '', open: false } })
+            this.setState({ data, loading: false })
         }).catch(error => {
             const { errors } = error.response.data
             this.setState({ errors, loading: false })
@@ -43,7 +43,7 @@ class Index extends React.Component {
             url: `/api/v1/posts/${id}`
         }).then(response => {
             const { data } = response.data
-            this.setState({ data, loading: false })
+            this.setState({ data, loading: false, modal: { id: '', open: false } })
         }).catch(error => {
             const { errors } = error.response.data
             this.setState({ errors, loading: false })
