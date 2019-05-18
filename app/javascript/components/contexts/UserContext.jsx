@@ -14,8 +14,14 @@ export class UserProvider extends React.Component {
     componentDidMount() {
         axios({
             method: 'get',
-            url: '/auth/validate_token'
+            url: '/auth/validate_token',
+            headers: {
+                'access-token': localStorage.getItem('access-token'),
+                'client': localStorage.getItem('client'),
+                'uid': localStorage.getItem('uid')
+            }
         }).then(response => {
+            localStorage.setItem('access-token', response.headers['access-token'])
             this.setState({ user: response.data.data })
         }).catch(error => {
             const { errors } = error.response.data

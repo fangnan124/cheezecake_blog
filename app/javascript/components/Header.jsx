@@ -32,7 +32,7 @@ class Header extends React.Component {
         return (
             <Menu text>
                 <Container>
-                    <Image src='/cheezecake.png' width={50} height={35}/>
+                    <Image src='/cheezecake.png' width={50}/>
                     <Menu.Item header>
                         <Link to={'/'} style={{ color: 'black' }}>
                             Cheezecake Blog
