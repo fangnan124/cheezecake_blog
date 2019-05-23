@@ -77,7 +77,7 @@ class Index extends React.Component {
                                         <Link style={{ color: 'black' }} to={`/posts/${post.id}`}>{ post.title }</Link>
                                     </Grid.Column>
                                     <Grid.Column width={2}>
-                                        <div style={{ fontSize: 12 }}>2018/01/01</div>
+                                        <div style={{ fontSize: 12 }}>{ post.updated_time_ago }</div>
                                     </Grid.Column>
                                     <Grid.Column width={2}>
                                         {

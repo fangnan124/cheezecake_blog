@@ -1,8 +1,6 @@
 json.data do
-  json.posts @posts do |post|
-    json.id      post.id
-    json.title   post.title
-    json.content post.content
+  json.posts do
+    json.array! @posts, partial: 'post', as: :post
   end
   json.currentPage @posts.current_page
   json.totalPages @posts.total_pages
