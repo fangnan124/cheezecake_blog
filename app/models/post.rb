@@ -1,3 +1,3 @@
 class Post < ApplicationRecord
-  validates :title, length: { in: 10..50 }
+  validates :title, length: { in: 3..50 }
 end

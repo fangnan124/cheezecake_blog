@@ -73,11 +73,11 @@ class Index extends React.Component {
                         data.posts.map(post => {
                             return (
                                 <Grid.Row key={ post.id }>
-                                    <Grid.Column width={12}>
+                                    <Grid.Column width={10}>
                                         <Link style={{ color: 'black' }} to={`/posts/${post.id}`}>{ post.title }</Link>
                                     </Grid.Column>
-                                    <Grid.Column width={2}>
-                                        <div style={{ fontSize: 12 }}>{ post.updated_time_ago }</div>
+                                    <Grid.Column width={4}>
+                                        <div style={{ fontSize: 12, float: 'right' }}>{ post.updated_time_ago }</div>
                                     </Grid.Column>
                                     <Grid.Column width={2}>
                                         {
