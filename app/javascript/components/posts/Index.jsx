@@ -2,7 +2,6 @@ import React from 'react'
 import axios from 'axios'
 import { Link, withRouter } from 'react-router-dom'
 import { Grid, Icon, Modal, Button, Pagination } from 'semantic-ui-react'
-import Tag from 'components/Tag'
 
 class Index extends React.Component {
     constructor(props) {
@@ -77,9 +76,9 @@ class Index extends React.Component {
                                     <Grid.Column width={10}>
                                         <Link style={{ color: 'black' }} to={`/posts/${post.id}`}>{ post.title }</Link>
                                         {/*<div>*/}
-                                            {/*{*/}
-                                                {/*post.tags.map(tag => <Tag key={tag.id} label={tag.name} color={tag.color}/>)*/}
-                                            {/*}*/}
+                                        {/*{*/}
+                                        {/*post.tags.map(tag => <Tag key={tag.id} label={tag.name} color={tag.color}/>)*/}
+                                        {/*}*/}
                                         {/*</div>*/}
                                     </Grid.Column>
                                     <Grid.Column width={4}>
