@@ -4,7 +4,7 @@ class Tag < ApplicationRecord
   has_many :posts, through: :post_tag_rels
 
   # Scopes
-  scope :posts, ->{ eager_load(:posts) }
+  scope :posts, -> { eager_load(:posts) }
 
   # Validations
 

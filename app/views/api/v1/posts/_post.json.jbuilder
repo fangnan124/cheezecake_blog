@@ -1,4 +1,4 @@
-json.merge!           post.attributes
+json.merge! post.attributes
 json.tags do
   json.array! post.post_tag_rels do |post_tag_rel|
     json.rel_id post_tag_rel.id

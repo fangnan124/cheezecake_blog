@@ -6,7 +6,7 @@ class Post < ApplicationRecord
   accepts_nested_attributes_for :post_tag_rels, allow_destroy: true
 
   # Scopes
-  scope :tags, ->{ eager_load(:tags) }
+  scope :tags, -> { eager_load(:tags) }
 
   # Validations
   validates :title, length: { in: 3..50 }
