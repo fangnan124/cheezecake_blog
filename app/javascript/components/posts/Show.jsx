@@ -2,6 +2,7 @@ import React from 'react'
 import axios from 'axios'
 import {Header, Icon} from 'semantic-ui-react'
 import {Link} from 'react-router-dom'
+import Tag from 'components/Tag'
 
 class Show extends React.Component {
     constructor(props) {
@@ -33,10 +34,15 @@ class Show extends React.Component {
         return (
             <div>
                 <Header as='h1'>{ post.title }</Header>
-                <Link to={`/posts/${post.id}/edit`}>
-                    <Icon name='edit outline'/>
-                </Link>
-                <div dangerouslySetInnerHTML={{ __html: post.content }}/>
+                {
+                    post.tags.map(tag => <Tag key={tag.id} label={tag.name} color={tag.color}/>)
+                }
+                <div style={{ float: 'right' }}>
+                    <Link to={`/posts/${post.id}/edit`}>
+                        <Icon name='edit outline'/>
+                    </Link>
+                </div>
+                <div style={{ margin: '30px 0' }} dangerouslySetInnerHTML={{ __html: post.content }}/>
             </div>
         )
     }
