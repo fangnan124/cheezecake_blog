@@ -6,6 +6,7 @@ if [ $RAILS_ENV = "production" ] || [ $RAILS_ENV = "staging" ]; then
   bundle exec rails assets:precompile
   yarn install --production
   # bundle exec rails webpacker:compile
+  bundle exec rails db:migrate
 else
   bundle install
   yarn install

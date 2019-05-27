@@ -75,6 +75,11 @@ class Index extends React.Component {
                                 <Grid.Row key={ post.id }>
                                     <Grid.Column width={10}>
                                         <Link style={{ color: 'black' }} to={`/posts/${post.id}`}>{ post.title }</Link>
+                                        {/*<div>*/}
+                                        {/*{*/}
+                                        {/*post.tags.map(tag => <Tag key={tag.id} label={tag.name} color={tag.color}/>)*/}
+                                        {/*}*/}
+                                        {/*</div>*/}
                                     </Grid.Column>
                                     <Grid.Column width={4}>
                                         <div style={{ fontSize: 12, float: 'right' }}>{ post.updated_time_ago }</div>

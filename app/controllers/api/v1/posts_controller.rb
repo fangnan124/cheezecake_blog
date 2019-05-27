@@ -35,7 +35,7 @@ module Api
       end
 
       def post_params
-        params.require(:post).permit(:title, :content)
+        params.require(:post).permit(:title, :content, post_tag_rels_attributes: [:_destroy, :id, :tag_id])
       end
     end
   end
