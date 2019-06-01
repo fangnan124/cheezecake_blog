@@ -3,6 +3,7 @@ import { Menu, Container, Image } from 'semantic-ui-react'
 import { Link, withRouter } from 'react-router-dom'
 import UserContext, { UserConsumer } from './contexts/UserContext'
 import axios from 'axios'
+import { Dropdown } from 'semantic-ui-react'
 
 class Header extends React.Component {
     static contextType = UserContext;
@@ -43,29 +44,30 @@ class Header extends React.Component {
                             Posts
                         </Link>
                     </Menu.Item>
-                    <UserConsumer>
-                        { ({ user }) => {
-                            return user ? (
-                                [
-                                    <Menu.Item active={false} key='email'>
-                                        { user.email }
-                                    </Menu.Item>,
-                                    <Menu.Item
-                                        key='logout'
-                                        name='logout'
-                                        active={false}
-                                        onClick={this.logout}
-                                    />
-                                ]
-                            ) : (
-                                <Menu.Item active={false}>
-                                    <Link to={'/login'}>
-                                        Login
-                                    </Link>
-                                </Menu.Item>
-                            )
-                        }}
-                    </UserConsumer>
+                    <Menu.Menu position='right'>
+                        <UserConsumer>
+                            { ({ user }) => {
+                                return user ? (
+                                    <Menu.Item active={false}>
+                                        <Dropdown text={ user.email.split('@')[0] }>
+                                            <Dropdown.Menu>
+                                                <Dropdown.Item text='Profile'/>
+                                                <Dropdown.Item text='Tags'/>
+                                                <Dropdown.Divider />
+                                                <Dropdown.Item text='Logout' onClick={this.logout}/>
+                                            </Dropdown.Menu>
+                                        </Dropdown>
+                                    </Menu.Item>
+                                ) : (
+                                    <Menu.Item active={false}>
+                                        <Link to={'/login'}>
+                                            Login
+                                        </Link>
+                                    </Menu.Item>
+                                )
+                            }}
+                        </UserConsumer>
+                    </Menu.Menu>
                 </Container>
             </Menu>
         )
