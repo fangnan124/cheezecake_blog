@@ -1,8 +1,9 @@
 import React from 'react'
 import axios from 'axios'
-import {Header, Icon} from 'semantic-ui-react'
+import {Header, Icon, Button, Comment, Form} from 'semantic-ui-react'
 import {Link} from 'react-router-dom'
 import Tag from 'components/Tag'
+import Comments from './Comments'
 
 class Show extends React.Component {
     constructor(props) {
@@ -33,7 +34,7 @@ class Show extends React.Component {
         if (this.state.loading) return null
         return (
             <div>
-                <Header as='h1'>{ post.title }</Header>
+                <Header as='h1'>{post.title}</Header>
                 {
                     post.tags.map(tag => <Tag key={tag.id} label={tag.name} color={tag.color}/>)
                 }
@@ -43,6 +44,7 @@ class Show extends React.Component {
                     </Link>
                 </div>
                 <div style={{ margin: '30px 0' }} dangerouslySetInnerHTML={{ __html: post.content }}/>
+                <Comments postId={post.id}/>
             </div>
         )
     }
