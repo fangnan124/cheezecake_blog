@@ -4,6 +4,7 @@ import {Header, Icon, Button, Comment, Form} from 'semantic-ui-react'
 import {Link} from 'react-router-dom'
 import Tag from 'components/Tag'
 import Comments from './Comments'
+import UserContext, { UserConsumer } from 'components/contexts/UserContext'
 
 class Show extends React.Component {
     constructor(props) {
@@ -38,11 +39,17 @@ class Show extends React.Component {
                 {
                     post.tags.map(tag => <Tag key={tag.id} label={tag.name} color={tag.color}/>)
                 }
-                <div style={{ float: 'right' }}>
-                    <Link to={`/posts/${post.id}/edit`}>
-                        <Icon name='edit outline'/>
-                    </Link>
-                </div>
+                <UserConsumer>
+                    { ({ user }) => {
+                        return user && (
+                            <div style={{ float: 'right' }}>
+                                <Link to={`/posts/${post.id}/edit`}>
+                                    <Icon name='edit outline'/>
+                                </Link>
+                            </div>
+                        )
+                    }}
+                </UserConsumer>
                 <div style={{ margin: '30px 0' }} dangerouslySetInnerHTML={{ __html: post.content }}/>
                 <Comments postId={post.id}/>
             </div>

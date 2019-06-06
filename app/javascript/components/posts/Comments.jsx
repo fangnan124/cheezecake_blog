@@ -45,6 +45,19 @@ class Comments extends React.Component {
         })
     };
 
+    handleDelete = (id) => {
+        axios({
+            method: 'delete',
+            url: `/api/v1/comments/${id}`
+        }).then(response => {
+            const { data } = response.data
+            this.setState({ data})
+        }).catch(error => {
+            const { errors } = error.response.data
+            this.setState({ errors })
+        })
+    };
+
     render() {
         if (this.state.loading) return null
         return (
@@ -57,14 +70,18 @@ class Comments extends React.Component {
                     this.state.data.comments.map((comment) => (
                         <Comment key={comment.id}>
                             <Comment.Content>
-                                <Comment.Author as='a'>{ comment.user.email }</Comment.Author>
+                                <Comment.Author as='a'>{comment.user.email}</Comment.Author>
                                 <Comment.Metadata>
                                     <div>{ comment.updated_time_ago }</div>
                                 </Comment.Metadata>
                                 <Comment.Text>{ comment.text }</Comment.Text>
-                                {/*<Comment.Actions>*/}
-                                {/*<Comment.Action>Reply</Comment.Action>*/}
-                                {/*</Comment.Actions>*/}
+                                <Comment.Actions>
+                                    {
+                                        this.state.data.policy.delete && (
+                                            <Comment.Action onClick={() => this.handleDelete(comment.id)}>Delete</Comment.Action>
+                                        )
+                                    }
+                                </Comment.Actions>
                             </Comment.Content>
                         </Comment>
                     ))

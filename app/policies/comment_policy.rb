@@ -11,7 +11,7 @@ class CommentPolicy < ApplicationPolicy
     user.writer_user? || user.reader_user?
   end
 
-  def destroy?
+  def delete?
     return false if user.nil?
 
     user.writer_user? || user.reader_user?

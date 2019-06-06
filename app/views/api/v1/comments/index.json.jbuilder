@@ -8,5 +8,6 @@ json.data do
     json.edit   policy(Comment.new).edit?
     json.new    policy(Comment.new).new?
     json.create policy(Comment.new).create?
+    json.delete policy(Comment.new).delete?
   end
 end
