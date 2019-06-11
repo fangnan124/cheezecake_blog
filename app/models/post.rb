@@ -1,4 +1,6 @@
 class Post < ApplicationRecord
+  enum status: { published: 'published', wip: 'wip' }, _prefix: true
+
   # Associations
   has_many :post_tag_rels
   has_many :tags, through: :post_tag_rels
@@ -10,7 +12,7 @@ class Post < ApplicationRecord
   scope :tags, -> { eager_load(:tags) }
 
   # Validations
-  validates :title, length: { in: 3..50 }
+  validates :title, length: { in: 3..80 }
 
   # Callbacks
 

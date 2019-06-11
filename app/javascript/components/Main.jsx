@@ -14,11 +14,11 @@ class Main extends React.Component {
             <Container text style={{ margin: '5em 0' }}>
                 <Switch>
                     <Route exact path="/login" component={Login}/>
+                    <Route exact path="/" component={() => <Index/>}/>
                     <Route exact path="/posts" component={Index}/>
                     <PrivateRoute exact path="/posts/new" component={New}/>
                     <Route exact path="/posts/:id" component={Show}/>
                     <PrivateRoute exact path="/posts/:id/edit" component={Edit}/>
-                    <Route exact path="/" component={Index}/>
                 </Switch>
             </Container>
         )

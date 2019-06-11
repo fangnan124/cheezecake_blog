@@ -3,10 +3,10 @@ module Api
     class CommentsController < ApiController
 
       before_action :set_post, only: [:index, :create]
-      before_action :set_comment, only: [:destroy]
+      before_action :set_comment, only: [:update, :destroy]
 
       def index
-        @comments = @post.comments.order(updated_at: :desc).page(params[:page] || 1).per(10)
+        @comments = @post.comments.order(created_at: :desc).page(params[:page] || 1).per(10)
       end
 
       def create
