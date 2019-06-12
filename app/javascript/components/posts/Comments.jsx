@@ -87,7 +87,7 @@ class Comments extends React.Component {
                     this.state.data.comments.map((comment) => (
                         <Comment key={comment.id}>
                             <Comment.Content>
-                                <Comment.Author as='a'>{comment.user.email}</Comment.Author>
+                                <Comment.Author as='a'>{comment.user.name}</Comment.Author>
                                 <Comment.Metadata>
                                     <span>{ comment.created_time_ago }</span>
                                 </Comment.Metadata>

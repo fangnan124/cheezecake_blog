@@ -57,9 +57,11 @@ class Header extends React.Component {
                             { ({ user }) => {
                                 return user ? (
                                     <Menu.Item active={false}>
-                                        <Dropdown text={ user.email.split('@')[0] }>
+                                        <Dropdown text={ user.name }>
                                             <Dropdown.Menu>
-                                                <Dropdown.Item text='Profile'/>
+                                                <Dropdown.Item>
+                                                    <Link to={'/profile'}>Profile</Link>
+                                                </Dropdown.Item>
                                                 <Dropdown.Item text='Tags'/>
                                                 <Dropdown.Divider />
                                                 <Dropdown.Item text='Logout' onClick={this.logout}/>

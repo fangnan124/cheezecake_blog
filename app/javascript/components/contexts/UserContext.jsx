@@ -5,6 +5,7 @@ const UserContext = React.createContext()
 
 export class UserProvider extends React.Component {
     state = {
+        loading: true,
         user: null,
         setUser: user => {
             this.setState({ user })
@@ -12,11 +13,12 @@ export class UserProvider extends React.Component {
     };
 
     componentDidMount() {
+        this.setState({ loading: true })
         axios({
             method: 'get',
             url: '/auth/validate_token'
         }).then(response => {
-            this.setState({ user: response.data.data })
+            this.setState({ user: response.data.data, loading: false})
         }).catch(error => {
             const { errors } = error.response.data
             this.setState({ errors, loading: false })
@@ -24,6 +26,7 @@ export class UserProvider extends React.Component {
     }
 
     render() {
+        if (this.state.loading) return null
         return (
             <UserContext.Provider value={this.state}>
                 {this.props.children}
