@@ -1,16 +1,22 @@
 import React from 'react'
-import { Button, Form } from 'semantic-ui-react'
+import { Button, Form, Select } from 'semantic-ui-react'
 import CKEditor from '@ckeditor/ckeditor5-react'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import TagsSelect from 'components/TagsSelect'
 import FormValidationMessage from '../FormValidationMessage'
+
+const options = [
+    { key: 'pub', text: 'Published', value: 'published' },
+    { key: 'wip', text: 'WIP', value: 'wip' }
+]
 
 class _Form extends React.Component {
     static defaultProps = {
         post: {
             title: '',
             content: '',
-            tags: []
+            tags: [],
+            status: ''
         }
     };
 
@@ -19,6 +25,7 @@ class _Form extends React.Component {
         this.state = {
             title: props.post.title,
             content: props.post.content,
+            status: props.post.status,
             tags: props.post.tags,
             tag_ids: props.post.tags.map(tag => tag.id)
         }
@@ -48,6 +55,7 @@ class _Form extends React.Component {
         this.props.submit({
             title: this.state.title,
             content: this.state.content,
+            status: this.state.status,
             post_tag_rels_attributes: post_tag_rels_attributes
         })
     };
@@ -80,6 +88,15 @@ class _Form extends React.Component {
                     />
                     <FormValidationMessage errors={this.props.errors} property={'content'}/>
                 </Form.Field>
+                <Form.Field
+                    control={Select}
+                    label='Status'
+                    options={options}
+                    placeholder='Status'
+                    width={4}
+                    defaultValue={this.state.status}
+                    onChange={(e, { value }) => this.setState({ status: value })}
+                />
                 <Button type='submit'>Save</Button>
             </Form>
         )

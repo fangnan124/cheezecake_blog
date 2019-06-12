@@ -4,7 +4,10 @@ module Api
       before_action :set_post, only: [:show, :update, :destroy]
 
       def index
-        @posts = Post.all.order(updated_at: :desc).page(params[:page] || 1).per(7)
+        @posts = Post.all
+        @posts = @posts.status_published unless user_signed_in? && authorize(@posts, :show_all?)
+        @posts = @posts.order(updated_at: :desc)
+        @posts = @posts.page(params[:page] || 1).per(7)
       end
 
       def show; end
@@ -35,7 +38,7 @@ module Api
       end
 
       def post_params
-        params.require(:post).permit(:title, :content, post_tag_rels_attributes: [:_destroy, :id, :tag_id])
+        params.require(:post).permit(:title, :content, :status, post_tag_rels_attributes: [:_destroy, :id, :tag_id])
       end
     end
   end

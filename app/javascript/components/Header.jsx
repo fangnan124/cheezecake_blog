@@ -8,6 +8,14 @@ import { Dropdown } from 'semantic-ui-react'
 class Header extends React.Component {
     static contextType = UserContext;
 
+    constructor(props) {
+        super(props)
+        this.state = {
+            redirect: false,
+            errors: {}
+        }
+    }
+
     logout = () => {
         axios({
             method: 'delete',

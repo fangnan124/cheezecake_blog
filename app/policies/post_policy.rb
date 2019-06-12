@@ -1,4 +1,10 @@
 class PostPolicy < ApplicationPolicy
+  def show_all?
+    return false if user.nil?
+
+    user.writer_user?
+  end
+
   def create?
     return false if user.nil?
 
