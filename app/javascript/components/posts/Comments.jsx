@@ -1,6 +1,6 @@
 import React from 'react'
-import {Header, Icon, Button, Comment, Form} from 'semantic-ui-react'
-import axios from "axios"
+import {Header, Button, Comment, Form} from 'semantic-ui-react'
+import axios from 'axios'
 
 class Comments extends React.Component {
     constructor(props) {
@@ -76,7 +76,6 @@ class Comments extends React.Component {
     };
 
     render() {
-        console.log(this.state)
         if (this.state.loading) return null
         return (
             <Comment.Group>

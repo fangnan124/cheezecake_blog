@@ -1,6 +1,6 @@
 import React from 'react'
 import { Menu, Container, Image } from 'semantic-ui-react'
-import { Link, withRouter, Redirect } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import UserContext, { UserConsumer } from './contexts/UserContext'
 import axios from 'axios'
 import { Dropdown } from 'semantic-ui-react'

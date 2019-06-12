@@ -1,10 +1,10 @@
 import React from 'react'
 import axios from 'axios'
-import {Header, Icon, Button, Comment, Form} from 'semantic-ui-react'
+import {Header, Icon} from 'semantic-ui-react'
 import {Link} from 'react-router-dom'
 import Tag from 'components/Tag'
 import Comments from './Comments'
-import UserContext, { UserConsumer } from 'components/contexts/UserContext'
+import { UserConsumer } from 'components/contexts/UserContext'
 
 class Show extends React.Component {
     constructor(props) {

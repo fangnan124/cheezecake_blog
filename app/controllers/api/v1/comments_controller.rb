@@ -1,7 +1,6 @@
 module Api
   module V1
     class CommentsController < ApiController
-
       before_action :set_post, only: [:index, :create]
       before_action :set_comment, only: [:update, :destroy]
 
@@ -41,7 +40,6 @@ module Api
       def comment_params
         params.require(:comment).permit(:text, :user_id, :post_id)
       end
-
     end
   end
 end
