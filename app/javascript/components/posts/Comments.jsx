@@ -130,6 +130,14 @@ class Comments extends React.Component {
                 }
 
                 {
+                    this.state.data.comments.length <= 0 && (
+                        <div>
+                            No Comments
+                        </div>
+                    )
+                }
+
+                {
                     this.state.data.policy.create && (
                         <Form reply onSubmit={this.handleSubmit}>
                             <Form.TextArea

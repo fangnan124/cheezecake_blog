@@ -1,6 +1,5 @@
 import React from 'react'
 import axios from 'axios'
-import { Link, withRouter } from 'react-router-dom'
 import { Tab } from 'semantic-ui-react'
 import Profile from './Profile'
 
@@ -20,4 +19,4 @@ class Index extends React.Component {
     }
 }
 
-export default withRouter(Index)
+export default Index

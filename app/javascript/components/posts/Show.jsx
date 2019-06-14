@@ -50,7 +50,7 @@ class Show extends React.Component {
                         )
                     }}
                 </UserConsumer>
-                <div style={{ margin: '30px 0' }} dangerouslySetInnerHTML={{ __html: post.content }}/>
+                <div style={{ margin: '30px 0', minHeight: 250 }} dangerouslySetInnerHTML={{ __html: post.content }}/>
                 <Comments postId={post.id}/>
             </div>
         )
