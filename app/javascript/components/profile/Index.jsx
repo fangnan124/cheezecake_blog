@@ -5,8 +5,8 @@ import Profile from './Profile'
 
 const panes = [
     { menuItem: 'Profile', render: () => <Tab.Pane><Profile/></Tab.Pane> },
-    { menuItem: 'Likes', render: () => <Tab.Pane>TODO</Tab.Pane> },
-    { menuItem: 'Bookmarks', render: () => <Tab.Pane>TODO</Tab.Pane> },
+    { menuItem: 'Likes', render: () => <Tab.Pane>Coming Soon</Tab.Pane> },
+    { menuItem: 'Bookmarks', render: () => <Tab.Pane>Coming Soon</Tab.Pane> },
 ]
 
 class Index extends React.Component {

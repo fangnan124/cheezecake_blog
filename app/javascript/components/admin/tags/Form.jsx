@@ -38,6 +38,7 @@ class _Form extends React.Component {
                     />
                 </Form.Field>
                 <Form.Field>
+                    <label>Color</label>
                     <CompactPicker
                         color={ this.state.color }
                         onChangeComplete={ ({ hex }) => this.setState({ color: hex }) }

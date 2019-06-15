@@ -4,8 +4,8 @@ import Tags from './tags/Index'
 
 const panes = [
     { menuItem: 'Tags', render: () => <Tab.Pane><Tags/></Tab.Pane> },
-    { menuItem: 'Other', render: () => <Tab.Pane>TODO</Tab.Pane> },
-    { menuItem: 'Another', render: () => <Tab.Pane>TODO</Tab.Pane> },
+    { menuItem: 'Users', render: () => <Tab.Pane>Coming Soon</Tab.Pane> },
+    { menuItem: 'Other', render: () => <Tab.Pane>Coming Soon</Tab.Pane> },
 ]
 
 class Index extends React.Component {

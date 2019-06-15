@@ -2,6 +2,11 @@ class ApiController < ActionController::API
   include Pundit
   include DeviseTokenAuth::Concerns::SetUserByToken
 
+  # # json layout
+  # include ActionController::ImplicitRender
+  # include ActionView::Layouts
+  # layout 'application'
+
   rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity
   rescue_from Pundit::NotAuthorizedError, with: :render_not_authorized_error
 

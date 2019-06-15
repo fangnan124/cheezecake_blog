@@ -70,14 +70,14 @@ class Index extends React.Component {
                                     color={tag.color}
                                 />
                                 <span style={{ marginLeft: 5 }}>
-                                    <Modal trigger={<Icon name='edit outline'/>} size={'mini'}>
+                                    <Modal trigger={<Icon name='edit outline' style={{ cursor: 'pointer' }}/>} size={'mini'}>
                                         <Modal.Header>Edit</Modal.Header>
                                         <Modal.Content>
                                             <Edit onSuccess={this.fetch} id={tag.id}/>
                                         </Modal.Content>
                                     </Modal>
-                                    <Modal trigger={<Icon name='remove'/>} size={'mini'}>
-                                        <Modal.Header>Edit</Modal.Header>
+                                    <Modal trigger={<Icon name='remove' style={{ cursor: 'pointer' }}/>} size={'mini'}>
+                                        <Modal.Header>Delete</Modal.Header>
                                         <Modal.Content>
                                             <p>Are you sure?</p>
                                         </Modal.Content>
@@ -92,7 +92,7 @@ class Index extends React.Component {
                     })
                 }
                 <Grid.Column width={16}>
-                    <Modal trigger={<Button primary size='mini'>Add</Button>} size={'mini'}>
+                    <Modal trigger={<Icon name='add' style={{ cursor: 'pointer' }}/>} size={'mini'}>
                         <Modal.Header>New</Modal.Header>
                         <Modal.Content>
                             <New onSuccess={this.fetch}/>

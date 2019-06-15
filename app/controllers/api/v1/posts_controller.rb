@@ -2,6 +2,7 @@ module Api
   module V1
     class PostsController < ApiController
       before_action :set_post, only: [:show, :update, :destroy]
+      after_action :increment_views, only: :show
 
       def index
         @posts = Post.all
@@ -39,6 +40,13 @@ module Api
 
       def post_params
         params.require(:post).permit(:title, :content, :status, post_tag_rels_attributes: [:_destroy, :id, :tag_id])
+      end
+
+      def increment_views
+        unless current_user&.writer_user?
+          @post.views += 1
+          @post.save!
+        end
       end
     end
   end
