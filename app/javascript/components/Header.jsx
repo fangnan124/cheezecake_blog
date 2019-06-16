@@ -19,12 +19,7 @@ class Header extends React.Component {
     logout = () => {
         axios({
             method: 'delete',
-            url: '/auth/sign_out',
-            headers: {
-                'access-token': localStorage.getItem('access-token'),
-                'client': localStorage.getItem('client'),
-                'uid': localStorage.getItem('uid')
-            }
+            url: '/auth/sign_out'
         }).then(() => {
             localStorage.removeItem('access-token')
             localStorage.removeItem('client')
@@ -62,9 +57,13 @@ class Header extends React.Component {
                                                 <Dropdown.Item>
                                                     <Link to={'/profile'}>Profile</Link>
                                                 </Dropdown.Item>
-                                                <Dropdown.Item>
-                                                    <Link to={'/admin'}>Admin</Link>
-                                                </Dropdown.Item>
+                                                {
+                                                    user && user.role === 'writer' && (
+                                                        <Dropdown.Item>
+                                                            <Link to={'/admin'}>Admin</Link>
+                                                        </Dropdown.Item>
+                                                    )
+                                                }
                                                 <Dropdown.Divider />
                                                 <Dropdown.Item text='Logout' onClick={this.logout}/>
                                             </Dropdown.Menu>
@@ -72,6 +71,10 @@ class Header extends React.Component {
                                     </Menu.Item>
                                 ) : (
                                     <Menu.Item active={false}>
+                                        <Link to={'/sign_up'}>
+                                            Sign up
+                                        </Link>
+                                        <span style={{ margin: '0 10px', color: 'lightgray' }}>|</span>
                                         <Link to={'/login'}>
                                             Login
                                         </Link>

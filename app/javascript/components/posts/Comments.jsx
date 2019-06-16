@@ -107,14 +107,14 @@ class Comments extends React.Component {
                                             <Comment.Text>{ comment.text }</Comment.Text>
                                             <Comment.Actions>
                                                 {
-                                                    this.state.data.policy.edit && (
+                                                    comment.policy.edit && (
                                                         <Comment.Action onClick={() => this.setState({ edit_id: comment.id })}>
                                                             Edit
                                                         </Comment.Action>
                                                     )
                                                 }
                                                 {
-                                                    this.state.data.policy.delete && (
+                                                    comment.policy.delete && (
                                                         <Comment.Action onClick={() => this.handleDelete(comment.id)}>
                                                             Delete
                                                         </Comment.Action>

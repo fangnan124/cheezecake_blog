@@ -8,12 +8,12 @@ class CommentPolicy < ApplicationPolicy
   def update?
     return false if user.nil?
 
-    user.writer_user? || user.reader_user?
+    user.writer_user? || record.user.id == user.id
   end
 
   def delete?
     return false if user.nil?
 
-    user.writer_user? || user.reader_user?
+    user.writer_user? || record.user.id == user.id
   end
 end

@@ -1,5 +1,4 @@
 import React from 'react'
-import axios from 'axios'
 import { Tab } from 'semantic-ui-react'
 import Profile from './Profile'
 

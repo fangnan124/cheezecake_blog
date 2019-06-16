@@ -17,6 +17,11 @@ Rails.application.routes.draw do
       end
       resources :tags
       resources :users
+      resources :invitation_requests do
+        member do
+          put :approve
+        end
+      end
     end
   end
 

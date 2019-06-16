@@ -1,11 +1,8 @@
 import React from 'react'
 import axios from 'axios'
-import {Form} from 'semantic-ui-react'
 import UserContext from 'components/contexts/UserContext'
-import Tag from "../../Tag"
-import { Button, Icon, Grid } from 'semantic-ui-react'
-import { Header, Image, Modal } from 'semantic-ui-react'
-import { CompactPicker } from 'react-color'
+import Tag from '../../Tag'
+import { Button, Icon, Grid, Modal } from 'semantic-ui-react'
 import New from './New'
 import Edit from './Edit'
 

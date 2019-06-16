@@ -35,7 +35,7 @@ class Show extends React.Component {
         if (this.state.loading) return null
         return (
             <div>
-                <Header as='h1' style={{ fontSize: 36 }}>{post.title}</Header>
+                <Header as='h1' style={{ fontSize: 32 }}>{post.title}</Header>
                 <div>
                     {
                         post.tags.map(tag => <Tag key={tag.id} label={tag.name} color={tag.color}/>)
@@ -52,7 +52,7 @@ class Show extends React.Component {
                     </span>
                     <UserConsumer>
                         { ({ user }) => {
-                            return user && (
+                            return user && user.role === 'writer' && (
                                 <div style={{ float: 'right' }}>
                                     <Link to={`/posts/${post.id}/edit`}>
                                         <Icon name='edit outline'/>

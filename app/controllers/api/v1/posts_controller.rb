@@ -6,7 +6,7 @@ module Api
 
       def index
         @posts = Post.all
-        @posts = @posts.status_published unless user_signed_in? && authorize(@posts, :show_all?)
+        @posts = @posts.status_published unless policy(@posts).show_all?
         @posts = @posts.order(updated_at: :desc)
         @posts = @posts.page(params[:page] || 1).per(7)
       end
@@ -43,10 +43,10 @@ module Api
       end
 
       def increment_views
-        unless current_user&.writer_user?
-          @post.views += 1
-          @post.save!
-        end
+        return if current_user&.writer_user?
+
+        @post.views += 1
+        @post.save!
       end
     end
   end

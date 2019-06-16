@@ -9,7 +9,6 @@
     "babel-eslint": "^10.0.1",
     "babel-preset-react": "^6.24.1",
     "chroma-js": "^2.0.3",
-    "ckeditor4-react": "^1.0.0-beta",
     "eslint": "^5.10.0",
     "eslint-plugin-react": "^7.11.1",
     "prop-types": "^15.6.2",

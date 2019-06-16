@@ -1,7 +1,8 @@
 import React from 'react'
 import axios from 'axios'
 import { Redirect } from 'react-router-dom'
-import Form from './Form'
+import { Message } from 'semantic-ui-react'
+import _Form from './_Form'
 
 class New extends React.Component {
     constructor(props) {
@@ -11,7 +12,8 @@ class New extends React.Component {
             color: '',
             redirect: false,
             loading: false,
-            errors: {}
+            errors: {},
+            success: false
         }
     }
 
@@ -19,10 +21,10 @@ class New extends React.Component {
         this.setState({ loading: true })
         axios({
             method: 'post',
-            url: '/api/v1/tags',
-            data: { tag: params }
+            url: '/api/v1/invitation_requests',
+            data: { invitation_request: params }
         }).then(() => {
-            this.props.onSuccess()
+            this.setState({ success: true })
         }).catch(error => {
             const { errors } = error.response.data
             this.setState({ errors, loading: false })
@@ -32,7 +34,15 @@ class New extends React.Component {
     render() {
         if (this.state.redirect) return <Redirect to={{ pathname: '/posts' }} />
         return (
-            <Form submit={this.handleSubmit} errors={this.state.errors}/>
+            this.state.success ? (
+                <Message positive>
+                    <p>
+                        Success
+                    </p>
+                </Message>
+            ) : (
+                <_Form submit={this.handleSubmit} errors={this.state.errors}/>
+            )
         )
     }
 }
