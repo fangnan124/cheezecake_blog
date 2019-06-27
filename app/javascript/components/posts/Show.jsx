@@ -35,22 +35,34 @@ class Show extends React.Component {
         if (this.state.loading) return null
         return (
             <div>
-                <Header as='h1'>{post.title}</Header>
-                {
-                    post.tags.map(tag => <Tag key={tag.id} label={tag.name} color={tag.color}/>)
-                }
-                <UserConsumer>
-                    { ({ user }) => {
-                        return user && (
-                            <div style={{ float: 'right' }}>
-                                <Link to={`/posts/${post.id}/edit`}>
-                                    <Icon name='edit outline'/>
-                                </Link>
-                            </div>
-                        )
-                    }}
-                </UserConsumer>
-                <div style={{ margin: '30px 0' }} dangerouslySetInnerHTML={{ __html: post.content }}/>
+                <Header as='h1' style={{ fontSize: 32 }}>{post.title}</Header>
+                <div>
+                    {
+                        post.tags.map(tag => <Tag key={tag.id} label={tag.name} color={tag.color}/>)
+                    }
+                </div>
+                <div style={{ margin: 5 }}>
+                    <span style={{ fontSize: 13, color: 'grey' }}>
+                        <span>
+                            { post.views } views
+                        </span>
+                        <span style={{ marginLeft: 10 }}>
+                            { post.created_time_ago }
+                        </span>
+                    </span>
+                    <UserConsumer>
+                        { ({ user }) => {
+                            return user && user.role === 'writer' && (
+                                <div style={{ float: 'right' }}>
+                                    <Link to={`/posts/${post.id}/edit`}>
+                                        <Icon name='edit outline'/>
+                                    </Link>
+                                </div>
+                            )
+                        }}
+                    </UserConsumer>
+                </div>
+                <div style={{ margin: '30px 0', minHeight: 250 }} dangerouslySetInnerHTML={{ __html: post.content }}/>
                 <Comments postId={post.id}/>
             </div>
         )

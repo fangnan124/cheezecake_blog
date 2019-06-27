@@ -2,8 +2,15 @@ class ApiController < ActionController::API
   include Pundit
   include DeviseTokenAuth::Concerns::SetUserByToken
 
+  # # json layout
+  # include ActionController::ImplicitRender
+  # include ActionView::Layouts
+  # layout 'application'
+
   rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity
   rescue_from Pundit::NotAuthorizedError, with: :render_not_authorized_error
+
+  before_action :configure_permitted_parameters, if: :devise_controller?
 
   def render_unprocessable_entity(exception)
     render json: {
@@ -47,5 +54,11 @@ class ApiController < ActionController::API
     render json: {
       errors: ['Not authorized']
     }
+  end
+
+  private
+
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :invitation_code])
   end
 end

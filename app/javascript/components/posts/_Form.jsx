@@ -4,6 +4,7 @@ import CKEditor from '@ckeditor/ckeditor5-react'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import TagsSelect from 'components/TagsSelect'
 import FormValidationMessage from '../FormValidationMessage'
+import UserContext from '../contexts/UserContext'
 
 const options = [
     { key: 'pub', text: 'Published', value: 'published' },
@@ -11,6 +12,8 @@ const options = [
 ]
 
 class _Form extends React.Component {
+    static contextType = UserContext;
+
     static defaultProps = {
         post: {
             title: '',

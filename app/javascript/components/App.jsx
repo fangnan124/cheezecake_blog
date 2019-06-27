@@ -7,7 +7,7 @@ class App extends React.Component {
     render() {
         return (
             <UserProvider>
-                <div>
+                <div style={{ paddingTop: '.5em' }}> {/* To avoid margin-top from <Header/> */}
                     <Header/>
                     <Main/>
                 </div>

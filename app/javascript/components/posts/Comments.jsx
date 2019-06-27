@@ -87,7 +87,7 @@ class Comments extends React.Component {
                     this.state.data.comments.map((comment) => (
                         <Comment key={comment.id}>
                             <Comment.Content>
-                                <Comment.Author as='a'>{comment.user.email}</Comment.Author>
+                                <Comment.Author as='a'>{comment.user.name}</Comment.Author>
                                 <Comment.Metadata>
                                     <span>{ comment.created_time_ago }</span>
                                 </Comment.Metadata>
@@ -107,14 +107,14 @@ class Comments extends React.Component {
                                             <Comment.Text>{ comment.text }</Comment.Text>
                                             <Comment.Actions>
                                                 {
-                                                    this.state.data.policy.edit && (
+                                                    comment.policy.edit && (
                                                         <Comment.Action onClick={() => this.setState({ edit_id: comment.id })}>
                                                             Edit
                                                         </Comment.Action>
                                                     )
                                                 }
                                                 {
-                                                    this.state.data.policy.delete && (
+                                                    comment.policy.delete && (
                                                         <Comment.Action onClick={() => this.handleDelete(comment.id)}>
                                                             Delete
                                                         </Comment.Action>
@@ -127,6 +127,14 @@ class Comments extends React.Component {
                             </Comment.Content>
                         </Comment>
                     ))
+                }
+
+                {
+                    this.state.data.comments.length <= 0 && (
+                        <div>
+                            No Comments
+                        </div>
+                    )
                 }
 
                 {

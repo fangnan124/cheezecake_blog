@@ -1,29 +1,27 @@
 import React from 'react'
-import { Button, Form, Checkbox } from 'semantic-ui-react'
+import { Button, Form } from 'semantic-ui-react'
 import axios from 'axios'
 import { Redirect } from 'react-router-dom'
 import UserContext from '../contexts/UserContext'
+import { Modal } from 'semantic-ui-react'
+import New from 'components/admin/invitation_requests/New'
+import FormValidationMessage from 'components/FormValidationMessage'
 
-class Login extends React.Component {
+class SignUp extends React.Component {
     static contextType = UserContext;
 
     constructor(props) {
         super(props)
 
         let email = localStorage.getItem('user.email')
-        let rememberMe
-        if (email === undefined) {
-            email = ''
-            rememberMe = false
-        } else {
-            rememberMe = true
-        }
 
         this.state = {
             email: email,
             password: '',
-            rememberMe: rememberMe,
-            redirect: false
+            name: '',
+            invitation_code: '',
+            redirect: false,
+            errors: {}
         }
     }
 
@@ -33,24 +31,19 @@ class Login extends React.Component {
         this.setState({ loading: true })
         axios({
             method: 'post',
-            url: '/auth/sign_in',
+            url: '/auth',
             data: {
                 email: this.state.email,
-                password: this.state.password
+                password: this.state.password,
+                name: this.state.name,
+                invitation_code: this.state.invitation_code
             }
         }).then(response => {
             localStorage.setItem('access-token', response.headers['access-token'])
             localStorage.setItem('client', response.headers['client'])
             localStorage.setItem('uid', response.headers['uid'])
 
-            if (this.state.rememberMe) {
-                localStorage.setItem('user.email', this.state.email)
-            } else {
-                localStorage.removeItem('user.email')
-            }
-
             this.context.setUser(response.data.data)
-
             this.setState({ redirect: true })
         }).catch(error => {
             const { errors } = error.response.data
@@ -69,6 +62,8 @@ class Login extends React.Component {
 
     render() {
         if (this.state.redirect) return <Redirect to={{ pathname: this.pathname() }} />
+
+
         return (
             <Form onSubmit={this.handleSubmit}>
                 <Form.Field>
@@ -78,6 +73,7 @@ class Login extends React.Component {
                         value={this.state.email}
                         onChange={e => this.setState({ email: e.target.value })}
                     />
+                    <FormValidationMessage errors={this.state.errors} property={'email'}/>
                 </Form.Field>
                 <Form.Field>
                     <label>Password</label>
@@ -86,18 +82,39 @@ class Login extends React.Component {
                         value={this.state.password}
                         onChange={e => this.setState({ password: e.target.value })}
                     />
+                    <FormValidationMessage errors={this.state.errors} property={'password'}/>
                 </Form.Field>
                 <Form.Field>
-                    <Checkbox
-                        label='remember me'
-                        checked={this.state.rememberMe}
-                        onChange={() => this.setState({ rememberMe: !this.state.rememberMe })}
+                    <label>Name</label>
+                    <input
+                        type="text"
+                        value={this.state.name}
+                        onChange={e => this.setState({ name: e.target.value })}
                     />
+                    <FormValidationMessage errors={this.state.errors} property={'name'}/>
                 </Form.Field>
-                <Button type='submit'>Login</Button>
+                <Form.Field>
+                    <label>Invitation Code</label>
+                    <input
+                        type="text"
+                        value={this.state.invitation_code}
+                        onChange={e => this.setState({ invitation_code: e.target.value })}
+                    />
+                    <FormValidationMessage errors={this.state.errors} property={'invitation_code'}/>
+                    <div style={{ fontSize: 12, marginTop: 3 }}>
+                        Don&#39;t have an invitation code?
+                        <Modal trigger={<span style={{ marginLeft: 5, fontWeight: 'bold', cursor: 'pointer' }}>request</span>} size={'tiny'} style={{ display: 'inline' }}>
+                            <Modal.Header>Request an invitation code</Modal.Header>
+                            <Modal.Content>
+                                <New/>
+                            </Modal.Content>
+                        </Modal>
+                    </div>
+                </Form.Field>
+                <Button type='submit'>Sign Up</Button>
             </Form>
         )
     }
 }
 
-export default Login
+export default SignUp

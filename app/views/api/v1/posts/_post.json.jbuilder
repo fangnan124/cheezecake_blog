@@ -7,4 +7,5 @@ json.tags do
     json.color  post_tag_rel.tag.color
   end
 end
+json.created_time_ago time_ago_in_words(post.created_at)
 json.updated_time_ago time_ago_in_words(post.updated_at)
