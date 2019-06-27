@@ -102,7 +102,7 @@ class SignUp extends React.Component {
                     />
                     <FormValidationMessage errors={this.state.errors} property={'invitation_code'}/>
                     <div style={{ fontSize: 12, marginTop: 3 }}>
-                        Don't have an invitation code?
+                        Don&#39;t have an invitation code?
                         <Modal trigger={<span style={{ marginLeft: 5, fontWeight: 'bold', cursor: 'pointer' }}>request</span>} size={'tiny'} style={{ display: 'inline' }}>
                             <Modal.Header>Request an invitation code</Modal.Header>
                             <Modal.Content>
