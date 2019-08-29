@@ -5,6 +5,8 @@ import {Link} from 'react-router-dom'
 import Tag from 'components/Tag'
 import Comments from './Comments'
 import { UserConsumer } from 'components/contexts/UserContext'
+import ReactMarkdown from 'react-markdown'
+import CodeBlock from '../CodeBlock'
 
 class Show extends React.Component {
     constructor(props) {
@@ -62,7 +64,12 @@ class Show extends React.Component {
                         }}
                     </UserConsumer>
                 </div>
-                <div style={{ margin: '30px 0', minHeight: 250 }} dangerouslySetInnerHTML={{ __html: post.content }}/>
+                <div style={{ margin: '30px 0', minHeight: 250 }}>
+                    <ReactMarkdown
+                        source={post.content}
+                        renderers={{ code: CodeBlock }}
+                    />
+                </div>
                 <Comments postId={post.id}/>
             </div>
         )

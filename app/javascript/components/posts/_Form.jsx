@@ -1,10 +1,10 @@
 import React from 'react'
-import { Button, Form, Select } from 'semantic-ui-react'
-import CKEditor from '@ckeditor/ckeditor5-react'
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
+import { Button, Form, Select, Tab, Table } from 'semantic-ui-react'
 import TagsSelect from 'components/TagsSelect'
 import FormValidationMessage from '../FormValidationMessage'
 import UserContext from '../contexts/UserContext'
+import ReactMarkdown from 'react-markdown'
+import CodeBlock from '../CodeBlock'
 
 const options = [
     { key: 'pub', text: 'Published', value: 'published' },
@@ -84,11 +84,27 @@ class _Form extends React.Component {
                 </Form.Field>
                 <Form.Field>
                     <label>Content</label>
-                    <CKEditor
-                        editor={ ClassicEditor }
-                        data={this.state.content}
-                        onChange={ (_event, editor) => this.setState({ content: editor.getData() }) }
-                    />
+                    <Tab menu={{ secondary: true, pointing: true }} panes={[
+                        {
+                            menuItem: 'Edit',
+                            render: () => (
+                                <Form.TextArea
+                                    onChange={(e, {value}) => { this.setState({ content: value }) }}
+                                    defaultValue={this.state.content}
+                                    style={{ height: 500 }}
+                                />
+                            )
+                        },
+                        {
+                            menuItem: 'Preview',
+                            render: () => (
+                                <ReactMarkdown
+                                    source={this.state.content}
+                                    renderers={{ code: CodeBlock, table: Table }}
+                                />
+                            )
+                        }
+                    ]}/>
                     <FormValidationMessage errors={this.props.errors} property={'content'}/>
                 </Form.Field>
                 <Form.Field
