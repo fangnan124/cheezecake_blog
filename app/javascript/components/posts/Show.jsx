@@ -1,12 +1,12 @@
 import React from 'react'
 import axios from 'axios'
-import {Form, Header, Icon} from 'semantic-ui-react'
+import {Header, Icon} from 'semantic-ui-react'
 import {Link} from 'react-router-dom'
 import Tag from 'components/Tag'
 import Comments from './Comments'
 import { UserConsumer } from 'components/contexts/UserContext'
 import ReactMarkdown from 'react-markdown'
-import CodeBlock from "../CodeBlock";
+import CodeBlock from '../CodeBlock'
 
 class Show extends React.Component {
     constructor(props) {

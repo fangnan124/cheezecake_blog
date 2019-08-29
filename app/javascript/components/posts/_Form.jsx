@@ -4,7 +4,7 @@ import TagsSelect from 'components/TagsSelect'
 import FormValidationMessage from '../FormValidationMessage'
 import UserContext from '../contexts/UserContext'
 import ReactMarkdown from 'react-markdown'
-import CodeBlock from "../CodeBlock";
+import CodeBlock from '../CodeBlock'
 
 const options = [
     { key: 'pub', text: 'Published', value: 'published' },

@@ -13,15 +13,15 @@ class CodeBlock extends PureComponent {
     };
 
     render() {
-        const { language, value } = this.props;
+        const { language, value } = this.props
         return (
             <div style={{ fontSize: 13, lineHeight: '18px' }}>
                 <Highlight className={language}>
                     {value}
                 </Highlight>
             </div>
-        );
+        )
     }
 }
 
-export default CodeBlock;
+export default CodeBlock
