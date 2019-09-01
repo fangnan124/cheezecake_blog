@@ -42,12 +42,13 @@ GEM
       i18n (>= 0.7, < 2)
       minitest (~> 5.1)
       tzinfo (~> 1.1)
+    annotate (2.7.5)
+      activerecord (>= 3.2, < 7.0)
+      rake (>= 10.4, < 13.0)
     arel (9.0.0)
     ast (2.4.0)
     bcrypt (3.1.12)
     bindex (0.5.0)
-    bootsnap (1.3.2)
-      msgpack (~> 1.0)
     builder (3.2.3)
     byebug (10.0.2)
     coffee-rails (4.2.2)
@@ -69,6 +70,7 @@ GEM
       devise (> 3.5.2, < 4.6)
       rails (>= 4.2.0, < 6)
     diff-lcs (1.3)
+    digest-crc (0.4.1)
     erubi (1.7.1)
     execjs (2.7.0)
     factory_bot (4.11.1)
@@ -97,6 +99,7 @@ GEM
       activerecord
       kaminari-core (= 1.1.1)
     kaminari-core (1.1.1)
+    king_konf (0.3.7)
     listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
@@ -113,7 +116,6 @@ GEM
     mini_mime (1.0.1)
     mini_portile2 (2.3.0)
     minitest (5.11.3)
-    msgpack (1.2.4)
     multi_json (1.13.1)
     nio4r (2.3.1)
     nokogiri (1.8.5)
@@ -127,6 +129,9 @@ GEM
     puma (3.12.0)
     pundit (2.0.0)
       activesupport (>= 3.0.0)
+    racecar (0.4.2)
+      king_konf (~> 0.3.6)
+      ruby-kafka (~> 0.6)
     rack (2.0.6)
     rack-proxy (0.6.5)
       rack
@@ -161,6 +166,7 @@ GEM
     rb-fsevent (0.10.3)
     rb-inotify (0.9.10)
       ffi (>= 0.5.0, < 2)
+    redcarpet (3.5.0)
     responders (2.4.0)
       actionpack (>= 4.2.0, < 5.3)
       railties (>= 4.2.0, < 5.3)
@@ -189,6 +195,8 @@ GEM
       rainbow (>= 2.2.2, < 4.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (~> 1.4.0)
+    ruby-kafka (0.7.8)
+      digest-crc
     ruby-progressbar (1.10.0)
     ruby_dep (1.5.0)
     sass (3.7.2)
@@ -241,7 +249,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bootsnap (>= 1.1.0)
+  annotate
   byebug
   coffee-rails (~> 4.2)
   devise
@@ -253,9 +261,12 @@ DEPENDENCIES
   pg (>= 0.18, < 2.0)
   puma (~> 3.11)
   pundit
+  racecar
   rails (~> 5.2.2)
+  redcarpet
   rspec-rails (~> 3.8)
   rubocop
+  ruby-kafka
   sass-rails (~> 5.0)
   spring
   spring-watcher-listen (~> 2.0.0)

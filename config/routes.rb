@@ -25,5 +25,7 @@ Rails.application.routes.draw do
     end
   end
 
-  get '*path', to: 'page#index'
+  get '*path', to: 'page#index', constraints: -> (request) do
+    !(request.path.start_with?('/rails')) # except path starts with '/rails'
+  end
 end

@@ -6,6 +6,83 @@ import UserContext from '../contexts/UserContext'
 import ReactMarkdown from 'react-markdown'
 import CodeBlock from '../CodeBlock'
 
+import {useEffect, useState} from 'react';
+import {useDropzone} from 'react-dropzone';
+
+const thumbsContainer = {
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    marginTop: 16
+};
+
+const thumb = {
+    display: 'inline-flex',
+    borderRadius: 2,
+    border: '1px solid #eaeaea',
+    marginBottom: 8,
+    marginRight: 8,
+    width: 100,
+    height: 100,
+    padding: 4,
+    boxSizing: 'border-box'
+};
+
+const thumbInner = {
+    display: 'flex',
+    minWidth: 0,
+    overflow: 'hidden'
+};
+
+const img = {
+    display: 'block',
+    width: 'auto',
+    height: '100%'
+};
+
+
+const Previews = (props) => {
+    const [files, setFiles] = useState([]);
+    const {getRootProps, getInputProps} = useDropzone({
+        accept: 'image/*',
+        onDrop: acceptedFiles => {
+            setFiles(acceptedFiles.map(file => Object.assign(file, {
+                preview: URL.createObjectURL(file)
+            })));
+            console.log(acceptedFiles[0]);
+            props.onChange(acceptedFiles[0]);
+        }
+    });
+
+    const thumbs = files.map(file => (
+        <div style={thumb} key={file.name}>
+            <div style={thumbInner}>
+                <img
+                    src={file.preview}
+                    style={img}
+                />
+            </div>
+        </div>
+    ));
+
+    useEffect(() => () => {
+        // Make sure to revoke the data uris to avoid memory leaks
+        files.forEach(file => URL.revokeObjectURL(file.preview));
+    }, [files]);
+
+    return (
+        <section className="container">
+            <div {...getRootProps({className: 'dropzone'})}>
+                <input {...getInputProps()} />
+                <p>Drag 'n' drop some files here, or click to select files</p>
+            </div>
+            <aside style={thumbsContainer}>
+                {thumbs}
+            </aside>
+        </section>
+    );
+}
+
 const options = [
     { key: 'pub', text: 'Published', value: 'published' },
     { key: 'wip', text: 'WIP', value: 'wip' }
@@ -30,7 +107,8 @@ class _Form extends React.Component {
             content: props.post.content,
             status: props.post.status,
             tags: props.post.tags,
-            tag_ids: props.post.tags.map(tag => tag.id)
+            tag_ids: props.post.tags.map(tag => tag.id),
+            image: null
         }
     }
 
@@ -59,7 +137,8 @@ class _Form extends React.Component {
             title: this.state.title,
             content: this.state.content,
             status: this.state.status,
-            post_tag_rels_attributes: post_tag_rels_attributes
+            post_tag_rels_attributes: post_tag_rels_attributes,
+            image: this.state.image
         })
     };
 
@@ -82,6 +161,7 @@ class _Form extends React.Component {
                         onChange={(tag_ids) => this.setState({ tag_ids: tag_ids })}
                     />
                 </Form.Field>
+                <Previews onChange={file => this.setState({ image: file })}/>
                 <Form.Field>
                     <label>Content</label>
                     <Tab menu={{ secondary: true, pointing: true }} panes={[

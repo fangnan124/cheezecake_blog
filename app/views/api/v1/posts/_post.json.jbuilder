@@ -7,5 +7,8 @@ json.tags do
     json.color  post_tag_rel.tag.color
   end
 end
+json.description      truncate(post.content_plain_text, length: 150, escape: false)
+json.comments_count   post.comments.count
+json.image_url        post.image.attached? ? url_for(post.image) : '/netherlands.jpg'
 json.created_time_ago time_ago_in_words(post.created_at)
 json.updated_time_ago time_ago_in_words(post.updated_at)

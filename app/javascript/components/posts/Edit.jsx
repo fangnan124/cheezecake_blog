@@ -29,10 +29,22 @@ class Edit extends React.Component {
     }
 
     handleSubmit = (params) => {
+
+        console.log(params)
+
+        let form_data = new FormData()
+
+        for (const param in params) {
+            form_data.append(param, params[param]);
+        }
+
         axios({
             method: 'put',
             url: `/api/v1/posts/${this.props.match.params.id}`,
-            data: params
+            data: form_data,
+            // headers: {
+            //     "content-type": "multipart/form-data"
+            // }
         }).then(() => {
             this.setState({ redirect: true })
         }).catch(error => {

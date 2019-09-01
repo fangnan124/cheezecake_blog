@@ -10,6 +10,7 @@ if [ $RAILS_ENV = "production" ] || [ $RAILS_ENV = "staging" ]; then
 else
   bundle install
   yarn install
+  bundle exec rails webpacker:clobber
 fi
 
 if [ -f /cheezecake_blog/tmp/pids/server.pid ]; then

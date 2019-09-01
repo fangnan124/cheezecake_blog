@@ -1,7 +1,8 @@
 import React from 'react'
 import axios from 'axios'
 import { Link, withRouter } from 'react-router-dom'
-import { Grid, Icon, Modal, Button, Pagination } from 'semantic-ui-react'
+import { Grid, Pagination, Item, Label } from 'semantic-ui-react'
+import Tag from "components/Tag";
 
 class Index extends React.Component {
     constructor(props) {
@@ -9,11 +10,7 @@ class Index extends React.Component {
         this.state = {
             data: {},
             errors: {},
-            loading: true,
-            modal: {
-                id: '',
-                open: false
-            }
+            loading: true
         }
     }
 
@@ -36,109 +33,67 @@ class Index extends React.Component {
         })
     };
 
-    delete = (id) => {
-        this.setState({ loading: true })
-        axios({
-            method: 'delete',
-            url: `/api/v1/posts/${id}`
-        }).then(response => {
-            const { data } = response.data
-            this.setState({ data, loading: false, modal: { id: '', open: false } })
-        }).catch(error => {
-            const { errors } = error.response.data
-            this.setState({ errors, loading: false })
-        })
-    };
-
-    open = (id) => {
-        this.setState({ modal: { id, open: true } })
-    };
-
-    close = () => {
-        this.setState({ modal: { open: false } })
-    };
-
     pageChange = (_event, data) => {
         const { activePage } = data
         this.fetch(activePage)
     };
 
     render() {
-        const { data, loading, modal } = this.state
+        const { data, loading } = this.state
         if (loading) return null
         return (
             <div>
                 <Grid padded>
-                    {
-                        data.posts.map(post => {
-                            return (
-                                <Grid.Row key={ post.id }>
-                                    <Grid.Column width={10}>
-                                        <Link style={{ color: 'black' }} to={`/posts/${post.id}`}>{ post.title }</Link>
-                                        {/*<div>*/}
-                                        {/*{*/}
-                                        {/*post.tags.map(tag => <Tag key={tag.id} label={tag.name} color={tag.color}/>)*/}
-                                        {/*}*/}
-                                        {/*</div>*/}
-                                    </Grid.Column>
-                                    <Grid.Column width={4}>
-                                        <div style={{ fontSize: 12, float: 'right' }}>{ post.updated_time_ago }</div>
-                                    </Grid.Column>
-                                    <Grid.Column width={2}>
-                                        {
-                                            data.policy.edit && (
-                                                <div>
-                                                    <Link to={`/posts/${post.id}/edit`}>
-                                                        <Icon name='edit outline'/>
-                                                    </Link>
-                                                    <a href="javascript:" onClick={() => this.open(post.id)}>
-                                                        <Icon name='remove'/>
-                                                    </a>
-                                                </div>
-                                            )
-                                        }
-                                    </Grid.Column>
-                                </Grid.Row>
-                            )
-                        })
-                    }
+                    <Item.Group divided>
+                        {
+                            data.posts.map(post => {
+                                return (
+                                    <Item key={ post.id }>
+                                        <Item.Image src={ post.image_url } />
+                                        <Item.Content>
+                                            <Item.Header>
+                                                <Link to={`/posts/${post.id}`}>{ post.title }</Link>
+                                            </Item.Header>
+                                            <Item.Meta style={{ fontSize: 13 }}>
+                                                <span className='cinema'>{ post.updated_time_ago }</span>
+                                                <span className='cinema' style={{ marginLeft: 5 }}>{ post.views } views</span>
+                                                <span className='cinema' style={{ marginLeft: 5 }}>{ post.comments_count } comments</span>
+                                            </Item.Meta>
+                                            <Item.Description style={{ color: 'rgba(0, 0, 0, 0.6)', fontSize: 14 }}>
+                                                { post.description }
+                                            </Item.Description>
+                                            {/*<Item.Extra>*/}
+                                            {/*    <Label>IMAX</Label>*/}
+                                            {/*    <Label icon='globe' content='Additional Languages' />*/}
+                                            {/*</Item.Extra>*/}
+                                            <Item.Extra style={{ opacity: 0.8 }}>
+                                                {
+                                                    post.tags.map(tag => <Label style={{ fontSize: 12, padding: '4px 8px' }}>{tag.name}</Label>)
+                                                }
+                                            </Item.Extra>
+                                        </Item.Content>
+                                    </Item>
+                                )
+                            })
+                        }
+                    </Item.Group>
                     <Grid.Row>
-                        <Grid.Column width={14}>
+                        <Grid.Column>
                             <Pagination
                                 boundaryRange={0}
                                 defaultActivePage={data.currentPage}
                                 ellipsisItem={null}
                                 firstItem={null}
                                 lastItem={null}
-                                siblingRange={1}
+                                siblingRange={3}
                                 totalPages={data.totalPages}
                                 onPageChange={this.pageChange}
                                 pointing
                                 secondary
                             />
                         </Grid.Column>
-                        <Grid.Column width={2}>
-                            {
-                                data.policy.new && (
-                                    <Link to={'/posts/new'}>
-                                        <Icon name='add'/>
-                                        new
-                                    </Link>
-                                )
-                            }
-                        </Grid.Column>
                     </Grid.Row>
                 </Grid>
-                <Modal size={'mini'} open={modal.open} onClose={this.close} centered={false}>
-                    <Modal.Header>Delete Post</Modal.Header>
-                    <Modal.Content>
-                        <p>Are you sure you want to delete this post?</p>
-                    </Modal.Content>
-                    <Modal.Actions>
-                        <Button negative onClick={this.close}>No</Button>
-                        <Button positive icon='checkmark' labelPosition='right' content='Yes' onClick={() => this.delete(modal.id)}/>
-                    </Modal.Actions>
-                </Modal>
             </div>
         )
     }

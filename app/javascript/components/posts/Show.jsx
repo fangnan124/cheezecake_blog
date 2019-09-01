@@ -1,12 +1,13 @@
 import React from 'react'
 import axios from 'axios'
-import {Header, Icon} from 'semantic-ui-react'
+import {Header, Icon, Modal, Button} from 'semantic-ui-react'
 import {Link} from 'react-router-dom'
 import Tag from 'components/Tag'
 import Comments from './Comments'
 import { UserConsumer } from 'components/contexts/UserContext'
 import ReactMarkdown from 'react-markdown'
 import CodeBlock from '../CodeBlock'
+import { Redirect } from 'react-router-dom'
 
 class Show extends React.Component {
     constructor(props) {
@@ -14,7 +15,11 @@ class Show extends React.Component {
         this.state = {
             data: {},
             errors: {},
-            loading: true
+            loading: true,
+            redirect: false,
+            modal: {
+                open: false
+            }
         }
     }
 
@@ -32,11 +37,62 @@ class Show extends React.Component {
         })
     }
 
+    delete = () => {
+        this.setState({ loading: true })
+        axios({
+            method: 'delete',
+            url: `/api/v1/posts/${this.props.match.params.id}`
+        }).then(() => {
+            this.setState({ redirect: true })
+        }).catch(error => {
+            const { errors } = error.response.data
+            this.setState({ errors, loading: false })
+        })
+    };
+
+    open = () => {
+        this.setState({ modal: { open: true } })
+    };
+
+    close = () => {
+        this.setState({ modal: { open: false } })
+    };
+
     render() {
-        const { post } = this.state.data
+        if (this.state.redirect) return <Redirect to={{ pathname: '/posts' }} />
         if (this.state.loading) return null
+        const { post } = this.state.data
         return (
             <div>
+                <div
+                    style={{
+                        position: 'fixed',
+                        right: '50%',
+                        marginRight: '-550px',
+                        border: 'solid 1px lightgrey',
+                        backgroundColor: '#faf9f5',
+                        width: 100
+                    }}
+                >
+                    <UserConsumer>
+                        { ({ user }) => {
+                            return user && user.role === 'writer' && (
+                                <div>
+                                    <div style={{ textAlign: 'center', color: 'lightgrey', margin: '20px 0' }}>
+                                        <Link to={`/posts/${post.id}/edit`}>
+                                            Edit
+                                        </Link>
+                                    </div>
+                                    <div style={{ textAlign: 'center', color: 'lightgrey', margin: '20px 0' }}>
+                                        <a href="javascript:" onClick={() => this.open()} style={{ color: 'red' }}>
+                                            Delete
+                                        </a>
+                                    </div>
+                                </div>
+                            )
+                        }}
+                    </UserConsumer>
+                </div>
                 <Header as='h1' style={{ fontSize: 32 }}>{post.title}</Header>
                 <div>
                     {
@@ -52,17 +108,6 @@ class Show extends React.Component {
                             { post.created_time_ago }
                         </span>
                     </span>
-                    <UserConsumer>
-                        { ({ user }) => {
-                            return user && user.role === 'writer' && (
-                                <div style={{ float: 'right' }}>
-                                    <Link to={`/posts/${post.id}/edit`}>
-                                        <Icon name='edit outline'/>
-                                    </Link>
-                                </div>
-                            )
-                        }}
-                    </UserConsumer>
                 </div>
                 <div style={{ margin: '30px 0', minHeight: 250 }}>
                     <ReactMarkdown
@@ -71,6 +116,16 @@ class Show extends React.Component {
                     />
                 </div>
                 <Comments postId={post.id}/>
+                <Modal size={'mini'} open={this.state.modal.open} onClose={this.close} centered={false}>
+                    <Modal.Header>Delete Post</Modal.Header>
+                    <Modal.Content>
+                        <p>Are you sure you want to delete this post?</p>
+                    </Modal.Content>
+                    <Modal.Actions>
+                        <Button negative onClick={this.close}>No</Button>
+                        <Button positive icon='checkmark' labelPosition='right' content='Yes' onClick={() => this.delete()}/>
+                    </Modal.Actions>
+                </Modal>
             </div>
         )
     }
