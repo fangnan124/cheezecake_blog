@@ -1,5 +1,5 @@
 class InvitationRequestConsumer < Racecar::Consumer
-  subscribes_to "test_events"
+  subscribes_to 'test_events'
 
   def process(message)
     # data = JSON.parse(message.value)
