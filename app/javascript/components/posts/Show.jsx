@@ -1,6 +1,6 @@
 import React from 'react'
 import axios from 'axios'
-import {Header, Icon, Modal, Button, Image} from 'semantic-ui-react'
+import {Header, Modal, Button, Image} from 'semantic-ui-react'
 import {Link} from 'react-router-dom'
 import Tag from 'components/Tag'
 import Comments from './Comments'

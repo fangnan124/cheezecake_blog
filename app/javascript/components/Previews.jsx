@@ -1,13 +1,13 @@
 import React from 'react'
-import {useEffect, useState} from 'react';
-import {useDropzone} from 'react-dropzone';
+import {useEffect, useState} from 'react'
+import {useDropzone} from 'react-dropzone'
 
 const thumbsContainer = {
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',
     marginTop: 16
-};
+}
 
 const thumb = {
     display: 'inline-flex',
@@ -19,31 +19,31 @@ const thumb = {
     height: 100,
     padding: 4,
     boxSizing: 'border-box'
-};
+}
 
 const thumbInner = {
     display: 'flex',
     minWidth: 0,
     overflow: 'hidden'
-};
+}
 
 const img = {
     display: 'block',
     width: 'auto',
     height: '100%'
-};
+}
 
 const Previews = (props) => {
-    const [files, setFiles] = useState([]);
+    const [files, setFiles] = useState([])
     const {getRootProps, getInputProps} = useDropzone({
         accept: 'image/*',
         onDrop: acceptedFiles => {
             setFiles(acceptedFiles.map(file => Object.assign(file, {
                 preview: URL.createObjectURL(file)
-            })));
-            props.onChange(acceptedFiles[0]);
+            })))
+            props.onChange(acceptedFiles[0])
         }
-    });
+    })
 
     const thumbs = files.map(file => (
         <div style={thumb} key={file.name}>
@@ -54,18 +54,18 @@ const Previews = (props) => {
                 />
             </div>
         </div>
-    ));
+    ))
 
     useEffect(() => () => {
         // Make sure to revoke the data uris to avoid memory leaks
-        files.forEach(file => URL.revokeObjectURL(file.preview));
-    }, [files]);
+        files.forEach(file => URL.revokeObjectURL(file.preview))
+    }, [files])
 
     return (
         <section className="container">
             <div {...getRootProps({className: 'dropzone'})}>
                 <input {...getInputProps()} />
-                <p>Drag 'n' drop some files here, or click to select files</p>
+                <p>Drag and drop some files here, or click to select files</p>
             </div>
             <aside style={thumbsContainer}>
                 {thumbs}
@@ -79,7 +79,7 @@ const Previews = (props) => {
                 {/*</div>*/}
             </aside>
         </section>
-    );
+    )
 }
 
-export default Previews;
+export default Previews
