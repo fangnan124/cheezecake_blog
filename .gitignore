@@ -42,6 +42,7 @@ yarn-debug.log*
 # Ignore docker container data files.
 /docker/kafka
 /docker/postgres/data
+/docker/elasticsearch/data
 docker-compose.override.yml
 
 deploy.rb
