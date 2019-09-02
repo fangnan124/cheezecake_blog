@@ -41,7 +41,6 @@ const Previews = (props) => {
             setFiles(acceptedFiles.map(file => Object.assign(file, {
                 preview: URL.createObjectURL(file)
             })));
-            console.log(acceptedFiles[0]);
             props.onChange(acceptedFiles[0]);
         }
     });
@@ -70,6 +69,14 @@ const Previews = (props) => {
             </div>
             <aside style={thumbsContainer}>
                 {thumbs}
+                {/*<div style={thumb}>*/}
+                {/*    <div style={thumbInner}>*/}
+                {/*        <img*/}
+                {/*            src={props.imageUrl}*/}
+                {/*            style={img}*/}
+                {/*        />*/}
+                {/*    </div>*/}
+                {/*</div>*/}
             </aside>
         </section>
     );

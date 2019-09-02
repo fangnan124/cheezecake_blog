@@ -2,6 +2,7 @@ import React from 'react'
 import axios from 'axios'
 import { Redirect } from 'react-router-dom'
 import _Form from './_Form'
+import objectToFormData from 'object-to-formdata'
 
 class Edit extends React.Component {
     constructor(props) {
@@ -29,22 +30,28 @@ class Edit extends React.Component {
     }
 
     handleSubmit = (params) => {
+        // let form_data = new FormData()
 
-        console.log(params)
+        const form_data = objectToFormData(
+            params
+        )
 
-        let form_data = new FormData()
-
-        for (const param in params) {
-            form_data.append(param, params[param]);
-        }
+        // for (const param in params) {
+        //     if (Array.isArray(params[param])) {
+        //
+        //         params[param].each(p => {
+        //             form_data.append(param, params[param])
+        //         });
+        //     } else {
+        //         form_data.append(param, params[param])
+        //     }
+        // }
 
         axios({
             method: 'put',
             url: `/api/v1/posts/${this.props.match.params.id}`,
             data: form_data,
-            // headers: {
-            //     "content-type": "multipart/form-data"
-            // }
+            headers: { 'content-type': 'multipart/form-data' }
         }).then(() => {
             this.setState({ redirect: true })
         }).catch(error => {

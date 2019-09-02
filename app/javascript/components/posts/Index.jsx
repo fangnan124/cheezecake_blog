@@ -2,7 +2,6 @@ import React from 'react'
 import axios from 'axios'
 import { Link, withRouter } from 'react-router-dom'
 import { Grid, Pagination, Item, Label } from 'semantic-ui-react'
-import Tag from "components/Tag";
 
 class Index extends React.Component {
     constructor(props) {
@@ -49,7 +48,7 @@ class Index extends React.Component {
                             data.posts.map(post => {
                                 return (
                                     <Item key={ post.id }>
-                                        <Item.Image src={ post.image_url } />
+                                        <Item.Image src={ post.thumb_url }/>
                                         <Item.Content>
                                             <Item.Header>
                                                 <Link to={`/posts/${post.id}`}>{ post.title }</Link>
@@ -62,13 +61,13 @@ class Index extends React.Component {
                                             <Item.Description style={{ color: 'rgba(0, 0, 0, 0.6)', fontSize: 14 }}>
                                                 { post.description }
                                             </Item.Description>
-                                            {/*<Item.Extra>*/}
-                                            {/*    <Label>IMAX</Label>*/}
-                                            {/*    <Label icon='globe' content='Additional Languages' />*/}
-                                            {/*</Item.Extra>*/}
                                             <Item.Extra style={{ opacity: 0.8 }}>
                                                 {
-                                                    post.tags.map(tag => <Label style={{ fontSize: 12, padding: '4px 8px' }}>{tag.name}</Label>)
+                                                    post.tags.map(tag => (
+                                                        <Label style={{ fontSize: 12, padding: '4px 8px' }} key={tag.id}>
+                                                            {tag.name}
+                                                        </Label>
+                                                    ))
                                                 }
                                             </Item.Extra>
                                         </Item.Content>

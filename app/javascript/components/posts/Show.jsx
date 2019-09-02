@@ -1,6 +1,6 @@
 import React from 'react'
 import axios from 'axios'
-import {Header, Icon, Modal, Button} from 'semantic-ui-react'
+import {Header, Icon, Modal, Button, Image} from 'semantic-ui-react'
 import {Link} from 'react-router-dom'
 import Tag from 'components/Tag'
 import Comments from './Comments'
@@ -84,7 +84,7 @@ class Show extends React.Component {
                                         </Link>
                                     </div>
                                     <div style={{ textAlign: 'center', color: 'lightgrey', margin: '20px 0' }}>
-                                        <a href="javascript:" onClick={() => this.open()} style={{ color: 'red' }}>
+                                        <a onClick={() => this.open()} style={{ color: 'red' }}>
                                             Delete
                                         </a>
                                     </div>
@@ -93,12 +93,7 @@ class Show extends React.Component {
                         }}
                     </UserConsumer>
                 </div>
-                <Header as='h1' style={{ fontSize: 32 }}>{post.title}</Header>
-                <div>
-                    {
-                        post.tags.map(tag => <Tag key={tag.id} label={tag.name} color={tag.color}/>)
-                    }
-                </div>
+                <Header as='h1' style={{ fontSize: 36 }}>{post.title}</Header>
                 <div style={{ margin: 5 }}>
                     <span style={{ fontSize: 13, color: 'grey' }}>
                         <span>
@@ -109,6 +104,12 @@ class Show extends React.Component {
                         </span>
                     </span>
                 </div>
+                <div>
+                    {
+                        post.tags.map(tag => <Tag key={tag.id} label={tag.name} color={tag.color}/>)
+                    }
+                </div>
+                <Image src={post.image_url} fluid/>
                 <div style={{ margin: '30px 0', minHeight: 250 }}>
                     <ReactMarkdown
                         source={post.content}

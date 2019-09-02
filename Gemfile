@@ -43,6 +43,8 @@ gem 'pundit'
 gem 'ruby-kafka'
 gem 'racecar'
 gem 'redcarpet'
+gem "mini_magick"
+gem 'image_processing'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -51,6 +53,7 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'rubocop', require: false
   gem 'annotate'
+  gem 'bullet'
 end
 
 group :development do

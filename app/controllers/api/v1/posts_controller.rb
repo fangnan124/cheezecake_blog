@@ -5,7 +5,7 @@ module Api
       after_action :increment_views, only: :show
 
       def index
-        @posts = Post.all
+        @posts = Post.with_post_tag_rels.with_attached_image
         @posts = @posts.status_published unless policy(@posts).show_all?
         @posts = @posts.order(updated_at: :desc)
         @posts = @posts.page(params[:page] || 1).per(10)

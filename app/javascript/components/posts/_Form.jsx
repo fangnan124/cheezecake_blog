@@ -5,7 +5,7 @@ import UserContext from '../contexts/UserContext'
 import FormValidationMessage from '../FormValidationMessage'
 import TagsSelect from 'components/TagsSelect'
 import CodeBlock from 'components/CodeBlock'
-import Previews from 'components/Previews';
+import Previews from 'components/Previews'
 
 const options = [
     { key: 'pub', text: 'Published', value: 'published' },
@@ -32,6 +32,7 @@ class _Form extends React.Component {
             status: props.post.status,
             tags: props.post.tags,
             tag_ids: props.post.tags.map(tag => tag.id),
+            imageUrl: props.post.image_url,
             image: null
         }
     }
@@ -87,7 +88,7 @@ class _Form extends React.Component {
                 </Form.Field>
                 <Form.Field>
                     <label>Image</label>
-                    <Previews onChange={file => this.setState({ image: file })}/>
+                    <Previews imageUrl={this.state.imageUrl} onChange={file => this.setState({ image: file })}/>
                 </Form.Field>
                 <Form.Field>
                     <label>Content</label>

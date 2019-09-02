@@ -15,19 +15,20 @@
 require 'redcarpet/render_strip'
 
 class Post < ApplicationRecord
-  has_one_attached :image
-
   enum status: { published: 'published', wip: 'wip' }, _prefix: true
 
   # Associations
   has_many :post_tag_rels
   has_many :tags, through: :post_tag_rels
   has_many :comments
+  has_one_attached :image
 
   accepts_nested_attributes_for :post_tag_rels, allow_destroy: true
 
   # Scopes
-  scope :tags, -> { eager_load(:tags) }
+  scope :with_post_tag_rels, -> { eager_load(post_tag_rels: :tag) }
+  scope :with_tags, -> { eager_load(:tags) }
+  # scope :with_image_attachment, -> { eager_load(image_attachment: :blob) }
 
   # Validations
   validates :title, length: { in: 3..80 }
