@@ -1,4 +1,6 @@
 class Post < ApplicationRecord
+  include Elasticsearch::Model
+
   enum status: { published: 'published', wip: 'wip' }, _prefix: true
 
   # Associations
@@ -20,3 +22,6 @@ class Post < ApplicationRecord
 
   # Instance methods
 end
+
+Post.__elasticsearch__.create_index! force: true
+Post.import

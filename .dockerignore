@@ -8,6 +8,7 @@ public/packs
 log
 tmp
 
+docker/elasticsearch/data
 docker/postgres/data
 yarn-debug.log*
 yarn-error.log*
