@@ -74,4 +74,9 @@ Rails.application.configure do
     g.request_specs       false
     g.helper_specs        false
   end
+
+  config.after_initialize do
+    Bullet.enable = true
+    Bullet.rails_logger = true
+  end
 end

@@ -27,7 +27,6 @@
 /config/master.key
 /public/packs
 /public/packs-test
-/node_modules
 yarn-debug.log*
 .yarn-integrity
 
@@ -40,7 +39,9 @@ yarn-debug.log*
 .env
 
 # Ignore docker container data files.
+/docker/kafka
 /docker/postgres/data
+/docker/elasticsearch/data
 docker-compose.override.yml
 
 deploy.rb

@@ -18,6 +18,9 @@ FROM ruby:2.5.3
 #    && rm -rf /var/lib/apt/lists/* /var/cache/apt/*
 #
 
+# Install ImageMagick
+RUN apt-get update -qq && apt-get install -y --no-install-recommends imagemagick
+
 # Install Node & Yarn
 RUN curl -sL https://deb.nodesource.com/setup_9.x | bash -
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -

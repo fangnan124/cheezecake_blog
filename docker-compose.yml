@@ -11,6 +11,7 @@ services:
       - .:/cheezecake_blog
     ports:
       - 3000:3000
+      - 3035:3035
     stdin_open: true
     tty: true
 
@@ -21,6 +22,4 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - postgres:/var/lib/postgresql/data
-volumes:
-  postgres:
+      - ./docker/postgres/data:/var/lib/postgresql/data

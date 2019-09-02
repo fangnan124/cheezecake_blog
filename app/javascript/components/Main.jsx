@@ -14,7 +14,7 @@ import PrivateRoute from './PrivateRoute'
 class Main extends React.Component {
     render() {
         return (
-            <Container text style={{ margin: '4.5em 0' }}>
+            <Container text style={{ margin: '3em 0' }}>
                 <Switch>
                     <Route exact path="/sign_up" component={SignUp}/>
                     <Route exact path="/login" component={Login}/>

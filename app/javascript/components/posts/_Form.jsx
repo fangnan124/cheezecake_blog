@@ -1,10 +1,11 @@
 import React from 'react'
 import { Button, Form, Select, Tab, Table } from 'semantic-ui-react'
-import TagsSelect from 'components/TagsSelect'
-import FormValidationMessage from '../FormValidationMessage'
-import UserContext from '../contexts/UserContext'
 import ReactMarkdown from 'react-markdown'
-import CodeBlock from '../CodeBlock'
+import UserContext from '../contexts/UserContext'
+import FormValidationMessage from '../FormValidationMessage'
+import TagsSelect from 'components/TagsSelect'
+import CodeBlock from 'components/CodeBlock'
+import Previews from 'components/Previews'
 
 const options = [
     { key: 'pub', text: 'Published', value: 'published' },
@@ -30,7 +31,9 @@ class _Form extends React.Component {
             content: props.post.content,
             status: props.post.status,
             tags: props.post.tags,
-            tag_ids: props.post.tags.map(tag => tag.id)
+            tag_ids: props.post.tags.map(tag => tag.id),
+            imageUrl: props.post.image_url,
+            image: null
         }
     }
 
@@ -55,12 +58,18 @@ class _Form extends React.Component {
             post_tag_rels_attributes.push({ tag_id })
         })
 
-        this.props.submit({
+        let params = {
             title: this.state.title,
             content: this.state.content,
             status: this.state.status,
             post_tag_rels_attributes: post_tag_rels_attributes
-        })
+        }
+
+        if (this.state.image) {
+            params['image'] = this.state.image
+        }
+
+        this.props.submit(params)
     };
 
     render() {
@@ -81,6 +90,10 @@ class _Form extends React.Component {
                         selected_tags={this.state.tags}
                         onChange={(tag_ids) => this.setState({ tag_ids: tag_ids })}
                     />
+                </Form.Field>
+                <Form.Field>
+                    <label>Image</label>
+                    <Previews imageUrl={this.state.imageUrl} onChange={file => this.setState({ image: file })}/>
                 </Form.Field>
                 <Form.Field>
                     <label>Content</label>
