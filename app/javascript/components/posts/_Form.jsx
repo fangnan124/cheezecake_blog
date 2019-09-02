@@ -58,13 +58,18 @@ class _Form extends React.Component {
             post_tag_rels_attributes.push({ tag_id })
         })
 
-        this.props.submit({
+        let params = {
             title: this.state.title,
             content: this.state.content,
             status: this.state.status,
-            post_tag_rels_attributes: post_tag_rels_attributes,
-            image: this.state.image
-        })
+            post_tag_rels_attributes: post_tag_rels_attributes
+        }
+
+        if (this.state.image) {
+            params['image'] = this.state.image
+        }
+
+        this.props.submit(params)
     };
 
     render() {

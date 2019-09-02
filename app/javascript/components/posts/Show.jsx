@@ -109,7 +109,9 @@ class Show extends React.Component {
                         post.tags.map(tag => <Tag key={tag.id} label={tag.name} color={tag.color}/>)
                     }
                 </div>
-                <Image src={post.image_url} fluid/>
+                <div style={{ marginTop: 10 }}>
+                    <Image src={post.image_url} fluid/>
+                </div>
                 <div style={{ margin: '30px 0', minHeight: 250 }}>
                     <ReactMarkdown
                         source={post.content}
