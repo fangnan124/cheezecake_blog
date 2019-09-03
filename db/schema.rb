@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_01_145331) do
+ActiveRecord::Schema.define(version: 2019_09_03_033734) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -68,6 +68,7 @@ ActiveRecord::Schema.define(version: 2019_09_01_145331) do
     t.string "status", limit: 20, default: "wip"
     t.integer "views", default: 0, null: false
     t.text "content_plain_text"
+    t.text "image_description"
   end
 
   create_table "tags", force: :cascade do |t|

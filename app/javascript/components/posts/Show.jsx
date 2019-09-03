@@ -106,6 +106,14 @@ class Show extends React.Component {
                 </div>
                 <div style={{ marginTop: 10 }}>
                     <Image src={post.image_url} fluid/>
+                    <div style={{
+                        textAlign: 'center',
+                        opacity: 0.6,
+                        fontSize: 14,
+                        marginTop: 8
+                    }}>
+                        <div dangerouslySetInnerHTML={{__html: post.image_description}} />
+                    </div>
                 </div>
                 <div style={{ margin: '30px 0', minHeight: 250 }}>
                     <ReactMarkdown

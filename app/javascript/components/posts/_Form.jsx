@@ -33,7 +33,8 @@ class _Form extends React.Component {
             tags: props.post.tags,
             tag_ids: props.post.tags.map(tag => tag.id),
             imageUrl: props.post.image_url,
-            image: null
+            image: null,
+            image_description: props.post.image_description,
         }
     }
 
@@ -62,11 +63,13 @@ class _Form extends React.Component {
             title: this.state.title,
             content: this.state.content,
             status: this.state.status,
-            post_tag_rels_attributes: post_tag_rels_attributes
+            post_tag_rels_attributes: post_tag_rels_attributes,
+            image_description: this.state.image_description
         }
 
         if (this.state.image) {
             params['image'] = this.state.image
+
         }
 
         this.props.submit(params)
@@ -94,6 +97,14 @@ class _Form extends React.Component {
                 <Form.Field>
                     <label>Image</label>
                     <Previews imageUrl={this.state.imageUrl} onChange={file => this.setState({ image: file })}/>
+                </Form.Field>
+                <Form.Field>
+                    <label>Image Description</label>
+                    <input
+                        type="text"
+                        value={this.state.image_description}
+                        onChange={e => this.setState({ image_description: e.target.value })}
+                    />
                 </Form.Field>
                 <Form.Field>
                     <label>Content</label>
