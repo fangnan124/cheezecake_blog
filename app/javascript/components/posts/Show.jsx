@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
 import {Redirect, Link} from 'react-router-dom'
 import {Header, Modal, Button, Image} from 'semantic-ui-react'
 import ReactMarkdown from 'react-markdown'
@@ -11,8 +10,8 @@ import {useFetch, useDestroy} from 'components/posts/hooks'
 
 const Show = (props) => {
     const [modalOpen, setModalOpen] = useState(false)
-    const [data, fetch, loading, fetchErrors] = useFetch(props.match.params.id)
-    const [destroy, redirect, destroyErrors] = useDestroy(props.match.params.id)
+    const [data, fetch, loading, _fetchErrors] = useFetch(props.match.params.id)
+    const [destroy, redirect, _destroyErrors] = useDestroy(props.match.params.id)
 
     useEffect(() => fetch(), [])
 

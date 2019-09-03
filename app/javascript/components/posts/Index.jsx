@@ -1,30 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
 import { Link, withRouter } from 'react-router-dom'
 import {Grid, Pagination, Item, Label} from 'semantic-ui-react'
+import {useFetchAll} from './hooks'
 
 const Index = () => {
-    const [data, setData] = useState({})
-    const [errors, setErrors] = useState({})
-    const [loading, setLoading] = useState(true)
+    const [data, fetchAll, loading, _errors] = useFetchAll()
     const [page, setPage] = useState(1)
 
-    useEffect(() => {
-        setLoading(true)
-        axios({
-            method: 'get',
-            url: '/api/v1/posts',
-            params: { page: page }
-        }).then(response => {
-            const { data } = response.data
-            setData(data)
-            setLoading(false)
-        }).catch(error => {
-            const { errors } = error.response.data
-            setErrors(errors)
-            setLoading(false)
-        })
-    }, [page])
+    useEffect(() => fetchAll(page), [page])
 
     if (loading) return null
     return (

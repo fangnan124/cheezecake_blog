@@ -1,33 +1,17 @@
-import React, { useState, useEffect } from 'react'
-import axios from 'axios'
-import { Redirect } from 'react-router-dom'
-import objectToFormData from 'object-to-formdata'
+import React, {useEffect} from 'react'
+import {Redirect} from 'react-router-dom'
 import _Form from './_Form'
+import {useFetch, useUpdate} from 'components/posts/hooks'
 
 const Edit = (props) => {
-    // const [redirect, setRedirect] = useState(false)
-    const [showLoading, data, showErrors] = usePostShow(props.match.params.id)
-    const [loading, errors, redirect, handleSubmit] = usePostCreate()
+    const [data, fetch, loading, errors] = useFetch(props.match.params.id)
+    const [_data, update, redirect] = useUpdate(props.match.params.id)
 
-    // const handleSubmit = (params) => {
-    //     axios({
-    //         method: 'put',
-    //         url: `/api/v1/posts/${props.match.params.id}`,
-    //         data: objectToFormData(params),
-    //         headers: { 'content-type': 'multipart/form-data' }
-    //     }).then(() => {
-    //         setRedirect(true)
-    //     }).catch(error => {
-    //         const { errors } = error.response.data
-    //         // setErrors(errors)
-    //     })
-    // }
-
-    console.log(redirect)
+    useEffect(() => fetch(), [])
 
     if (redirect) return <Redirect to={{ pathname: '/posts' }} />
-    if (loading || showLoading) return null
-    return <_Form submit={handleSubmit} post={data.post} errors={errors || showErrors} />
+    if (loading) return null
+    return <_Form submit={update} post={data.post} errors={errors} />
 }
 
 export default Edit
