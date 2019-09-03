@@ -1,13 +1,12 @@
 import React from 'react'
 import axios from 'axios'
+import {Redirect, Link} from 'react-router-dom'
 import {Header, Modal, Button, Image} from 'semantic-ui-react'
-import {Link} from 'react-router-dom'
-import Tag from 'components/Tag'
-import Comments from './Comments'
-import { UserConsumer } from 'components/contexts/UserContext'
 import ReactMarkdown from 'react-markdown'
-import CodeBlock from '../CodeBlock'
-import { Redirect } from 'react-router-dom'
+import {UserConsumer} from 'components/contexts/UserContext'
+import Tag from 'components/Tag'
+import CodeBlock from 'components/CodeBlock'
+import Comments from './Comments'
 
 class Show extends React.Component {
     constructor(props) {
@@ -64,35 +63,31 @@ class Show extends React.Component {
         const { post } = this.state.data
         return (
             <div>
-                <div
-                    style={{
-                        position: 'fixed',
-                        right: '50%',
-                        marginRight: '-550px',
-                        border: 'solid 1px lightgrey',
-                        backgroundColor: '#faf9f5',
-                        width: 100
-                    }}
-                >
-                    <UserConsumer>
-                        { ({ user }) => {
-                            return user && user.role === 'writer' && (
-                                <div>
-                                    <div style={{ textAlign: 'center', color: 'lightgrey', margin: '20px 0' }}>
-                                        <Link to={`/posts/${post.id}/edit`}>
-                                            Edit
-                                        </Link>
-                                    </div>
-                                    <div style={{ textAlign: 'center', color: 'lightgrey', margin: '20px 0' }}>
-                                        <a onClick={() => this.open()} style={{ color: 'red' }}>
-                                            Delete
-                                        </a>
-                                    </div>
+                <UserConsumer>
+                    { ({ user }) => {
+                        return user && user.role === 'writer' && (
+                            <div style={{
+                                position: 'fixed',
+                                right: '50%',
+                                marginRight: '-550px',
+                                border: 'solid 1px lightgrey',
+                                backgroundColor: '#faf9f5',
+                                width: 100
+                            }}>
+                                <div style={{ textAlign: 'center', color: 'lightgrey', margin: '20px 0' }}>
+                                    <Link to={`/posts/${post.id}/edit`}>
+                                        Edit
+                                    </Link>
                                 </div>
-                            )
-                        }}
-                    </UserConsumer>
-                </div>
+                                <div style={{ textAlign: 'center', color: 'lightgrey', margin: '20px 0' }}>
+                                    <a onClick={() => this.open()} style={{ color: 'red' }}>
+                                        Delete
+                                    </a>
+                                </div>
+                            </div>
+                        )
+                    }}
+                </UserConsumer>
                 <Header as='h1' style={{ fontSize: 36 }}>{post.title}</Header>
                 <div style={{ margin: 5 }}>
                     <span style={{ fontSize: 13, color: 'grey' }}>

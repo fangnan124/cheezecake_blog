@@ -1,6 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import { Redirect } from 'react-router-dom'
+import objectToFormData from 'object-to-formdata'
 import _Form from './_Form'
 
 class New extends React.Component {
@@ -16,7 +17,8 @@ class New extends React.Component {
         axios({
             method: 'post',
             url: '/api/v1/posts',
-            data: params
+            data: objectToFormData(params),
+            headers: { 'content-type': 'multipart/form-data' }
         }).then(() => {
             this.setState({ redirect: true })
         }).catch(error => {
