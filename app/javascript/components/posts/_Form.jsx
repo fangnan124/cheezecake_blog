@@ -125,6 +125,7 @@ class _Form extends React.Component {
                                 <ReactMarkdown
                                     source={this.state.content}
                                     renderers={{ code: CodeBlock, table: Table }}
+                                    escapeHtml={false}
                                 />
                             )
                         }

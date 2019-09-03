@@ -76,6 +76,7 @@ const Show = (props) => {
                 <ReactMarkdown
                     source={post.content}
                     renderers={{ code: CodeBlock }}
+                    escapeHtml={false}
                 />
             </div>
             <Comments postId={post.id}/>
