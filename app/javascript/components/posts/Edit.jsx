@@ -1,59 +1,33 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { Redirect } from 'react-router-dom'
 import objectToFormData from 'object-to-formdata'
 import _Form from './_Form'
 
-class Edit extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            redirect: false,
-            data: {},
-            errors: {},
-            loading: true
-        }
-    }
+const Edit = (props) => {
+    // const [redirect, setRedirect] = useState(false)
+    const [showLoading, data, showErrors] = usePostShow(props.match.params.id)
+    const [loading, errors, redirect, handleSubmit] = usePostCreate()
 
-    componentDidMount() {
-        this.setState({ loading: true })
-        axios({
-            method: 'get',
-            url: `/api/v1/posts/${this.props.match.params.id}`
-        }).then(response => {
-            const { data } = response.data
-            this.setState({ data, loading: false })
-        }).catch(error => {
-            const { errors } = error.response.data
-            this.setState({ errors, loading: false })
-        })
-    }
+    // const handleSubmit = (params) => {
+    //     axios({
+    //         method: 'put',
+    //         url: `/api/v1/posts/${props.match.params.id}`,
+    //         data: objectToFormData(params),
+    //         headers: { 'content-type': 'multipart/form-data' }
+    //     }).then(() => {
+    //         setRedirect(true)
+    //     }).catch(error => {
+    //         const { errors } = error.response.data
+    //         // setErrors(errors)
+    //     })
+    // }
 
-    handleSubmit = (params) => {
-        axios({
-            method: 'put',
-            url: `/api/v1/posts/${this.props.match.params.id}`,
-            data: objectToFormData(params),
-            headers: { 'content-type': 'multipart/form-data' }
-        }).then(() => {
-            this.setState({ redirect: true })
-        }).catch(error => {
-            const { errors } = error.response.data
-            this.setState({ errors, loading: false })
-        })
-    };
+    console.log(redirect)
 
-    render() {
-        if (this.state.loading) return null
-        if (this.state.redirect) return <Redirect to={{ pathname: '/posts' }} />
-        return (
-            <_Form
-                submit={this.handleSubmit}
-                post={this.state.data.post}
-                errors={this.state.errors}
-            />
-        )
-    }
+    if (redirect) return <Redirect to={{ pathname: '/posts' }} />
+    if (loading || showLoading) return null
+    return <_Form submit={handleSubmit} post={data.post} errors={errors || showErrors} />
 }
 
 export default Edit
