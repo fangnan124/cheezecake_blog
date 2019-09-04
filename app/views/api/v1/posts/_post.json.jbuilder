@@ -9,7 +9,7 @@ json.tags do
 end
 json.description      truncate(post.content_plain_text, length: 150, escape: false)
 json.comments_count   post.comments.count
-json.thumb_url        post.image.attached? ? url_for(post.image.variant(resize: '500x500')) : '/netherlands.jpg'
-json.image_url        post.image.attached? ? url_for(post.image.variant(resize: '1000x1000')) : '/netherlands.jpg'
+json.thumb_url        post.image.attached? ? url_for(post.image.variant(resize: '500x500')) : image_url('netherlands.jpg')
+json.image_url        post.image.attached? ? url_for(post.image.variant(resize: '1000x1000')) : image_url('/netherlands.jpg')
 json.created_time_ago time_ago_in_words(post.created_at)
 json.updated_time_ago time_ago_in_words(post.updated_at)
