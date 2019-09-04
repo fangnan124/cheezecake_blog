@@ -113,5 +113,3 @@ export const useDestroy = (id) => {
 
     return [destroy, redirect, errors]
 }
-
-export default useFetch

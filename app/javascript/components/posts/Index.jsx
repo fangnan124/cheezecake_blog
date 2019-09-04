@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import { Link, withRouter } from 'react-router-dom'
+import React, {useState, useEffect} from 'react'
+import {Link, withRouter} from 'react-router-dom'
 import {Grid, Pagination, Item, Label} from 'semantic-ui-react'
 import {useFetchAll} from './hooks'
 
