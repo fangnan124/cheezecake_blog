@@ -11,13 +11,21 @@
     <%= stylesheet_link_tag    'application', media: 'all' %>
     <%= javascript_include_tag 'application' %>
 
-    <%= stylesheet_link_tag    'https://highlightjs.org/static/demo/styles/railscasts.css', media: 'all' %>
+    <!-- Highlight Theme -->
+    <%= stylesheet_link_tag 'https://highlightjs.org/static/demo/styles/railscasts.css', media: 'all' %>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <%= javascript_include_tag 'https://www.googletagmanager.com/gtag/js?id=UA-142403750-1' %>
 
     <%= javascript_pack_tag 'application' %>
     <%= stylesheet_pack_tag 'application' %>
   </head>
-
   <body>
     <%= yield %>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+    </script>
   </body>
 </html>

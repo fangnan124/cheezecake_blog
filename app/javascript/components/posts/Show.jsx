@@ -13,7 +13,10 @@ const Show = (props) => {
     const [data, fetch, loading, _fetchErrors] = useFetch(props.match.params.id)
     const [destroy, redirect, _destroyErrors] = useDestroy(props.match.params.id)
 
-    useEffect(() => fetch(), [])
+    useEffect(() => {
+        fetch()
+        gtag('config', 'UA-142403750-1', {'page_path': props.location.pathname})
+    }, [])
 
     if (redirect) return <Redirect to={{ pathname: '/posts' }}/>
     if (loading) return null

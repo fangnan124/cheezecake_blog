@@ -3,11 +3,14 @@ import {Link, withRouter} from 'react-router-dom'
 import {Grid, Pagination, Item, Label} from 'semantic-ui-react'
 import {useFetchAll} from './hooks'
 
-const Index = () => {
+const Index = (props) => {
     const [data, fetchAll, loading, _errors] = useFetchAll()
     const [page, setPage] = useState(1)
 
-    useEffect(() => fetchAll(page), [page])
+    useEffect(() => {
+        fetchAll(page)
+        gtag('config', 'UA-142403750-1', {'page_path': props.location.pathname})
+    }, [page])
 
     if (loading) return null
     return (
