@@ -9,18 +9,18 @@ import Comments from './Comments'
 import {useFetch, useDestroy} from 'components/posts/hooks'
 
 const Show = (props) => {
+    const [fetchState, fetch] = useFetch(props.match.params.id)
+    const [destroyState, destroy] = useDestroy(props.match.params.id)
     const [modalOpen, setModalOpen] = useState(false)
-    const [data, fetch, loading, _fetchErrors] = useFetch(props.match.params.id)
-    const [destroy, redirect, _destroyErrors] = useDestroy(props.match.params.id)
 
     useEffect(() => {
         fetch()
         gtag('config', 'UA-142403750-1', {'page_path': props.location.pathname})
     }, [])
 
-    if (redirect) return <Redirect to={{ pathname: '/posts' }}/>
-    if (loading) return null
-    const { post } = data
+    if (destroyState.redirect) return <Redirect to={{ pathname: '/posts' }}/>
+    if (fetchState.loading) return null
+    const { post } = fetchState.data
     return (
         <div>
             <UserConsumer>

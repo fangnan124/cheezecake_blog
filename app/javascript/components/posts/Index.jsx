@@ -4,7 +4,7 @@ import {Pagination, Item, Label} from 'semantic-ui-react'
 import {useFetchAll} from './hooks'
 
 const Index = (props) => {
-    const [data, fetchAll, loading, _errors] = useFetchAll()
+    const [fetchAllState, fetchAll] = useFetchAll()
     const [page, setPage] = useState(1)
 
     useEffect(() => {
@@ -12,12 +12,12 @@ const Index = (props) => {
         gtag('config', 'UA-142403750-1', {'page_path': props.location.pathname})
     }, [page])
 
-    if (loading) return null
+    if (fetchAllState.loading) return null
     return (
         <div>
             <Item.Group divided>
                 {
-                    data.posts.map(post => (
+                    fetchAllState.data.posts.map(post => (
                         <Item key={post.id}>
                             <Item.Image src={post.thumb_url}/>
                             <Item.Content>
@@ -46,12 +46,12 @@ const Index = (props) => {
             </Item.Group>
             <Pagination
                 boundaryRange={0}
-                defaultActivePage={data.currentPage}
+                defaultActivePage={fetchAllState.data.currentPage}
                 ellipsisItem={null}
                 firstItem={null}
                 lastItem={null}
                 siblingRange={3}
-                totalPages={data.totalPages}
+                totalPages={fetchAllState.data.totalPages}
                 onPageChange={(_, data) => setPage(data.activePage)}
             />
         </div>

@@ -2,64 +2,68 @@ import { useState } from 'react'
 import axios from 'axios'
 import objectToFormData from 'object-to-formdata'
 
+const resourcesUrl = '/api/v1/posts'
+
 export const useFetchAll = () => {
-    const [loading, setLoading] = useState(true)
     const [data, setData] = useState({})
     const [errors, setErrors] = useState({})
+    const [loading, setLoading] = useState(true)
 
     const fetchAll = (page) => {
         setLoading(true)
         axios({
             method: 'get',
-            url: '/api/v1/posts',
+            url: resourcesUrl,
             params: { page: page }
         }).then(response => {
             const { data } = response.data
             setData(data)
-            setLoading(false)
         }).catch(error => {
             const { errors } = error.response.data
             setErrors(errors)
+        }).finally(() => {
             setLoading(false)
         })
     }
 
-    return [data, fetchAll, loading, errors]
+    return [{ data, errors, loading }, fetchAll]
 }
 
 export const useFetch = (id) => {
-    const [loading, setLoading] = useState(true)
     const [data, setData] = useState({})
     const [errors, setErrors] = useState({})
+    const [loading, setLoading] = useState(true)
 
     const fetch = () => {
         setLoading(true)
         axios({
             method: 'get',
-            url: `/api/v1/posts/${id}`
+            url: `${resourcesUrl}/${id}`
         }).then(response => {
             const { data } = response.data
             setData(data)
-            setLoading(false)
         }).catch(error => {
             const { errors } = error.response.data
             setErrors(errors)
+        }).finally(() => {
             setLoading(false)
         })
     }
 
-    return [data, fetch, loading, errors]
+    return [{ data, errors, loading }, fetch]
 }
 
 export const useCreate = () => {
     const [data, _setData] = useState({})
-    const [redirect, setRedirect] = useState(false)
     const [errors, setErrors] = useState({})
+    const [loading, setLoading] = useState(false)
+    const [redirect, setRedirect] = useState(false)
 
     const create = (params) => {
+        setLoading(true)
         axios({
             method: 'post',
-            url: '/api/v1/posts',
+            url: resourcesUrl,
             data: objectToFormData(params),
             headers: { 'content-type': 'multipart/form-data' }
         }).then(() => {
@@ -67,49 +71,60 @@ export const useCreate = () => {
         }).catch(error => {
             const { errors } = error.response.data
             setErrors(errors)
+        }).finally(() => {
+            setLoading(false)
         })
     }
 
-    return [data, create, redirect, errors]
+    return [{ data, errors, loading, redirect }, create]
 }
 
 export const useUpdate = (id) => {
     const [data, _setData] = useState({})
+    const [errors, setErrors] = useState({})
+    const [loading, setLoading] = useState(false)
     const [redirect, setRedirect] = useState(false)
-    const [errors, _setErrors] = useState({})
 
     const update = (params) => {
+        setLoading(true)
         axios({
             method: 'put',
-            url: `/api/v1/posts/${id}`,
+            url: `${resourcesUrl}/${id}`,
             data: objectToFormData(params),
             headers: { 'content-type': 'multipart/form-data' }
         }).then(() => {
             setRedirect(true)
         }).catch(error => {
-            const { _errors } = error.response.data
-            // setErrors(errors)
+            const { errors } = error.response.data
+            setErrors(errors)
+        }).finally(() => {
+            setLoading(false)
         })
     }
 
-    return [data, update, redirect, errors]
+    return [{ data, errors, loading, redirect }, update]
 }
 
 export const useDestroy = (id) => {
-    const [redirect, setRedirect] = useState(false)
+    const [data, _setData] = useState({})
     const [errors, setErrors] = useState({})
+    const [loading, setLoading] = useState(false)
+    const [redirect, setRedirect] = useState(false)
 
     const destroy = () => {
+        setLoading(true)
         axios({
             method: 'delete',
-            url: `/api/v1/posts/${id}`
+            url: `${resourcesUrl}/${id}`
         }).then(() => {
             setRedirect(true)
         }).catch(error => {
             const { errors } = error.response.data
             setErrors(errors)
+        }).finally(() => {
+            setLoading(false)
         })
     }
 
-    return [destroy, redirect, errors]
+    return [{ data, errors, loading, redirect }, destroy]
 }
