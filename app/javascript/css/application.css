@@ -43,10 +43,29 @@ a {
 }
 
 blockquote {
-    color: #666;
-    margin: 0;
-    padding-left: 3em;
-    border-left: 0.5em #eee solid;
+    color: #6F6F6F;
+    border-left: 4px solid #6F6F6F;
+    padding: 0em 2em;
+    margin: 1em 0em 2em;
+}
+
+code:not([class*="hljs"]) {
+    font-size: 87.5%;
+    line-height: 1.4;
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 3px;
+    white-space: pre;
+    display: inline-block;
+}
+
+code:not([class*="hljs"])::before {
+    letter-spacing: -0.2em;
+    content: '\00a0';
+}
+
+code:not([class*="hljs"])::after {
+    letter-spacing: -0.2em;
+    content: '\00a0';
 }
 
 /*---------------------------------------------------------------------*/
