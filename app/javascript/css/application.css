@@ -52,10 +52,12 @@ blockquote {
 code:not([class*="hljs"]) {
     font-size: 87.5%;
     line-height: 1.4;
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: #f8f8f8;
     border-radius: 3px;
     white-space: pre;
     display: inline-block;
+    border: 1px solid #ddd;
+    color: #e01e5a;
 }
 
 code:not([class*="hljs"])::before {
