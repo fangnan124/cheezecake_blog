@@ -44,7 +44,7 @@ class Post < ApplicationRecord
   after_save do
     # create a revision
     ids = post_revisions.order(created_at: :desc).limit(99).ids
-    PostRevision.where.not(id: ids).destroy_all
+    post_revisions.where.not(id: ids).destroy_all
     post_revisions.create(title: title, content: content)
   end
 
