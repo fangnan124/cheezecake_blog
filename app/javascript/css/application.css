@@ -186,3 +186,7 @@ code:not([class*="hljs"])::after {
 .m-b-9 { margin-bottom: 9px; }
 .m-b-10 { margin-bottom: 10px; }
 .m-b-20 { margin-bottom: 20px; }
+
+.ui.dimmer {
+    background-color: rgba(0, 0, 0, .5);
+}

@@ -22,6 +22,7 @@ class Post < ApplicationRecord
   has_many :tags, through: :post_tag_rels
   has_many :comments
   has_one_attached :image
+  has_many :post_revisions
 
   accepts_nested_attributes_for :post_tag_rels, allow_destroy: true
 
@@ -35,8 +36,16 @@ class Post < ApplicationRecord
 
   # Callbacks
   before_save do
+    # save content_plain_text
     markdown = Redcarpet::Markdown.new(Redcarpet::Render::StripDown)
     self.content_plain_text = markdown.render(content).gsub(/(\r\n|\r|\n)/, ' ')
+  end
+
+  after_save do
+    # create a revision
+    ids = post_revisions.order(created_at: :desc).limit(99).ids
+    PostRevision.where.not(id: ids).destroy_all
+    post_revisions.create(title: title, content: content)
   end
 
   # Class methods
