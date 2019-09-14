@@ -7,6 +7,7 @@ import Tag from 'components/Tag'
 import CodeBlock from 'components/CodeBlock'
 import Comments from './Comments'
 import {useFetch, useDestroy} from 'components/posts/hooks'
+import FloatMenu from 'components/FloatMenu'
 
 const Show = (props) => {
     const [fetchState, fetch] = useFetch(props.match.params.id)
@@ -26,25 +27,28 @@ const Show = (props) => {
             <UserConsumer>
                 { ({ user }) => {
                     return user && user.role === 'writer' && (
-                        <div style={{
-                            position: 'fixed',
-                            right: '50%',
-                            marginRight: '-550px',
-                            border: 'solid 1px lightgrey',
-                            backgroundColor: '#faf9f5',
-                            width: 100
-                        }}>
-                            <div style={{ textAlign: 'center', color: 'lightgrey', margin: '20px 0' }}>
+                        <FloatMenu>
+                            <FloatMenu.Item>
                                 <Link to={`/posts/${post.id}/edit`}>
                                     Edit
                                 </Link>
-                            </div>
-                            <div style={{ textAlign: 'center', color: 'lightgrey', margin: '20px 0' }}>
+                            </FloatMenu.Item>
+                            <FloatMenu.Item>
                                 <a onClick={() => setModalOpen(true)} style={{ color: 'red' }}>
                                     Delete
                                 </a>
-                            </div>
-                        </div>
+                                <Modal size={'mini'} open={modalOpen} onClose={() => setModalOpen(false)} centered={false}>
+                                    <Modal.Header>Delete Post</Modal.Header>
+                                    <Modal.Content>
+                                        <p>Are you sure you want to delete this post?</p>
+                                    </Modal.Content>
+                                    <Modal.Actions>
+                                        <Button negative onClick={() => setModalOpen(false)}>No</Button>
+                                        <Button positive icon='checkmark' labelPosition='right' content='Yes' onClick={() => destroy()}/>
+                                    </Modal.Actions>
+                                </Modal>
+                            </FloatMenu.Item>
+                        </FloatMenu>
                     )
                 }}
             </UserConsumer>
@@ -83,16 +87,6 @@ const Show = (props) => {
                 />
             </div>
             <Comments postId={post.id}/>
-            <Modal size={'mini'} open={modalOpen} onClose={() => setModalOpen(false)} centered={false}>
-                <Modal.Header>Delete Post</Modal.Header>
-                <Modal.Content>
-                    <p>Are you sure you want to delete this post?</p>
-                </Modal.Content>
-                <Modal.Actions>
-                    <Button negative onClick={() => setModalOpen(false)}>No</Button>
-                    <Button positive icon='checkmark' labelPosition='right' content='Yes' onClick={() => destroy()}/>
-                </Modal.Actions>
-            </Modal>
         </div>
     )
 }
