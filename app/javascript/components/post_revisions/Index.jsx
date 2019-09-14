@@ -6,12 +6,12 @@ const RevisionNumber = (props) => {
     const [modalOpen, setModalOpen] = useState(false)
     return (
         <div>
-            <div onClick={() => setModalOpen(true)}>
+            <div onClick={() => setModalOpen(true)} style={{cursor: 'pointer'}}>
                 {props.post_revision.revision_number}
             </div>
             <Modal size={'small'} open={modalOpen} onClose={() => setModalOpen(false)}>
-                <Modal.Header>Revisions</Modal.Header>
-                <Modal.Content>
+                <Modal.Header>{props.post_revision.revision_number}</Modal.Header>
+                <Modal.Content style={{ padding: 0 }}>
                     <Form>
                         <Form.Field>
                             <Form.TextArea
@@ -45,7 +45,7 @@ const Index = (props) => {
             <Table.Body>
                 {
                     fetchAllState.data.post_revisions.map(post_revision => (
-                        <Table.Row>
+                        <Table.Row key={post_revision.id}>
                             <Table.Cell>
                                 <RevisionNumber post_revision={post_revision}/>
                             </Table.Cell>
@@ -67,6 +67,7 @@ const Index = (props) => {
                             siblingRange={3}
                             totalPages={fetchAllState.data.totalPages}
                             onPageChange={(_, data) => setPage(data.activePage)}
+                            size='mini'
                         />
                     </Table.HeaderCell>
                 </Table.Row>

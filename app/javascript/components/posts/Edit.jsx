@@ -28,14 +28,14 @@ const Edit = (props) => {
                                 </a>
                                 <Modal size={'small'} open={modalOpen} onClose={() => setModalOpen(false)}>
                                     <Modal.Header>Revisions</Modal.Header>
-                                    <Modal.Content>
+                                    <Modal.Content style={{padding: 0}}>
                                         <PostRevisions postId={props.match.params.id}/>
                                     </Modal.Content>
                                 </Modal>
                             </FloatMenu.Item>
                         </FloatMenu>
                     )
-                }}
+                } }
             </UserConsumer>
             <_Form submit={update} post={fetchState.data.post} errors={fetchState.errors} />
         </div>
