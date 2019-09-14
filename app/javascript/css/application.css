@@ -42,6 +42,33 @@ a {
     opacity: 0.6;
 }
 
+blockquote {
+    color: #6F6F6F;
+    border-left: 4px solid #6F6F6F;
+    padding: 0em 2em;
+    margin: 1em 0em 2em;
+}
+
+code:not([class*="hljs"]) {
+    font-size: 87.5%;
+    line-height: 1.4;
+    background-color: #f8f8f8;
+    border-radius: 3px;
+    white-space: pre;
+    display: inline-block;
+    border: 1px solid #ddd;
+    color: #e01e5a;
+}
+
+code:not([class*="hljs"])::before {
+    letter-spacing: -0.2em;
+    content: '\00a0';
+}
+
+code:not([class*="hljs"])::after {
+    letter-spacing: -0.2em;
+    content: '\00a0';
+}
 
 /*---------------------------------------------------------------------*/
 .p-0 { padding: 0; }
@@ -159,3 +186,7 @@ a {
 .m-b-9 { margin-bottom: 9px; }
 .m-b-10 { margin-bottom: 10px; }
 .m-b-20 { margin-bottom: 20px; }
+
+.ui.dimmer {
+    background-color: rgba(0, 0, 0, .5);
+}
