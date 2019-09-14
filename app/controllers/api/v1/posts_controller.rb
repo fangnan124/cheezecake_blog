@@ -39,7 +39,18 @@ module Api
       end
 
       def post_params
-        params.permit(:title, :content, :status, :image, :image_description, post_tag_rels_attributes: [:_destroy, :id, :tag_id])
+        params.permit(
+          :title,
+          :content,
+          :status,
+          :image,
+          :image_description,
+          post_tag_rels_attributes: [
+            :id,
+            :tag_id,
+            :_destroy
+          ]
+        )
       end
 
       def increment_views
