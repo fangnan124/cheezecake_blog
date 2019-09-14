@@ -47,5 +47,8 @@
             "error",
             { "argsIgnorePattern": "^_", "varsIgnorePattern": "^_" }
         ]
+    },
+    "globals": {
+        "gtag": "readonly"
     }
 }
