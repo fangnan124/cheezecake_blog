@@ -1,6 +1,7 @@
 import React from 'react'
-import {Header, Button, Comment, Form} from 'semantic-ui-react'
+import {Header, Button, Comment, Form, Image} from 'semantic-ui-react'
 import axios from 'axios'
+import FormValidationMessage from 'components/FormValidationMessage'
 
 class Comments extends React.Component {
     constructor(props) {
@@ -33,14 +34,14 @@ class Comments extends React.Component {
 
     handleSubmit = (event) => {
         event.preventDefault()
-        this.setState({ loading: true })
+        // this.setState({ loading: true })
         axios({
             method: 'post',
             url: `/api/v1/posts/${this.props.postId}/comments`,
             data: { text: this.state.text }
         }).then(response => {
             const { data } = response.data
-            this.setState({ data, loading: false, edit_id: null, edit_text: '' })
+            this.setState({ data, loading: false, edit_id: null, text: '', errors: {} })
         }).catch(error => {
             const { errors } = error.response.data
             this.setState({ errors, loading: false })
@@ -77,6 +78,9 @@ class Comments extends React.Component {
 
     render() {
         if (this.state.loading) return null
+
+        console.log(this.state.text)
+
         return (
             <Comment.Group>
                 <Header as='h3' dividing>
@@ -86,8 +90,13 @@ class Comments extends React.Component {
                 {
                     this.state.data.comments.map((comment) => (
                         <Comment key={comment.id}>
+                            <Comment.Avatar src={comment.user.avatar_url} className='ui circular image'/>
                             <Comment.Content>
-                                <Comment.Author as='a'>{comment.user.name}</Comment.Author>
+                                <Comment.Author as='a'>
+                                    <span>
+                                        {comment.user.name}
+                                    </span>
+                                </Comment.Author>
                                 <Comment.Metadata>
                                     <span>{ comment.created_time_ago }</span>
                                 </Comment.Metadata>
@@ -104,7 +113,7 @@ class Comments extends React.Component {
                                         </Form>
                                     ) : (
                                         <div>
-                                            <Comment.Text>{ comment.text }</Comment.Text>
+                                            <Comment.Text style={{ whiteSpace: 'pre-wrap' }}>{ comment.text }</Comment.Text>
                                             <Comment.Actions>
                                                 {
                                                     comment.policy.edit && (
@@ -141,10 +150,13 @@ class Comments extends React.Component {
                     this.state.data.policy.create && (
                         <Form reply onSubmit={this.handleSubmit}>
                             <Form.TextArea
+                                label='Leave a comment'
+                                value={this.state.text}
                                 onChange={(e, {value}) => {this.setState({ text: value })}}
                                 style={{ height: '6em' }} // default is 12em, rows does not work here.
                             />
-                            <Form.Button content='Add Reply' labelPosition='left' icon='edit' primary/>
+                            <FormValidationMessage errors={this.state.errors} property={'text'}/>
+                            <Form.Button content='Reply' labelPosition='left' icon='edit' primary/>
                         </Form>
                     )
                 }

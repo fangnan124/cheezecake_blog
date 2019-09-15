@@ -34,7 +34,7 @@ const Index = (props) => {
 
     if (fetchAllState.loading) return null
     return (
-        <Table celled>
+        <Table celled compact>
             <Table.Header>
                 <Table.Row>
                     <Table.HeaderCell>Revision Number</Table.HeaderCell>

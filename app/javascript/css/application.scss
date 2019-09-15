@@ -2,6 +2,10 @@ a {
     color: rgba(0, 0, 0, 0.87);
 }
 
+.main {
+    min-height: calc(100vh - 136px);
+}
+
 
 /*-----------------------------------------*/
 .container {
@@ -189,4 +193,42 @@ code:not([class*="hljs"])::after {
 
 .ui.dimmer {
     background-color: rgba(0, 0, 0, .5);
+}
+
+
+/* Float Menu */
+ul.float-menu {
+    position: fixed;
+    right: 50%;
+    margin-right: -550px;
+    border: solid 1px lightgrey;
+    background-color: #faf9f5;
+    /*width: 100px;*/
+    list-style: none;
+    padding-left: 0;
+
+    li {
+        text-align: center;
+        color: lightgrey;
+        line-height: 50px;
+        width: 100px;
+    }
+}
+
+@media only screen and (max-width: 1150px) {
+    ul.float-menu {
+        margin-right: -470px;
+    }
+}
+
+@media only screen and (max-width: 1000px) {
+    ul.float-menu {
+        position: unset;
+        margin-right: 0;
+
+        li {
+            display: inline;
+            padding: 0 30px;
+        }
+    }
 }

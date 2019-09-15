@@ -43,8 +43,9 @@ gem 'pundit'
 gem 'ruby-kafka'
 gem 'racecar'
 gem 'redcarpet'
-gem "mini_magick"
+gem 'mini_magick'
 gem 'image_processing'
+gem 'letter_avatar'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
