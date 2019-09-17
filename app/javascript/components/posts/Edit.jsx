@@ -1,57 +1,45 @@
-import React from 'react'
-import axios from 'axios'
-import { Redirect } from 'react-router-dom'
+import React, {useState, useEffect} from 'react'
+import {Redirect} from 'react-router-dom'
+import {Modal} from 'semantic-ui-react'
 import _Form from './_Form'
+import {useFetch, useUpdate} from 'components/posts/hooks'
+import {UserConsumer} from 'components/contexts/UserContext'
+import FloatMenu from 'components/FloatMenu'
+import PostRevisions from 'components/post_revisions/Index'
 
-class Edit extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            redirect: false,
-            data: {},
-            errors: {},
-            loading: true
-        }
-    }
+const Edit = (props) => {
+    const [fetchState, fetch] = useFetch(props.match.params.id)
+    const [updateState, update] = useUpdate(props.match.params.id)
+    const [modalOpen, setModalOpen] = useState(false)
 
-    componentDidMount() {
-        this.setState({ loading: true })
-        axios({
-            method: 'get',
-            url: `/api/v1/posts/${this.props.match.params.id}`
-        }).then(response => {
-            const { data } = response.data
-            this.setState({ data, loading: false })
-        }).catch(error => {
-            const { errors } = error.response.data
-            this.setState({ errors, loading: false })
-        })
-    }
+    useEffect(() => fetch(), [])
 
-    handleSubmit = (params) => {
-        axios({
-            method: 'put',
-            url: `/api/v1/posts/${this.props.match.params.id}`,
-            data: params
-        }).then(() => {
-            this.setState({ redirect: true })
-        }).catch(error => {
-            const { errors } = error.response.data
-            this.setState({ errors, loading: false })
-        })
-    };
-
-    render() {
-        if (this.state.loading) return null
-        if (this.state.redirect) return <Redirect to={{ pathname: '/posts' }} />
-        return (
-            <_Form
-                submit={this.handleSubmit}
-                post={this.state.data.post}
-                errors={this.state.errors}
-            />
-        )
-    }
+    if (updateState.redirect) return <Redirect to={{ pathname: '/posts' }} />
+    if (fetchState.loading) return null
+    return (
+        <div>
+            <UserConsumer>
+                { ({ user }) => {
+                    return user && user.role === 'writer' && (
+                        <FloatMenu>
+                            <FloatMenu.Item>
+                                <a onClick={() => setModalOpen(true)}>
+                                    Revisions
+                                </a>
+                                <Modal size={'small'} open={modalOpen} onClose={() => setModalOpen(false)}>
+                                    <Modal.Header>Revisions</Modal.Header>
+                                    <Modal.Content style={{padding: 0}}>
+                                        <PostRevisions postId={props.match.params.id}/>
+                                    </Modal.Content>
+                                </Modal>
+                            </FloatMenu.Item>
+                        </FloatMenu>
+                    )
+                } }
+            </UserConsumer>
+            <_Form submit={update} post={fetchState.data.post} errors={fetchState.errors} />
+        </div>
+    )
 }
 
 export default Edit

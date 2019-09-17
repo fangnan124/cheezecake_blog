@@ -1,3 +1,5 @@
 class PageController < ApplicationController
-  def index; end
+  def index
+    # $kafka_producer.produce("{'a': 1, 'b': 2}", topic: "test_events")
+  end
 end

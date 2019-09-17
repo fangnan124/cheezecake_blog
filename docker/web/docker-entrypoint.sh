@@ -10,6 +10,7 @@ if [ $RAILS_ENV = "production" ] || [ $RAILS_ENV = "staging" ]; then
 else
   bundle install
   yarn install
+  bundle exec rails webpacker:clobber
 fi
 
 if [ -f /cheezecake_blog/tmp/pids/server.pid ]; then
@@ -25,6 +26,7 @@ fi
 #  bundle exec sidekiq -e $RAILS_ENV -d -L log/sidekiq.log -C config/initializers/sidekiq.yml
 #fi
 
+#bundle exec bin/webpack-dev-server -d
 bundle exec rails s -p 3000 -b '0.0.0.0'
 
 exec "$@"

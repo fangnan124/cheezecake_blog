@@ -25,6 +25,10 @@ class SignUp extends React.Component {
         }
     }
 
+    componentDidMount() {
+        gtag('config', 'UA-142403750-1', {'page_path': this.props.location.pathname})
+    }
+
     handleSubmit = (event) => {
         event.preventDefault()
 

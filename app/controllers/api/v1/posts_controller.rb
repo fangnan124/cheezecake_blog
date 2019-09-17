@@ -5,10 +5,10 @@ module Api
       after_action :increment_views, only: :show
 
       def index
-        @posts = Post.all
+        @posts = Post.with_post_tag_rels.with_attached_image
         @posts = @posts.status_published unless policy(@posts).show_all?
         @posts = @posts.order(updated_at: :desc)
-        @posts = @posts.page(params[:page] || 1).per(7)
+        @posts = @posts.page(params[:page] || 1).per(10)
       end
 
       def show; end
@@ -39,7 +39,18 @@ module Api
       end
 
       def post_params
-        params.require(:post).permit(:title, :content, :status, post_tag_rels_attributes: [:_destroy, :id, :tag_id])
+        params.permit(
+          :title,
+          :content,
+          :status,
+          :image,
+          :image_description,
+          post_tag_rels_attributes: [
+            :id,
+            :tag_id,
+            :_destroy
+          ]
+        )
       end
 
       def increment_views

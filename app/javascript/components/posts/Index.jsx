@@ -1,147 +1,61 @@
-import React from 'react'
-import axios from 'axios'
-import { Link, withRouter } from 'react-router-dom'
-import { Grid, Icon, Modal, Button, Pagination } from 'semantic-ui-react'
+import React, {useState, useEffect} from 'react'
+import {Link, withRouter} from 'react-router-dom'
+import {Pagination, Item, Label} from 'semantic-ui-react'
+import {useFetchAll} from './hooks'
 
-class Index extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            data: {},
-            errors: {},
-            loading: true,
-            modal: {
-                id: '',
-                open: false
-            }
-        }
-    }
+const Index = (props) => {
+    const [fetchAllState, fetchAll] = useFetchAll()
+    const [page, setPage] = useState(1)
 
-    componentDidMount() {
-        this.fetch()
-    }
+    useEffect(() => {
+        fetchAll(page)
+        gtag('config', 'UA-142403750-1', {'page_path': props.location.pathname})
+    }, [page])
 
-    fetch = (page) => {
-        this.setState({ loading: true })
-        axios({
-            method: 'get',
-            url: '/api/v1/posts',
-            params: { page: page }
-        }).then(response => {
-            const { data } = response.data
-            this.setState({ data, loading: false })
-        }).catch(error => {
-            const { errors } = error.response.data
-            this.setState({ errors, loading: false })
-        })
-    };
-
-    delete = (id) => {
-        this.setState({ loading: true })
-        axios({
-            method: 'delete',
-            url: `/api/v1/posts/${id}`
-        }).then(response => {
-            const { data } = response.data
-            this.setState({ data, loading: false, modal: { id: '', open: false } })
-        }).catch(error => {
-            const { errors } = error.response.data
-            this.setState({ errors, loading: false })
-        })
-    };
-
-    open = (id) => {
-        this.setState({ modal: { id, open: true } })
-    };
-
-    close = () => {
-        this.setState({ modal: { open: false } })
-    };
-
-    pageChange = (_event, data) => {
-        const { activePage } = data
-        this.fetch(activePage)
-    };
-
-    render() {
-        const { data, loading, modal } = this.state
-        if (loading) return null
-        return (
-            <div>
-                <Grid padded>
-                    {
-                        data.posts.map(post => {
-                            return (
-                                <Grid.Row key={ post.id }>
-                                    <Grid.Column width={10}>
-                                        <Link style={{ color: 'black' }} to={`/posts/${post.id}`}>{ post.title }</Link>
-                                        {/*<div>*/}
-                                        {/*{*/}
-                                        {/*post.tags.map(tag => <Tag key={tag.id} label={tag.name} color={tag.color}/>)*/}
-                                        {/*}*/}
-                                        {/*</div>*/}
-                                    </Grid.Column>
-                                    <Grid.Column width={4}>
-                                        <div style={{ fontSize: 12, float: 'right' }}>{ post.updated_time_ago }</div>
-                                    </Grid.Column>
-                                    <Grid.Column width={2}>
-                                        {
-                                            data.policy.edit && (
-                                                <div>
-                                                    <Link to={`/posts/${post.id}/edit`}>
-                                                        <Icon name='edit outline'/>
-                                                    </Link>
-                                                    <a href="javascript:" onClick={() => this.open(post.id)}>
-                                                        <Icon name='remove'/>
-                                                    </a>
-                                                </div>
-                                            )
-                                        }
-                                    </Grid.Column>
-                                </Grid.Row>
-                            )
-                        })
-                    }
-                    <Grid.Row>
-                        <Grid.Column width={14}>
-                            <Pagination
-                                boundaryRange={0}
-                                defaultActivePage={data.currentPage}
-                                ellipsisItem={null}
-                                firstItem={null}
-                                lastItem={null}
-                                siblingRange={1}
-                                totalPages={data.totalPages}
-                                onPageChange={this.pageChange}
-                                pointing
-                                secondary
-                            />
-                        </Grid.Column>
-                        <Grid.Column width={2}>
-                            {
-                                data.policy.new && (
-                                    <Link to={'/posts/new'}>
-                                        <Icon name='add'/>
-                                        new
-                                    </Link>
-                                )
-                            }
-                        </Grid.Column>
-                    </Grid.Row>
-                </Grid>
-                <Modal size={'mini'} open={modal.open} onClose={this.close} centered={false}>
-                    <Modal.Header>Delete Post</Modal.Header>
-                    <Modal.Content>
-                        <p>Are you sure you want to delete this post?</p>
-                    </Modal.Content>
-                    <Modal.Actions>
-                        <Button negative onClick={this.close}>No</Button>
-                        <Button positive icon='checkmark' labelPosition='right' content='Yes' onClick={() => this.delete(modal.id)}/>
-                    </Modal.Actions>
-                </Modal>
-            </div>
-        )
-    }
+    if (fetchAllState.loading) return null
+    return (
+        <div>
+            <Item.Group divided>
+                {
+                    fetchAllState.data.posts.map(post => (
+                        <Item key={post.id}>
+                            <Item.Image src={post.thumb_url}/>
+                            <Item.Content>
+                                <Item.Header>
+                                    <Link to={`/posts/${post.id}`}>{post.title}</Link>
+                                </Item.Header>
+                                <Item.Meta style={{fontSize: 13}}>
+                                    <span className='cinema'>{post.updated_time_ago}</span>
+                                </Item.Meta>
+                                <Item.Description style={{opacity: 0.6, fontSize: 14}}>
+                                    {post.description}
+                                </Item.Description>
+                                <Item.Extra style={{opacity: 0.8}}>
+                                    {
+                                        post.tags.map(tag => (
+                                            <Label key={tag.id} style={{fontSize: 12, padding: '3px 6px'}}>
+                                                {tag.name}
+                                            </Label>
+                                        ))
+                                    }
+                                </Item.Extra>
+                            </Item.Content>
+                        </Item>
+                    ))
+                }
+            </Item.Group>
+            <Pagination
+                boundaryRange={0}
+                defaultActivePage={fetchAllState.data.currentPage}
+                ellipsisItem={null}
+                firstItem={null}
+                lastItem={null}
+                siblingRange={3}
+                totalPages={fetchAllState.data.totalPages}
+                onPageChange={(_, data) => setPage(data.activePage)}
+            />
+        </div>
+    )
 }
 
 export default withRouter(Index)

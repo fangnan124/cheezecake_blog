@@ -14,6 +14,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :posts do
         resources :comments, shallow: true
+        resources :post_revisions, shallow: true
       end
       resources :tags
       resources :users
@@ -25,5 +26,7 @@ Rails.application.routes.draw do
     end
   end
 
-  get '*path', to: 'page#index'
+  get '*path', to: 'page#index', constraints: -> (request) do
+    !(request.path.start_with?('/rails')) # except path starts with '/rails'
+  end
 end

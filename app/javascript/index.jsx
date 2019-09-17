@@ -4,6 +4,7 @@ import App from 'components/App'
 import { BrowserRouter as Router } from 'react-router-dom'
 import axios from 'axios'
 import 'semantic-ui-css/semantic.min.css'
+import 'css/application.css'
 
 // Add a request interceptor
 axios.interceptors.request.use(function (config) {

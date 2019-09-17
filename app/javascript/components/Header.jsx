@@ -1,5 +1,5 @@
 import React from 'react'
-import { Menu, Container, Image } from 'semantic-ui-react'
+import { Menu, Container, Image, Icon } from 'semantic-ui-react'
 import { Link, withRouter } from 'react-router-dom'
 import UserContext, { UserConsumer } from './contexts/UserContext'
 import axios from 'axios'
@@ -39,7 +39,7 @@ class Header extends React.Component {
                     <Image src='/cheezecake.png' width={50} height={35}/>
                     <Menu.Item header>
                         <Link to={'/'} style={{ color: 'black' }}>
-                            Cheezecake Blog
+                            noIDEA BLOG
                         </Link>
                     </Menu.Item>
                     <Menu.Item active={false}>
@@ -54,18 +54,33 @@ class Header extends React.Component {
                                     <Menu.Item active={false}>
                                         <Dropdown text={ user.name }>
                                             <Dropdown.Menu>
-                                                <Dropdown.Item>
-                                                    <Link to={'/profile'}>Profile</Link>
-                                                </Dropdown.Item>
                                                 {
-                                                    user && user.role === 'writer' && (
-                                                        <Dropdown.Item>
-                                                            <Link to={'/admin'}>Admin</Link>
+                                                    user && user.role === 'writer' && [
+                                                        <Dropdown.Item key='new_post'>
+                                                            <Link to={'/posts/new'}>
+                                                                <Icon name='add'/>
+                                                                New Post
+                                                            </Link>
+                                                        </Dropdown.Item>,
+                                                        <Dropdown.Item key='admin'>
+                                                            <Link to={'/admin'}>
+                                                                <Icon name='key'/>
+                                                                Admin
+                                                            </Link>
                                                         </Dropdown.Item>
-                                                    )
+                                                    ]
                                                 }
+                                                <Dropdown.Item>
+                                                    <Link to={'/profile'}>
+                                                        <Icon name='user circle'/>
+                                                        Profile
+                                                    </Link>
+                                                </Dropdown.Item>
                                                 <Dropdown.Divider />
-                                                <Dropdown.Item text='Logout' onClick={this.logout}/>
+                                                <Dropdown.Item onClick={this.logout}>
+                                                    <Icon name='log out'/>
+                                                    Logout
+                                                </Dropdown.Item>
                                             </Dropdown.Menu>
                                         </Dropdown>
                                     </Menu.Item>

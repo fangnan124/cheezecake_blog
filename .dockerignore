@@ -8,6 +8,7 @@ public/packs
 log
 tmp
 
+docker/kafka
 docker/elasticsearch/data
 docker/postgres/data
 yarn-debug.log*
