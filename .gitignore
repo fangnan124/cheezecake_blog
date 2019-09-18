@@ -43,6 +43,7 @@ yarn-debug.log*
 /docker/kafka
 /docker/postgres/data
 /docker/elasticsearch/data
+/docker/certbot/data
 docker-compose.override.yml
 
 deploy.rb
