@@ -62,3 +62,4 @@ echo
 
 echo "### Stopping nginx ..."
 docker-compose down nginx
+echo
