@@ -39,7 +39,7 @@ class Header extends React.Component {
                     <Image src='/cheezecake.png' width={50} height={35}/>
                     <Menu.Item header>
                         <Link to={'/'} style={{ color: 'black' }}>
-                            GOT NO IDEA
+                            PEACE OF CAKE
                         </Link>
                     </Menu.Item>
                     <Menu.Item active={false}>
