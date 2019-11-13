@@ -9,6 +9,14 @@ class PostPolicy < ApplicationPolicy
     end
   end
 
+  def show?
+    if user.present? && user.writer_user?
+      true
+    else
+      record.status_published?
+    end
+  end
+
   def create?
     return false if user.nil?
 
