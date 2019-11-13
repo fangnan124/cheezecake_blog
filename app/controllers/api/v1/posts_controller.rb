@@ -6,16 +6,18 @@ module Api
 
       def index
         @posts = Post.with_post_tag_rels.with_attached_image
-        @posts = @posts.status_published unless policy(@posts).show_all?
+        @posts = policy_scope(@posts)
         @posts = @posts.order(updated_at: :desc)
         @posts = @posts.page(params[:page] || 1).per(10)
       end
 
-      def show; end
+      def show
+        authorize @post
+      end
 
       def create
+        authorize Post
         @post = Post.new(post_params)
-        authorize @post
         @post.save!
         redirect_to api_v1_post_path(@post)
       end
@@ -57,7 +59,8 @@ module Api
         return if current_user&.writer_user?
 
         @post.views += 1
-        @post.save!
+        # (touch: false) Not to update updated_at
+        @post.save!(touch: false)
       end
     end
   end
