@@ -1,5 +1,5 @@
 import React from 'react'
-import { Menu, Container, Image, Icon, Label } from 'semantic-ui-react'
+import { Menu, Container, Image, Icon } from 'semantic-ui-react'
 import { Link, withRouter } from 'react-router-dom'
 import UserContext, { UserConsumer } from './contexts/UserContext'
 import axios from 'axios'

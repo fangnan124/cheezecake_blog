@@ -1,5 +1,5 @@
 import React from 'react'
-import {Header, Button, Comment, Form, Image} from 'semantic-ui-react'
+import {Header, Button, Comment, Form} from 'semantic-ui-react'
 import axios from 'axios'
 import FormValidationMessage from 'components/FormValidationMessage'
 
@@ -78,9 +78,6 @@ class Comments extends React.Component {
 
     render() {
         if (this.state.loading) return null
-
-        console.log(this.state.text)
-
         return (
             <Comment.Group>
                 <Header as='h3' dividing>

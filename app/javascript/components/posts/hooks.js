@@ -32,7 +32,7 @@ export const useFetchAll = () => {
 export const useFetch = (id) => {
     const [data, setData] = useState({})
     const [errors, setErrors] = useState({})
-    const [httpStatus, setHttpStatus] = useState({})
+    // const [httpStatus, setHttpStatus] = useState({})
     const [loading, setLoading] = useState(true)
 
     const fetch = () => {
@@ -44,7 +44,7 @@ export const useFetch = (id) => {
             const { data } = response.data
             setData(data)
         }).catch(error => {
-            setHttpStatus(error.response.status)
+            // setHttpStatus(error.response.status)
             const { errors } = error.response.data
             setErrors(errors)
         }).finally(() => {
