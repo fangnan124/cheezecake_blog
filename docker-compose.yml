@@ -10,7 +10,7 @@ services:
     volumes:
       - .:/cheezecake_blog
     ports:
-      - 3000:3000
+      - 3030:3000
       - 3035:3035
     stdin_open: true
     tty: true

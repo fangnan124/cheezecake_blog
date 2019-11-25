@@ -141,6 +141,8 @@ GEM
       king_konf (~> 0.3.6)
       ruby-kafka (~> 0.6)
     rack (2.0.6)
+    rack-cors (1.1.0)
+      rack (>= 2.0.0)
     rack-proxy (0.6.5)
       rack
     rack-test (1.1.0)
@@ -277,6 +279,7 @@ DEPENDENCIES
   puma (~> 3.11)
   pundit
   racecar
+  rack-cors
   rails (~> 5.2.2)
   redcarpet
   rspec-rails (~> 3.8)
