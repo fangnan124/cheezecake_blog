@@ -1,6 +1,7 @@
 class ApiController < ActionController::API
   include Pundit
   include DeviseTokenAuth::Concerns::SetUserByToken
+  include LetterAvatar::AvatarHelper
 
   # # json layout
   # include ActionController::ImplicitRender
@@ -42,9 +43,9 @@ class ApiController < ActionController::API
     puts 'render_destroy_error'
   end
 
-  def render_validate_token_success
-    puts 'render_validate_token_success'
-  end
+  # def render_validate_token_success
+  #   puts 'render_validate_token_success'
+  # end
 
   def render_validate_token_error
     puts 'render_validate_token_error'
@@ -52,8 +53,9 @@ class ApiController < ActionController::API
 
   def render_not_authorized_error
     render json: {
+      meta: {},
       errors: ['Not authorized']
-    }
+    }, status: :unauthorized
   end
 
   private

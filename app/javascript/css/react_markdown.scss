@@ -1,0 +1,30 @@
+// <blockquote/>
+blockquote {
+  color: #6F6F6F;
+  border-left: 4px solid #6F6F6F;
+  padding: 0em 2em;
+  margin: 1em 0em 2em;
+}
+
+// `string`
+code:not([class*="hljs"]) {
+  font-size: 90%;
+  line-height: 1.4;
+  background-color: #f8f8f8;
+  border-radius: 3px;
+  white-space: pre;
+  //display: inline-block;
+  border: 1px solid #ddd;
+  color: #e01e5a;
+  padding-top: 1px;
+
+  &:before {
+    letter-spacing: -0.2em;
+    content: '\00a0';
+  }
+
+  &:after {
+    letter-spacing: -0.2em;
+    content: '\00a0';
+  }
+}

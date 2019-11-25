@@ -5,7 +5,7 @@ module Api
       before_action :set_comment, only: [:update, :destroy]
 
       def index
-        @comments = @post.comments.order(created_at: :desc).page(params[:page] || 1).per(10)
+        @comments = @post.comments.order(:created_at).page(params[:page] || 1).per(100)
       end
 
       def create
