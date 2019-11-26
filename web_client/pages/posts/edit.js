@@ -1,23 +1,26 @@
 import React, {useState, useEffect} from 'react'
-import {Redirect} from 'react-router-dom'
 import {Modal} from 'semantic-ui-react'
-import _Form from './_Form'
-import {useFetch, useUpdate} from 'components/posts/hooks'
-import {UserConsumer} from 'components/contexts/UserContext'
-import FloatMenu from 'components/FloatMenu'
-import PostRevisions from 'components/post_revisions/Index'
+import _Form from '../_form'
+import {useFetch, useUpdate} from '../hooks'
+import {UserConsumer} from 'contexts/UserContext'
+import FloatMenu from 'components/float_menu'
+// import PostRevisions from 'components/post_revisions/Index'
+import AppLayout from 'layouts/app'
+import { useRouter } from 'next/router'
 
-const Edit = (props) => {
-    const [fetchState, fetch] = useFetch(props.match.params.id)
-    const [updateState, update] = useUpdate(props.match.params.id)
+const Edit = () => {
+    const router = useRouter()
+    const { id } = router.query
+
+    const [fetchState, fetch] = useFetch(id)
+    const [updateState, update] = useUpdate(id)
     const [modalOpen, setModalOpen] = useState(false)
 
     useEffect(() => fetch(), [])
 
-    if (updateState.redirect) return <Redirect to={{ pathname: '/posts' }} />
     if (fetchState.loading) return null
     return (
-        <div>
+        <AppLayout>
             <UserConsumer>
                 { ({ user }) => {
                     return user && user.role === 'writer' && (
@@ -29,7 +32,7 @@ const Edit = (props) => {
                                 <Modal size={'small'} open={modalOpen} onClose={() => setModalOpen(false)}>
                                     <Modal.Header>Revisions</Modal.Header>
                                     <Modal.Content style={{padding: 0}}>
-                                        <PostRevisions postId={props.match.params.id}/>
+                                        {/*<PostRevisions postId={props.match.params.id}/>*/}
                                     </Modal.Content>
                                 </Modal>
                             </FloatMenu.Item>
@@ -38,7 +41,7 @@ const Edit = (props) => {
                 } }
             </UserConsumer>
             <_Form submit={update} post={fetchState.data.post} errors={fetchState.errors} />
-        </div>
+        </AppLayout>
     )
 }
 

@@ -3,6 +3,7 @@ import App from 'next/app'
 import { UserProvider } from 'contexts/UserContext'
 import axios from 'axios'
 import 'semantic-ui-css/semantic.min.css'
+import 'css/application.scss'
 
 // Add a request interceptor
 axios.interceptors.request.use(function (config) {

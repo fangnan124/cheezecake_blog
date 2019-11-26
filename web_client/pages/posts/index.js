@@ -4,7 +4,7 @@ import {useFetchAll} from './hooks'
 import AppLayout from 'layouts/app'
 import Link from 'next/link'
 
-const Index = (props) => {
+const Index = () => {
     const [fetchAllState, fetchAll] = useFetchAll()
     const [page, setPage] = useState(1)
 
@@ -12,8 +12,6 @@ const Index = (props) => {
         fetchAll(page)
         // gtag('config', 'UA-142403750-1', {'page_path': props.location.pathname})
     }, [page])
-
-    console.log(fetchAllState)
 
     if (fetchAllState.loading) return null
     return (
@@ -25,7 +23,7 @@ const Index = (props) => {
                             <Item.Image src={post.thumb_url}/>
                             <Item.Content>
                                 <Item.Header>
-                                    <Link href="/posts/[id]" as={`/posts/${post.id}`}>
+                                    <Link href={`/posts/${post.id}`}>
                                         {post.title}
                                     </Link>
                                 </Item.Header>

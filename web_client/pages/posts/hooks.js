@@ -1,8 +1,7 @@
 import { useState } from 'react'
 import axios from 'axios'
-// import objectToFormData from 'object-to-formdata'
-
-const resourcesUrl = 'http://localhost:3030/api/v1/posts'
+import Router from 'next/router'
+import objectToFormData from 'object-to-formdata'
 
 export const useFetchAll = () => {
     const [data, setData] = useState({})
@@ -13,7 +12,7 @@ export const useFetchAll = () => {
         setLoading(true)
         axios({
             method: 'get',
-            url: resourcesUrl,
+            url: `${process.env.api_prefix}/posts`,
             params: { page: page }
         }).then(response => {
             const { data } = response.data
@@ -32,14 +31,13 @@ export const useFetchAll = () => {
 export const useFetch = (id) => {
     const [data, setData] = useState({})
     const [errors, setErrors] = useState({})
-    // const [httpStatus, setHttpStatus] = useState({})
     const [loading, setLoading] = useState(true)
 
     const fetch = () => {
         setLoading(true)
         axios({
             method: 'get',
-            url: `${resourcesUrl}/${id}`
+            url: `${process.env.api_prefix}/posts/${id}`
         }).then(response => {
             const { data } = response.data
             setData(data)
@@ -56,20 +54,18 @@ export const useFetch = (id) => {
 }
 
 export const useCreate = () => {
-    const [data, _setData] = useState({})
     const [errors, setErrors] = useState({})
     const [loading, setLoading] = useState(false)
-    const [redirect, setRedirect] = useState(false)
 
     const create = (params) => {
         setLoading(true)
         axios({
             method: 'post',
-            url: resourcesUrl,
-            // data: objectToFormData(params),
+            url: `${process.env.api_prefix}/posts`,
+            data: objectToFormData(params),
             headers: { 'content-type': 'multipart/form-data' }
         }).then(() => {
-            setRedirect(true)
+            Router.push('/posts')
         }).catch(error => {
             const { errors } = error.response.data
             setErrors(errors)
@@ -78,24 +74,22 @@ export const useCreate = () => {
         })
     }
 
-    return [{ data, errors, loading, redirect }, create]
+    return [{ errors, loading }, create]
 }
 
 export const useUpdate = (id) => {
-    const [data, _setData] = useState({})
     const [errors, setErrors] = useState({})
     const [loading, setLoading] = useState(false)
-    const [redirect, setRedirect] = useState(false)
 
     const update = (params) => {
         setLoading(true)
         axios({
             method: 'put',
-            url: `${resourcesUrl}/${id}`,
-            // data: objectToFormData(params),
+            url: `${process.env.api_prefix}/posts/${id}`,
+            data: objectToFormData(params),
             headers: { 'content-type': 'multipart/form-data' }
         }).then(() => {
-            setRedirect(true)
+            Router.push('/posts')
         }).catch(error => {
             const { errors } = error.response.data
             setErrors(errors)
@@ -104,22 +98,20 @@ export const useUpdate = (id) => {
         })
     }
 
-    return [{ data, errors, loading, redirect }, update]
+    return [{ errors, loading }, update]
 }
 
 export const useDestroy = (id) => {
-    const [data, _setData] = useState({})
     const [errors, setErrors] = useState({})
     const [loading, setLoading] = useState(false)
-    const [redirect, setRedirect] = useState(false)
 
     const destroy = () => {
         setLoading(true)
         axios({
             method: 'delete',
-            url: `${resourcesUrl}/${id}`
+            url: `${process.env.api_prefix}/posts/${id}`
         }).then(() => {
-            setRedirect(true)
+            Router.push('/posts')
         }).catch(error => {
             const { errors } = error.response.data
             setErrors(errors)
@@ -128,5 +120,5 @@ export const useDestroy = (id) => {
         })
     }
 
-    return [{ data, errors, loading, redirect }, destroy]
+    return [{ errors, loading }, destroy]
 }

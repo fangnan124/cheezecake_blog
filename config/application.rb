@@ -35,7 +35,7 @@ module CheezecakeBlog
         origins '*'
         resource '*',
                  headers: :any,
-                 methods: [:get, :post, :options],
+                 methods: [:get, :post, :put, :delete, :options],
                  expose: ['uid', 'client', 'access-token'] # Headers allowed to expose
       end
     end

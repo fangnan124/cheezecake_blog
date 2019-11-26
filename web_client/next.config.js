@@ -1,10 +1,15 @@
 const withPlugins = require('next-compose-plugins')
 const withCSS = require('@zeit/next-css')
 const path = require('path')
+const withTM = require('next-transpile-modules')
+const withSass = require('@zeit/next-sass')
 
 const nextConfig = {
     exportPathMap: function() {
         return { '/': {page: '/posts'} }
+    },
+    env: {
+        api_prefix: 'http://localhost:3030/api/v1',
     }
 }
 
@@ -17,6 +22,14 @@ module.exports = withPlugins([
             })
             config.resolve.modules.push(path.resolve('./'))
             return config
-        }
-    }]
+        },
+        transpileModules: [
+            'object-to-formdata'
+        ]
+    }],
+    [withTM, {
+        // Transpile modules in node_modules that is written in ES6+
+        transpileModules: ['object-to-formdata']
+    }],
+    [withSass]
 ], nextConfig)

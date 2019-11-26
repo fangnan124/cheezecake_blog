@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import {Redirect, Link} from 'react-router-dom'
 import {Header, Modal, Button, Image} from 'semantic-ui-react'
 import ReactMarkdown from 'react-markdown'
 import {UserConsumer} from 'contexts/UserContext'
@@ -10,6 +9,7 @@ import {useFetch, useDestroy} from './hooks'
 import FloatMenu from 'components/float_menu'
 import { useRouter } from 'next/router'
 import AppLayout from 'layouts/app'
+import Link from 'next/link'
 
 export default (props) => {
     const router = useRouter()
@@ -34,9 +34,9 @@ export default (props) => {
                     return user && user.role === 'writer' && (
                         <FloatMenu>
                             <FloatMenu.Item>
-                                {/*<Link href={`/posts/${post.id}/edit`}>*/}
-                                {/*    Edit*/}
-                                {/*</Link>*/}
+                                <Link href={`/posts/${post.id}/edit`}>
+                                    Edit
+                                </Link>
                             </FloatMenu.Item>
                             <FloatMenu.Item>
                                 <a onClick={() => setModalOpen(true)} style={{ color: 'red' }}>

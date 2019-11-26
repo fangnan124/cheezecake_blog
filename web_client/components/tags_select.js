@@ -21,7 +21,7 @@ class TagsSelect extends React.Component {
         this.setState({ loading: true })
         axios({
             method: 'get',
-            url: '/api/v1/tags'
+            url: `${process.env.api_prefix}/tags`
         }).then(response => {
             const { data } = response.data
             this.setState({ data, loading: false })
