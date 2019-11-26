@@ -16,6 +16,7 @@ require 'redcarpet/render_strip'
 
 class Post < ApplicationRecord
   include Elasticsearch::Model
+  include Elasticsearch::Model::Callbacks
 
   enum status: { published: 'published', wip: 'wip' }, _prefix: true
 
