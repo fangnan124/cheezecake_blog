@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from 'react'
 import {Pagination, Item, Label} from 'semantic-ui-react'
 import {useFetchAll} from './hooks'
-import 'semantic-ui-css/semantic.min.css'
+import AppLayout from 'layouts/app'
+import Link from 'next/link'
 
 const Index = (props) => {
     const [fetchAllState, fetchAll] = useFetchAll()
@@ -16,8 +17,7 @@ const Index = (props) => {
 
     if (fetchAllState.loading) return null
     return (
-        <div>
-            123
+        <AppLayout>
             <Item.Group divided>
                 {
                     fetchAllState.data.posts.map(post => (
@@ -25,7 +25,9 @@ const Index = (props) => {
                             <Item.Image src={post.thumb_url}/>
                             <Item.Content>
                                 <Item.Header>
-                                    {/*<Link to={`/posts/${post.id}`}>{post.title}</Link>*/}
+                                    <Link href="/posts/[id]" as={`/posts/${post.id}`}>
+                                        {post.title}
+                                    </Link>
                                 </Item.Header>
                                 <Item.Meta style={{fontSize: 13}}>
                                     <span className='cinema'>{post.updated_time_ago}</span>
@@ -57,7 +59,7 @@ const Index = (props) => {
                 totalPages={fetchAllState.data.totalPages}
                 onPageChange={(_, data) => setPage(data.activePage)}
             />
-        </div>
+        </AppLayout>
     )
 }
 
