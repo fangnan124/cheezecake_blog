@@ -63,18 +63,6 @@ Life is good.
     ```bash
     rspec
     ```
-    
-4. Cucumber:
-
-    ```bash
-    cucumber
-    ```
-
-5. Annotate:
-
-    ```bash
-    annotate
-    ```
 
 ## Useful Commands
 

@@ -18,7 +18,7 @@ export class UserProvider extends React.Component {
             method: 'get',
             url: '/auth/validate_token'
         }).then(response => {
-            this.setState({ user: response.data.data, loading: false})
+            this.setState({ user: response.data.data.user, loading: false})
         }).catch(error => {
             const { errors } = error.response.data
             this.setState({ errors, loading: false })

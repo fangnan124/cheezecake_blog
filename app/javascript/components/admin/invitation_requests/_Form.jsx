@@ -43,7 +43,7 @@ class _Form extends React.Component {
                         onChange={e => this.setState({ message: e.target.value })}
                     />
                 </Form.Field>
-                <Form.Button content='Save' labelPosition='left' icon='edit' primary/>
+                <Form.Button content='Send' labelPosition='left' icon='send' primary/>
             </Form>
         )
     }

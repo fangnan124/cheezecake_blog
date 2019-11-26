@@ -11,6 +11,7 @@ tmp
 docker/kafka
 docker/elasticsearch/data
 docker/postgres/data
+docker/certbot/data
 yarn-debug.log*
 yarn-error.log*
 .yarn-integrity

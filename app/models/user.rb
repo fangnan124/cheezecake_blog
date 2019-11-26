@@ -31,12 +31,15 @@
 #  role                   :string
 #
 
+require 'letter_avatar/has_avatar'
+
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
   include DeviseTokenAuth::Concerns::User
+  include LetterAvatar::HasAvatar
 
   enum role: {
     writer: 'writer',

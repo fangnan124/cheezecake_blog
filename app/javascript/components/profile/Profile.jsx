@@ -37,9 +37,11 @@ class Profile extends React.Component {
             method: 'put',
             url: `/api/v1/users/${this.context.user.id}`,
             data: { user: { name: this.state.data.user.name } }
+
         }).then(response => {
             const { data } = response.data
             this.setState({ data, loading: false })
+            this.context.setUser(data.user)
         }).catch(error => {
             const { errors } = error.response.data
             this.setState({ errors, loading: false })

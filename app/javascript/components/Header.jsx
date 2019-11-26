@@ -39,7 +39,7 @@ class Header extends React.Component {
                     <Image src='/cheezecake.png' width={50} height={35}/>
                     <Menu.Item header>
                         <Link to={'/'} style={{ color: 'black' }}>
-                            noIDEA BLOG
+                            PEACE OF CAKE
                         </Link>
                     </Menu.Item>
                     <Menu.Item active={false}>
@@ -52,7 +52,8 @@ class Header extends React.Component {
                             { ({ user }) => {
                                 return user ? (
                                     <Menu.Item active={false}>
-                                        <Dropdown text={ user.name }>
+                                        <Image src={user.avatar_url} style={{ width: 30, marginRight: 10 }} circular/>
+                                        <Dropdown text={ user.name } closeOnBlur>
                                             <Dropdown.Menu>
                                                 {
                                                     user && user.role === 'writer' && [

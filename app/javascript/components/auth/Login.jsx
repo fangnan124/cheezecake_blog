@@ -53,7 +53,7 @@ class Login extends React.Component {
                 localStorage.removeItem('user.email')
             }
 
-            this.context.setUser(response.data.data)
+            this.context.setUser(response.data.data.user)
 
             this.setState({ redirect: true })
         }).catch(error => {

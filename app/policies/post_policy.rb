@@ -1,8 +1,20 @@
 class PostPolicy < ApplicationPolicy
-  def show_all?
-    return false if user.nil?
+  class Scope < Scope
+    def resolve
+      if user.present? && user.writer_user?
+        scope.all
+      else
+        scope.status_published
+      end
+    end
+  end
 
-    user.writer_user?
+  def show?
+    if user.present? && user.writer_user?
+      true
+    else
+      record.status_published?
+    end
   end
 
   def create?

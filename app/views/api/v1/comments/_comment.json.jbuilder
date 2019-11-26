@@ -3,6 +3,7 @@ json.user do
   json.id    comment.user.id
   json.email comment.user.email
   json.name  comment.user.name
+  json.avatar_url comment.user.avatar_url(300)
 end
 json.policy do
   json.edit   policy(comment).update?
