@@ -1,6 +1,6 @@
 import React from 'react'
 import App from 'next/app'
-import { UserProvider } from 'contexts/UserContext'
+import { UserProvider } from 'contexts/user_context'
 import axios from 'axios'
 import 'semantic-ui-css/semantic.min.css'
 import 'css/application.scss'

@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react'
+import React, {useState, useEffect} from 'react'
 import {Header, Modal, Button, Image} from 'semantic-ui-react'
 import ReactMarkdown from 'react-markdown'
-import {UserConsumer} from 'contexts/UserContext'
+import {UserConsumer} from 'contexts/user_context'
 import Tag from 'components/tag'
 import CodeBlock from 'components/code_block'
-// import Comments from './Comments'
+import Comments from './comments'
 import {useFetch, useDestroy} from './hooks'
 import FloatMenu from 'components/float_menu'
-import { useRouter } from 'next/router'
+import {useRouter} from 'next/router'
 import AppLayout from 'layouts/app'
 import Link from 'next/link'
 
@@ -91,7 +91,7 @@ export default (props) => {
                     escapeHtml={false}
                 />
             </div>
-            {/*<Comments postId={post.id}/>*/}
+            <Comments postId={post.id}/>
         </AppLayout>
     )
 }

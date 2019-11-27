@@ -1,12 +1,12 @@
 import React, {useState, useEffect, useContext} from 'react'
 import { Button, Form, Checkbox } from 'semantic-ui-react'
 import axios from 'axios'
-import UserContext from 'contexts/UserContext'
+import UserContext from 'contexts/user_context'
 import AppLayout from 'layouts/app'
 import Router from 'next/router'
 
-export default () => {
-    const userContext = useContext(UserContext)
+const Login = () => {
+    const { setUser } = useContext(UserContext)
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [rememberMe, setRememberMe] = useState(false)
@@ -37,9 +37,6 @@ export default () => {
                 password
             }
         }).then(response => {
-            console.log(response)
-            console.log(response.headers)
-
             localStorage.setItem('access-token', response.headers['access-token'])
             localStorage.setItem('client', response.headers['client'])
             localStorage.setItem('uid', response.headers['uid'])
@@ -50,11 +47,10 @@ export default () => {
                 localStorage.removeItem('user.email')
             }
 
-            userContext.setUser(response.data.data.user)
+            setUser(response.data.data.user)
 
             Router.push('/posts')
         }).catch(error => {
-            console.log(error)
             const { errors } = error.response.data
             this.setState({ errors, loading: false })
         })
@@ -91,3 +87,5 @@ export default () => {
         </AppLayout>
     )
 }
+
+export default Login

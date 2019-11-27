@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button, Form, Select, Tab, Table } from 'semantic-ui-react'
 import ReactMarkdown from 'react-markdown'
-import UserContext from 'contexts/UserContext'
+import UserContext from 'contexts/user_context'
 import FormValidationMessage from 'components/form_validation_message'
 import TagsSelect from 'components/tags_select'
 import CodeBlock from 'components/code_block'

@@ -9,6 +9,7 @@ const nextConfig = {
         return { '/': {page: '/posts'} }
     },
     env: {
+        domain: 'http://localhost:3030',
         api_prefix: 'http://localhost:3030/api/v1',
     }
 }

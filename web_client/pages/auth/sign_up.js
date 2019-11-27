@@ -2,10 +2,10 @@ import React from 'react'
 import { Button, Form } from 'semantic-ui-react'
 import axios from 'axios'
 import { Redirect } from 'react-router-dom'
-import UserContext from 'contexts/UserContext'
+import UserContext from 'contexts/user_context'
 import { Modal } from 'semantic-ui-react'
 import New from 'components/admin/invitation_requests/New'
-import FormValidationMessage from 'components/FormValidationMessage'
+import FormValidationMessage from 'components/form_validation_message'
 
 class Sign_up extends React.Component {
     static contextType = UserContext;
@@ -25,9 +25,9 @@ class Sign_up extends React.Component {
         }
     }
 
-    componentDidMount() {
-        gtag('config', 'UA-142403750-1', {'page_path': this.props.location.pathname})
-    }
+    // componentDidMount() {
+    //     gtag('config', 'UA-142403750-1', {'page_path': this.props.location.pathname})
+    // }
 
     handleSubmit = (event) => {
         event.preventDefault()
