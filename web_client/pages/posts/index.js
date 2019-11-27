@@ -8,10 +8,7 @@ const Index = () => {
     const [fetchAllState, fetchAll] = useFetchAll()
     const [page, setPage] = useState(1)
 
-    useEffect(() => {
-        fetchAll(page)
-        // gtag('config', 'UA-142403750-1', {'page_path': props.location.pathname})
-    }, [page])
+    useEffect(() => fetchAll(page), [page])
 
     if (fetchAllState.loading) return null
     return (

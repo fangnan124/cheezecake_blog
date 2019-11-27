@@ -19,10 +19,7 @@ export default (props) => {
     const [destroyState, destroy] = useDestroy(id)
     const [modalOpen, setModalOpen] = useState(false)
 
-    useEffect(() => {
-        fetch()
-        // gtag('config', 'UA-142403750-1', {'page_path': props.location.pathname})
-    }, [])
+    useEffect(() => fetch(), [])
 
     // if (destroyState.redirect) return <Redirect to={{ pathname: '/posts' }}/>
     if (fetchState.loading) return null

@@ -1,11 +1,11 @@
 import React from 'react'
 import { Button, Form } from 'semantic-ui-react'
 import axios from 'axios'
-import { Redirect } from 'react-router-dom'
 import UserContext from 'contexts/user_context'
 import { Modal } from 'semantic-ui-react'
-import New from 'components/admin/invitation_requests/New'
+import New from 'pages/admin/invitation_requests/new'
 import FormValidationMessage from 'components/form_validation_message'
+import AppLayout from 'layouts/app'
 
 class Sign_up extends React.Component {
     static contextType = UserContext;
@@ -13,10 +13,8 @@ class Sign_up extends React.Component {
     constructor(props) {
         super(props)
 
-        let email = localStorage.getItem('user.email')
-
         this.state = {
-            email: email,
+            email: '',
             password: '',
             name: '',
             invitation_code: '',
@@ -25,9 +23,10 @@ class Sign_up extends React.Component {
         }
     }
 
-    // componentDidMount() {
-    //     gtag('config', 'UA-142403750-1', {'page_path': this.props.location.pathname})
-    // }
+    componentDidMount() {
+        let email = localStorage.getItem('user.email')
+        this.setState({ email })
+    }
 
     handleSubmit = (event) => {
         event.preventDefault()
@@ -65,57 +64,59 @@ class Sign_up extends React.Component {
     };
 
     render() {
-        if (this.state.redirect) return <Redirect to={{ pathname: this.pathname() }} />
+        // if (this.state.redirect) return <Redirect to={{ pathname: this.pathname() }} />
 
         return (
-            <Form onSubmit={this.handleSubmit}>
-                <Form.Field>
-                    <label>Email</label>
-                    <input
-                        type="text"
-                        value={this.state.email}
-                        onChange={e => this.setState({ email: e.target.value })}
-                    />
-                    <FormValidationMessage errors={this.state.errors} property={'email'}/>
-                </Form.Field>
-                <Form.Field>
-                    <label>Password</label>
-                    <input
-                        type="password"
-                        value={this.state.password}
-                        onChange={e => this.setState({ password: e.target.value })}
-                    />
-                    <FormValidationMessage errors={this.state.errors} property={'password'}/>
-                </Form.Field>
-                <Form.Field>
-                    <label>Name</label>
-                    <input
-                        type="text"
-                        value={this.state.name}
-                        onChange={e => this.setState({ name: e.target.value })}
-                    />
-                    <FormValidationMessage errors={this.state.errors} property={'name'}/>
-                </Form.Field>
-                <Form.Field>
-                    <label>Invitation Code</label>
-                    <input
-                        type="text"
-                        value={this.state.invitation_code}
-                        onChange={e => this.setState({ invitation_code: e.target.value })}
-                    />
-                    <FormValidationMessage errors={this.state.errors} property={'invitation_code'}/>
-                    <div style={{ fontSize: 12, marginTop: 3 }}>
-                        Don&#39;t have an invitation code?
-                        <Modal trigger={<span style={{ marginLeft: 5, fontWeight: 'bold', cursor: 'pointer' }}>request</span>} size={'tiny'} style={{ display: 'inline' }}>
-                            <Modal.Header>Request an invitation code</Modal.Header>
-                            <Modal.Content>
-                                <New/>
-                            </Modal.Content>
-                        </Modal>
-                    </div>
-                </Form.Field>
-                <Button type='submit'>Sign Up</Button>
-            </Form>
+            <AppLayout>
+                <Form onSubmit={this.handleSubmit}>
+                    <Form.Field>
+                        <label>Email</label>
+                        <input
+                            type="text"
+                            value={this.state.email}
+                            onChange={e => this.setState({ email: e.target.value })}
+                        />
+                        <FormValidationMessage errors={this.state.errors} property={'email'}/>
+                    </Form.Field>
+                    <Form.Field>
+                        <label>Password</label>
+                        <input
+                            type="password"
+                            value={this.state.password}
+                            onChange={e => this.setState({ password: e.target.value })}
+                        />
+                        <FormValidationMessage errors={this.state.errors} property={'password'}/>
+                    </Form.Field>
+                    <Form.Field>
+                        <label>Name</label>
+                        <input
+                            type="text"
+                            value={this.state.name}
+                            onChange={e => this.setState({ name: e.target.value })}
+                        />
+                        <FormValidationMessage errors={this.state.errors} property={'name'}/>
+                    </Form.Field>
+                    <Form.Field>
+                        <label>Invitation Code</label>
+                        <input
+                            type="text"
+                            value={this.state.invitation_code}
+                            onChange={e => this.setState({ invitation_code: e.target.value })}
+                        />
+                        <FormValidationMessage errors={this.state.errors} property={'invitation_code'}/>
+                        <div style={{ fontSize: 12, marginTop: 3 }}>
+                            Don&#39;t have an invitation code?
+                            <Modal trigger={<span style={{ marginLeft: 5, fontWeight: 'bold', cursor: 'pointer' }}>request</span>} size={'tiny'} style={{ display: 'inline' }}>
+                                <Modal.Header>Request an invitation code</Modal.Header>
+                                <Modal.Content>
+                                    <New/>
+                                </Modal.Content>
+                            </Modal>
+                        </div>
+                    </Form.Field>
+                    <Button type='submit'>Sign Up</Button>
+                </Form>
+            </AppLayout>
         )
     }
 }

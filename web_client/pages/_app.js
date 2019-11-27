@@ -4,6 +4,7 @@ import { UserProvider } from 'contexts/user_context'
 import axios from 'axios'
 import 'semantic-ui-css/semantic.min.css'
 import 'css/application.scss'
+import Router from 'next/router'
 
 // Add a request interceptor
 axios.interceptors.request.use(function (config) {
@@ -25,6 +26,8 @@ axios.interceptors.response.use(function (response) {
     // Do something with response error
     return Promise.reject(error)
 })
+
+Router.events.on('routeChangeComplete', url => window.gtag('config', 'UA-142403750-1', { page_path: url }))
 
 class MyApp extends App {
     // Only uncomment this method if you have blocking data requirements for
