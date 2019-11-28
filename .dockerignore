@@ -11,9 +11,6 @@ tmp
 docker/kafka
 docker/postgres/data
 docker/certbot/data
-yarn-debug.log*
-yarn-error.log*
-.yarn-integrity
 
 web_client/.next
 web_client/node_modules

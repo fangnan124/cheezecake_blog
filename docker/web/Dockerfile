@@ -21,12 +21,10 @@ FROM ruby:2.5.3
 # Install ImageMagick
 RUN apt-get update -qq && apt-get install -y --no-install-recommends imagemagick
 
-# Install Node & Yarn
+# Install Node
 RUN curl -sL https://deb.nodesource.com/setup_9.x | bash -
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
-RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
 RUN apt-get update -qqy \
-    && apt-get -qqyy install nodejs yarn \
+    && apt-get -qqyy install nodejs \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy project
