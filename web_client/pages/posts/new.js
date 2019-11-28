@@ -1,6 +1,6 @@
 import React from 'react'
 import _Form from './_form'
-import {useCreate} from './hooks'
+import {useCreate} from 'models/post'
 import AppLayout from 'layouts/app'
 
 const New = () => {

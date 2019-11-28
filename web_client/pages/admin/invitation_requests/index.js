@@ -21,7 +21,7 @@ class Index extends React.Component {
         this.setState({ loading: true })
         axios({
             method: 'get',
-            url: '/api/v1/invitation_requests',
+            url: `${process.env.api_prefix}/invitation_requests`,
             params: { page: page }
         }).then(response => {
             const { data } = response.data
@@ -35,7 +35,7 @@ class Index extends React.Component {
     approve = (id) => {
         axios({
             method: 'put',
-            url: `/api/v1/invitation_requests/${id}/approve`
+            url: `${process.env.api_prefix}/invitation_requests/${id}/approve`
         }).then(response => {
             const { data: approved } = response.data
             const data = Object.assign({}, this.state.data)

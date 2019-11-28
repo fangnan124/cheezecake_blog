@@ -27,9 +27,9 @@ axios.interceptors.response.use(function (response) {
     return Promise.reject(error)
 })
 
-Router.events.on('routeChangeComplete', url => window.gtag('config', 'UA-142403750-1', { page_path: url }))
+Router.events.on('routeChangeComplete', url => gtag('config', 'UA-142403750-1', { page_path: url }))
 
-class MyApp extends App {
+export default class extends App {
     // Only uncomment this method if you have blocking data requirements for
     // every single page in your application. This disables the ability to
     // perform automatic static optimization, causing every page in your app to
@@ -51,5 +51,3 @@ class MyApp extends App {
         )
     }
 }
-
-export default MyApp

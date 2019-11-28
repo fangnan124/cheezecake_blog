@@ -11,7 +11,18 @@ services:
       - .:/cheezecake_blog
     ports:
       - 3030:3000
-      - 3035:3035
+    stdin_open: true
+    tty: true
+
+  client:
+    build:
+      context: .
+      dockerfile: ./docker/web_client/Dockerfile
+    command: tail -f /dev/null
+    volumes:
+      - ./web_client:/root/webapp
+    ports:
+      - 3000:3000
     stdin_open: true
     tty: true
 

@@ -8,8 +8,8 @@ export default class extends Document {
             <html>
                 <Head>
                     {/*<title>Title</title>*/}
-                    <meta charSet="utf-8" />
-                    <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+                    {/*<meta charSet="utf-8" />*/}
+                    {/*<meta name="viewport" content="initial-scale=1.0, width=device-width" />*/}
 
                     {/* Highlight Theme */}
                     <link rel="stylesheet" media="all" href="https://highlightjs.org/static/demo/styles/railscasts.css" />

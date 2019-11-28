@@ -10,7 +10,7 @@ export const useFetchAll = (postId) => {
         setLoading(true)
         axios({
             method: 'get',
-            url: `/api/v1/posts/${postId}/post_revisions`,
+            url: `${process.env.api_prefix}/posts/${postId}/post_revisions`,
             params: { page: page }
         }).then(response => {
             const { data } = response.data
@@ -35,7 +35,7 @@ export const useFetch = (id) => {
         setLoading(true)
         axios({
             method: 'get',
-            url: `/api/v1/post_revisions/${id}`
+            url: `${process.env.api_prefix}/post_revisions/${id}`
         }).then(response => {
             const { data } = response.data
             setData(data)
@@ -49,3 +49,5 @@ export const useFetch = (id) => {
 
     return [{ data, errors, loading }, fetch]
 }
+
+export default { useFetchAll, useFetch }

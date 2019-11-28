@@ -3,7 +3,7 @@ import { Button, Icon, Grid, Modal } from 'semantic-ui-react'
 import axios from 'axios'
 import Tag from 'components/tag'
 import New from './new'
-import Edit from './Edit'
+import Edit from './edit'
 
 const Index = () => {
     const [data, setData] = useState({})

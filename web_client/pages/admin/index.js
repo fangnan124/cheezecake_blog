@@ -1,7 +1,7 @@
 import React from 'react'
 import { Tab } from 'semantic-ui-react'
 import Tags from './tags'
-// import Requests from './invitation_requests/Index'
+import Requests from './invitation_requests'
 import AppLayout from 'layouts/app'
 
 const Index = () => {
@@ -12,7 +12,7 @@ const Index = () => {
                 panes={[
                     { menuItem: 'Tags', render: () => <Tab.Pane><Tags/></Tab.Pane> },
                     { menuItem: 'Users', render: () => <Tab.Pane>Coming Soon</Tab.Pane> },
-                    { menuItem: 'Requests', render: () => <Tab.Pane>Coming Soon</Tab.Pane> },
+                    { menuItem: 'Requests', render: () => <Tab.Pane><Requests/></Tab.Pane> },
                 ]}
             />
         </AppLayout>

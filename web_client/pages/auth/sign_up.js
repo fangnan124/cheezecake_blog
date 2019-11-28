@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 import { Button, Form } from 'semantic-ui-react'
 import axios from 'axios'
 import UserContext from 'contexts/user_context'
@@ -6,119 +6,109 @@ import { Modal } from 'semantic-ui-react'
 import New from 'pages/admin/invitation_requests/new'
 import FormValidationMessage from 'components/form_validation_message'
 import AppLayout from 'layouts/app'
+import Router from 'next/router'
 
-class Sign_up extends React.Component {
-    static contextType = UserContext;
+const SignUp = () => {
+    const { setUser } = useContext(UserContext)
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [name, setName] = useState('')
+    const [invitationCode, setInvitationCode] = useState('')
+    const [errors, setErrors] = useState('')
+    const [requestModalOpen, setRequestModalOpen] = useState(false)
 
-    constructor(props) {
-        super(props)
+    useEffect(() => {
+        const email = localStorage.getItem('user.email')
+        setEmail(email)
+    }, [])
 
-        this.state = {
-            email: '',
-            password: '',
-            name: '',
-            invitation_code: '',
-            redirect: false,
-            errors: {}
-        }
-    }
-
-    componentDidMount() {
-        let email = localStorage.getItem('user.email')
-        this.setState({ email })
-    }
-
-    handleSubmit = (event) => {
+    const sign_up = (event) => {
         event.preventDefault()
 
-        this.setState({ loading: true })
         axios({
             method: 'post',
             url: '/auth',
             data: {
-                email: this.state.email,
-                password: this.state.password,
-                name: this.state.name,
-                invitation_code: this.state.invitation_code
+                email,
+                password,
+                name,
+                invitation_code: invitationCode
             }
         }).then(response => {
             localStorage.setItem('access-token', response.headers['access-token'])
             localStorage.setItem('client', response.headers['client'])
             localStorage.setItem('uid', response.headers['uid'])
 
-            this.context.setUser(response.data.data)
-            this.setState({ redirect: true })
+            setUser(response.data.data)
+            Router.push('/posts')
         }).catch(error => {
             const { errors } = error.response.data
-            this.setState({ errors, loading: false })
+            setErrors(errors)
         })
-    };
-
-    pathname = () => {
-        const { location } = this.props
-        if (location.state !== undefined) {
-            return location.state.from.pathname
-        } else {
-            return '/'
-        }
-    };
-
-    render() {
-        // if (this.state.redirect) return <Redirect to={{ pathname: this.pathname() }} />
-
-        return (
-            <AppLayout>
-                <Form onSubmit={this.handleSubmit}>
-                    <Form.Field>
-                        <label>Email</label>
-                        <input
-                            type="text"
-                            value={this.state.email}
-                            onChange={e => this.setState({ email: e.target.value })}
-                        />
-                        <FormValidationMessage errors={this.state.errors} property={'email'}/>
-                    </Form.Field>
-                    <Form.Field>
-                        <label>Password</label>
-                        <input
-                            type="password"
-                            value={this.state.password}
-                            onChange={e => this.setState({ password: e.target.value })}
-                        />
-                        <FormValidationMessage errors={this.state.errors} property={'password'}/>
-                    </Form.Field>
-                    <Form.Field>
-                        <label>Name</label>
-                        <input
-                            type="text"
-                            value={this.state.name}
-                            onChange={e => this.setState({ name: e.target.value })}
-                        />
-                        <FormValidationMessage errors={this.state.errors} property={'name'}/>
-                    </Form.Field>
-                    <Form.Field>
-                        <label>Invitation Code</label>
-                        <input
-                            type="text"
-                            value={this.state.invitation_code}
-                            onChange={e => this.setState({ invitation_code: e.target.value })}
-                        />
-                        <FormValidationMessage errors={this.state.errors} property={'invitation_code'}/>
-                        <div style={{ fontSize: 12, marginTop: 3 }}>
-                            Don&#39;t have an invitation code?
-                            <Modal trigger={<span style={{ marginLeft: 5, fontWeight: 'bold', cursor: 'pointer' }}>request</span>} size={'tiny'} style={{ display: 'inline' }}>
-                                <Modal.Header>Request an invitation code</Modal.Header>
-                                <Modal.Content>
-                                    <New/>
-                                </Modal.Content>
-                            </Modal>
-                        </div>
-                    </Form.Field>
-                    <Button type='submit'>Sign Up</Button>
-                </Form>
-            </AppLayout>
-        )
     }
+
+    // pathname = () => {
+    //     const { location } = this.props
+    //     if (location.state !== undefined) {
+    //         return location.state.from.pathname
+    //     } else {
+    //         return '/'
+    //     }
+    // };
+
+    return (
+        <AppLayout>
+            <Form onSubmit={sign_up}>
+                <Form.Field>
+                    <label>Email</label>
+                    <input
+                        type="text"
+                        value={email}
+                        onChange={e => setEmail(e.target.value)}
+                    />
+                    <FormValidationMessage errors={errors} property={'email'}/>
+                </Form.Field>
+                <Form.Field>
+                    <label>Password</label>
+                    <input
+                        type="password"
+                        value={password}
+                        onChange={e => setPassword(e.target.value)}
+                    />
+                    <FormValidationMessage errors={errors} property={'password'}/>
+                </Form.Field>
+                <Form.Field>
+                    <label>Name</label>
+                    <input
+                        type="text"
+                        value={name}
+                        onChange={e => setName(e.target.value)}
+                    />
+                    <FormValidationMessage errors={errors} property={'name'}/>
+                </Form.Field>
+                <Form.Field>
+                    <label>Invitation Code</label>
+                    <input
+                        type="text"
+                        value={invitationCode}
+                        onChange={e => setInvitationCode(e.target.value)}
+                    />
+                    <FormValidationMessage errors={errors} property={'invitation_code'}/>
+                    <div style={{ fontSize: 12, marginTop: 3 }}>
+                        Don&#39;t have an invitation code?
+                        <span style={{ marginLeft: 5, fontWeight: 'bold', cursor: 'pointer' }} onClick={() => setRequestModalOpen(true)}>request</span>
+                    </div>
+                </Form.Field>
+                <Button type='submit'>Sign Up</Button>
+            </Form>
+            <Modal open={requestModalOpen} onClose={() => setRequestModalOpen(false)} size={'tiny'} style={{ display: 'inline' }}>
+                <Modal.Header>Request an invitation code</Modal.Header>
+                <Modal.Content>
+                    <New/>
+                </Modal.Content>
+            </Modal>
+        </AppLayout>
+    )
 }
 
-export default Sign_up
+export default SignUp

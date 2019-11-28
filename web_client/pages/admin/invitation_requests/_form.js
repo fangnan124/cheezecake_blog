@@ -7,10 +7,7 @@ const _Form = (props) => {
 
     const submit = (event) => {
         event.preventDefault()
-
-        // alert(1)
-        //
-        // props.submit({ email, message })
+        props.submit({ email, message })
     }
 
     return (

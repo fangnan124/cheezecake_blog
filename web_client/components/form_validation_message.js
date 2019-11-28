@@ -12,4 +12,9 @@ const FormValidationMessage = ({ errors, property }) => {
     )
 }
 
+FormValidationMessage.defaultProps = {
+    errors: {},
+    property: ''
+}
+
 export default FormValidationMessage

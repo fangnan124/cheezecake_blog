@@ -122,3 +122,5 @@ export const useDestroy = (id) => {
 
     return [{ errors, loading }, destroy]
 }
+
+export default { useFetchAll, useFetch, useCreate, useUpdate, useDestroy }

@@ -1,10 +1,10 @@
 import React, {useState, useEffect} from 'react'
 import {Modal} from 'semantic-ui-react'
 import _Form from '../_form'
-import {useFetch, useUpdate} from '../hooks'
+import {useFetch, useUpdate} from 'models/post'
 import {UserConsumer} from 'contexts/user_context'
 import FloatMenu from 'components/float_menu'
-// import PostRevisions from 'components/post_revisions/Index'
+import PostRevisions from 'pages/post_revisions/'
 import AppLayout from 'layouts/app'
 import { useRouter } from 'next/router'
 
@@ -32,7 +32,7 @@ const Edit = () => {
                                 <Modal size={'small'} open={modalOpen} onClose={() => setModalOpen(false)}>
                                     <Modal.Header>Revisions</Modal.Header>
                                     <Modal.Content style={{padding: 0}}>
-                                        {/*<PostRevisions postId={props.match.params.id}/>*/}
+                                        <PostRevisions postId={id}/>
                                     </Modal.Content>
                                 </Modal>
                             </FloatMenu.Item>

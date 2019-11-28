@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import {Pagination, Item, Label} from 'semantic-ui-react'
-import {useFetchAll} from './hooks'
+import {useFetchAll} from 'models/post'
 import AppLayout from 'layouts/app'
 import Link from 'next/link'
 

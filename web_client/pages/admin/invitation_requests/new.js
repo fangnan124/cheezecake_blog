@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import axios from 'axios'
 import { Message } from 'semantic-ui-react'
-import _Form from './_Form'
+import _Form from './_form'
 
 const New = () => {
     const [success, setSuccess] = useState(false)
