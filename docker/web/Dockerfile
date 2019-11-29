@@ -31,7 +31,9 @@ RUN apt-get update -qqy \
 RUN mkdir /cheezecake_blog
 WORKDIR /cheezecake_blog
 COPY . /cheezecake_blog
-RUN bundle install
+# * No `bundle install` *
+# -> Keep this process in lightweight, speed up build.
+# -> Put gems in volume, put `bundle install` in docke-entrypoint.sh
 
 # Entrypoint
 COPY ./docker/web/docker-entrypoint.sh /

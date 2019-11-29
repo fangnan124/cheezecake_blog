@@ -33,6 +33,11 @@ class Post < ApplicationRecord
 
   # Validations
   validates :title, length: { in: 3..80 }
+  validates :post_tag_rels, length: { in: 1..10, message: 'should select at least 1 tag.' }
+  validates :image, presence: true
+  validates :image_description, presence: true
+  validates :content, length: { minimum: 3 }
+  validates :status, presence: true
 
   # Callbacks
   before_save do

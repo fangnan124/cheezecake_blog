@@ -2,7 +2,9 @@ import React from 'react'
 import axios from 'axios'
 import Select from 'react-select'
 import chroma from 'chroma-js'
+import classnames from 'classnames'
 
+// Make this similar usage with From.Input
 class TagsSelect extends React.Component {
     static defaultProps = {
         selected_tags: []
@@ -49,8 +51,16 @@ class TagsSelect extends React.Component {
     render() {
         if (this.state.loading) return null
 
+        const hasError = this.props.error
+
+        const errorStyle = hasError ? {
+            background: '#fff6f6',
+            borderColor: '#e0b4b4',
+            color: '#9f3a38'
+        } : {}
+
         const colourStyles = {
-            control: styles => ({ ...styles, backgroundColor: 'white' }),
+            control: styles => ({ ...styles, backgroundColor: 'white', ...errorStyle }),
             option: (styles, { data, isDisabled, isFocused, isSelected }) => {
                 const color = chroma(data.color)
                 return {
@@ -93,17 +103,27 @@ class TagsSelect extends React.Component {
         }
 
         return (
-            <Select
-                closeMenuOnSelect={false}
-                defaultValue={this.selected}
-                isMulti
-                options={this.options}
-                styles={colourStyles}
-                onChange={tags => {
-                    const tag_ids = tags.map(s => s.value)
-                    this.props.onChange(tag_ids)
-                }}
-            />
+            <div className={classnames({ 'error': hasError }, 'field')}>
+                { this.props.label && <label>{this.props.label}</label> }
+                <Select
+                    closeMenuOnSelect={false}
+                    defaultValue={this.selected}
+                    isMulti
+                    options={this.options}
+                    styles={colourStyles}
+                    onChange={tags => {
+                        const tag_ids = tags.map(s => s.value)
+                        this.props.onChange(tag_ids)
+                    }}
+                />
+                {
+                    hasError && (
+                        <div className="ui pointing prompt label">
+                            { this.props.error.content }
+                        </div>
+                    )
+                }
+            </div>
         )
     }
 }

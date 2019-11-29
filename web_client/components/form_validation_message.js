@@ -1,16 +1,15 @@
 import React from 'react'
+import { Message } from 'semantic-ui-react'
 
-const FormValidationMessage = ({ errors, property }) => {
-    return (
-        errors.hasOwnProperty(property) && (
-            errors[property].map((message, index) => (
-                <div key={index} style={{ color: '#9f3a38', margin: '0 5px' }}>
-                    { message }
-                </div>
-            ))
-        )
+const FormValidationMessage = ({ errors, property }) => (
+    errors.hasOwnProperty(property) && (
+        errors[property].map((message, index) => (
+            <Message negative key={index}>
+                <p>{ message }</p>
+            </Message>
+        ))
     )
-}
+)
 
 FormValidationMessage.defaultProps = {
     errors: {},

@@ -5,6 +5,7 @@ import FormValidationMessage from 'components/form_validation_message'
 import TagsSelect from 'components/tags_select'
 import CodeBlock from 'components/code_block'
 import Previews from 'components/previews'
+import { errorMessage } from 'helpers/form_helper'
 
 const options = [
     { key: 'pub', text: 'Published', value: 'published' },
@@ -60,19 +61,21 @@ const _Form = (props) => {
     return (
         <Form onSubmit={submit}>
             <Form.Field>
-                <label>Title</label>
-                <input
+                <Form.Input
+                    fluid
+                    label='Title'
                     type="text"
                     value={title}
                     onChange={e => setTitle(e.target.value)}
+                    error={errorMessage({ errors: props.errors, property: 'title' })}
                 />
-                <FormValidationMessage errors={props.errors} property={'title'}/>
             </Form.Field>
             <Form.Field>
-                <label>Tag</label>
                 <TagsSelect
+                    label='Tag'
                     selected_tags={tags}
                     onChange={(tag_ids) => setTagIds(tag_ids)}
+                    error={errorMessage({ errors: props.errors, property: 'post_tag_rels' })}
                 />
             </Form.Field>
             <Form.Field>
@@ -80,11 +83,13 @@ const _Form = (props) => {
                 <Previews imageUrl={imageUrl} onChange={file => setImage(file)}/>
             </Form.Field>
             <Form.Field>
-                <label>Image Description</label>
-                <input
+                <Form.Input
+                    fluid
+                    label='Image Description'
                     type="text"
                     value={imageDescription}
                     onChange={e => setImageDescription(e.target.value)}
+                    error={errorMessage({ errors: props.errors, property: 'image_description' })}
                 />
             </Form.Field>
             <Form.Field>
@@ -97,6 +102,7 @@ const _Form = (props) => {
                                 onChange={(e, {value}) => { setContent(value) }}
                                 defaultValue={content}
                                 style={{ height: 500 }}
+                                error={errorMessage({ errors: props.errors, property: 'content', pointing: 'below' })}
                             />
                         )
                     },
@@ -111,7 +117,6 @@ const _Form = (props) => {
                         )
                     }
                 ]}/>
-                <FormValidationMessage errors={props.errors} property={'content'}/>
             </Form.Field>
             <Form.Field
                 control={Select}
@@ -121,8 +126,9 @@ const _Form = (props) => {
                 width={4}
                 defaultValue={status}
                 onChange={(e, { value }) => setStatus(value)}
+                error={errorMessage({ errors: props.errors, property: 'status' })}
             />
-            <Button type='submit'>Save</Button>
+            <Button type='submit' primary>Save</Button>
         </Form>
     )
 }

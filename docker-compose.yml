@@ -9,8 +9,13 @@ services:
     env_file: .env
     volumes:
       - .:/cheezecake_blog
+      - bundle_path:/bundle
+    environment:
+      - BUNDLE_PATH=/bundle/vendor
     ports:
       - 3030:3000
+    depends_on:
+      - postgres
     stdin_open: true
     tty: true
 
@@ -18,11 +23,17 @@ services:
     build:
       context: .
       dockerfile: ./docker/web_client/Dockerfile
-    command: tail -f /dev/null
+#    command: tail -f /dev/null
     volumes:
       - ./web_client:/root/webapp
+
+      # This is important when you want use HMR with docker, but don't know WHY.
+      # same with using an anonymous volume - /root/webapp/node_modules
+      - node_modules:/root/webapp/node_modules
     ports:
       - 3000:3000
+    depends_on:
+      - web
     stdin_open: true
     tty: true
 
@@ -34,3 +45,7 @@ services:
       - 5432:5432
     volumes:
       - ./docker/postgres/data:/var/lib/postgresql/data
+
+volumes:
+  bundle_path:
+  node_modules:

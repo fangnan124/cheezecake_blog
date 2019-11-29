@@ -1,19 +1,13 @@
 import React from 'react'
 
-class Float_menu extends React.Component {
-    static Item = (props) => (
-        <li>
-            { props.children }
-        </li>
-    )
+const FloatMenu = ({ children }) => (
+    <ul className='float-menu'>
+        { children }
+    </ul>
+)
 
-    render() {
-        return (
-            <ul className='float-menu'>
-                { this.props.children }
-            </ul>
-        )
-    }
-}
+FloatMenu.Item = ({ children }) => (
+    <li>{ children }</li>
+)
 
-export default Float_menu
+export default FloatMenu

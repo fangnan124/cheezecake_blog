@@ -11,23 +11,25 @@
     "@zeit/next-css": "^1.0.1",
     "@zeit/next-sass": "^1.0.1",
     "axios": "latest",
+    "chroma-js": "^2.0.3",
+    "classnames": "^2.2.6",
     "file-loader": "^5.0.2",
     "next": "9.1.4",
     "next-compose-plugins": "^2.2.0",
     "next-transpile-modules": "^2.3.1",
     "node-sass": "^4.13.0",
     "object-to-formdata": "latest",
+    "prop-types": "^15.6.2",
     "react": "16.12.0",
+    "react-color": "^2.17.3",
     "react-dom": "16.12.0",
     "react-dropzone": "^10.1.8",
     "react-highlight": "^0.12.0",
     "react-markdown": "^4.1.0",
-    "react-color": "^2.17.3",
     "react-select": "^3.0.4",
     "sass-loader": "^8.0.0",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^0.88.0",
-    "url-loader": "^2.3.0",
-    "chroma-js": "^2.0.3"
+    "url-loader": "^2.3.0"
   }
 }

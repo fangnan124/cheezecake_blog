@@ -68,6 +68,7 @@ export const useCreate = () => {
             Router.push('/posts')
         }).catch(error => {
             const { errors } = error.response.data
+            console.log(errors)
             setErrors(errors)
         }).finally(() => {
             setLoading(false)

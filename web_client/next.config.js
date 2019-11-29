@@ -11,6 +11,14 @@ const nextConfig = {
     env: {
         domain: 'http://localhost:3030',
         api_prefix: 'http://localhost:3030/api/v1',
+    },
+    webpackDevMiddleware: config => {
+        // This is important when you want use HMR with docker
+        config.watchOptions = {
+            poll: 1000,
+            aggregateTimeout: 300
+        }
+        return config
     }
 }
 
