@@ -41,11 +41,11 @@ export const useFetch = (id) => {
         }).then(response => {
             const { data } = response.data
             setData(data)
+            setLoading(false)
         }).catch(error => {
             // setHttpStatus(error.response.status)
             const { errors } = error.response.data
             setErrors(errors)
-        }).finally(() => {
             setLoading(false)
         })
     }

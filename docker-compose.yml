@@ -25,11 +25,12 @@ services:
       dockerfile: ./docker/web_client/Dockerfile
 #    command: tail -f /dev/null
     volumes:
-      - ./web_client:/root/webapp
+      - ./web_client:/webapp
 
       # This is important when you want use HMR with docker, but don't know WHY.
-      # same with using an anonymous volume - /root/webapp/node_modules
-      - node_modules:/root/webapp/node_modules
+      # Don't use host volumes, like ./node_modules:/webapp/node_modules, it slows down reloading.
+      - next:/webapp/.next
+      - node_modules:/webapp/node_modules
     ports:
       - 3000:3000
     depends_on:
@@ -48,4 +49,5 @@ services:
 
 volumes:
   bundle_path:
+  next:
   node_modules:

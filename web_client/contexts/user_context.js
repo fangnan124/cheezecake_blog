@@ -4,7 +4,7 @@ import axios from 'axios'
 const UserContext = React.createContext()
 
 export const UserProvider = ({ children }) => {
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(true)
     const [user, setUser] = useState(null)
 
     useEffect(() => {
@@ -14,9 +14,9 @@ export const UserProvider = ({ children }) => {
             url: `${process.env.domain}/auth/validate_token`
         }).then(response => {
             setUser(response.data.data.user)
+            setLoading(false)
         }).catch(error => {
             const { errors } = error.response.data
-        }).finally(() => {
             setLoading(false)
         })
     }, [])
@@ -29,12 +29,10 @@ export const UserProvider = ({ children }) => {
     )
 }
 
-export const UserConsumer = ({ children }) => {
-    return (
-        <UserContext.Consumer>
-            {children}
-        </UserContext.Consumer>
-    )
-}
+export const UserConsumer = ({ children }) => (
+    <UserContext.Consumer>
+        {children}
+    </UserContext.Consumer>
+)
 
 export default UserContext

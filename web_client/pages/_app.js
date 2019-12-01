@@ -27,7 +27,7 @@ axios.interceptors.response.use(function (response) {
     return Promise.reject(error)
 })
 
-Router.events.on('routeChangeComplete', url => gtag('config', 'UA-142403750-1', { page_path: url }))
+// Router.events.on('routeChangeComplete', url => gtag('config', 'UA-142403750-1', { page_path: url }))
 
 export default class extends App {
     // Only uncomment this method if you have blocking data requirements for
@@ -45,9 +45,7 @@ export default class extends App {
     render() {
         const { Component, pageProps } = this.props
         return (
-            <UserProvider>
-                <Component {...pageProps} />
-            </UserProvider>
+            <Component {...pageProps} />
         )
     }
 }

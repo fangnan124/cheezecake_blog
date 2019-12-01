@@ -1,7 +1,10 @@
 #!/bin/bash
 set -e
 
-yarn
+echo "yarn install ..."
+yarn install
+
+echo "yarn dev ..."
 yarn dev
 
 exec "$@"

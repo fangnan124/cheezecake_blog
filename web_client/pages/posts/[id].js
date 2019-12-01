@@ -10,20 +10,23 @@ import FloatMenu from 'components/float_menu'
 import {useRouter} from 'next/router'
 import AppLayout from 'layouts/app'
 import Link from 'next/link'
+import axios from "axios";
 
-export default (props) => {
-    const router = useRouter()
-    const { id } = router.query
+const Post = (props) => {
+    // const router = useRouter()
+    // const { id } = router.query
 
-    const [fetchState, fetch] = useFetch(id)
-    const [destroyState, destroy] = useDestroy(id)
+    console.log(1234)
+    console.log(props)
+
+    // const [fetchState, fetch1] = useFetch(id)
+    // const [destroyState, destroy] = useDestroy(id)
     const [modalOpen, setModalOpen] = useState(false)
 
-    useEffect(() => fetch(), [])
+    // useEffect(() => fetch1(), [])
 
-    // if (destroyState.redirect) return <Redirect to={{ pathname: '/posts' }}/>
-    if (fetchState.loading) return null
-    const { post } = fetchState.data
+    // if (fetchState.loading) return null
+    const { post } = props.data
     return (
         <AppLayout>
             <UserConsumer>
@@ -32,7 +35,7 @@ export default (props) => {
                         <FloatMenu>
                             <FloatMenu.Item>
                                 <Link href={`/posts/${post.id}/edit`}>
-                                    Edit
+                                    <a>Edit</a>
                                 </Link>
                             </FloatMenu.Item>
                             <FloatMenu.Item>
@@ -46,7 +49,7 @@ export default (props) => {
                                     </Modal.Content>
                                     <Modal.Actions>
                                         <Button negative onClick={() => setModalOpen(false)}>No</Button>
-                                        <Button positive icon='checkmark' labelPosition='right' content='Yes' onClick={() => destroy()}/>
+                                        {/*<Button positive icon='checkmark' labelPosition='right' content='Yes' onClick={() => destroy()}/>*/}
                                     </Modal.Actions>
                                 </Modal>
                             </FloatMenu.Item>
@@ -92,3 +95,33 @@ export default (props) => {
         </AppLayout>
     )
 }
+
+Post.getInitialProps = async function(context) {
+    const { id } = context.query;
+
+    console.log(id)
+
+    let result = {
+        data: {},
+        errors: {}
+    }
+
+    await axios({
+        method: 'get',
+        url: `${process.env.api_prefix}/posts/${id}`
+    }).then(response => {
+        const { data } = response.data
+        result.data = data
+    }).catch(error => {
+
+        console.log(error)
+
+        // setHttpStatus(error.response.status)
+        // const { errors } = error.response.data
+        // result.errors = errors
+    })
+
+    return result;
+};
+
+export default Post
