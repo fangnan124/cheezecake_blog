@@ -5,28 +5,18 @@ import {UserConsumer} from 'contexts/user_context'
 import Tag from 'components/tag'
 import CodeBlock from 'components/code_block'
 import Comments from './comments'
-import {useFetch, useDestroy} from 'models/post'
+import {useDestroy} from 'models/post'
 import FloatMenu from 'components/float_menu'
-import {useRouter} from 'next/router'
 import AppLayout from 'layouts/app'
 import Link from 'next/link'
 import axios from "axios";
+import cookie from 'cookie'
 
 const Post = (props) => {
-    // const router = useRouter()
-    // const { id } = router.query
-
-    console.log(1234)
-    console.log(props)
-
-    // const [fetchState, fetch1] = useFetch(id)
-    // const [destroyState, destroy] = useDestroy(id)
+    const { post } = props.data
+    const [destroyState, destroy] = useDestroy(post.id)
     const [modalOpen, setModalOpen] = useState(false)
 
-    // useEffect(() => fetch1(), [])
-
-    // if (fetchState.loading) return null
-    const { post } = props.data
     return (
         <AppLayout>
             <UserConsumer>
@@ -49,7 +39,7 @@ const Post = (props) => {
                                     </Modal.Content>
                                     <Modal.Actions>
                                         <Button negative onClick={() => setModalOpen(false)}>No</Button>
-                                        {/*<Button positive icon='checkmark' labelPosition='right' content='Yes' onClick={() => destroy()}/>*/}
+                                        <Button positive icon='checkmark' labelPosition='right' content='Yes' onClick={() => destroy()}/>
                                     </Modal.Actions>
                                 </Modal>
                             </FloatMenu.Item>
@@ -97,28 +87,33 @@ const Post = (props) => {
 }
 
 Post.getInitialProps = async function(context) {
+    const cookies = cookie.parse(context.req.headers.cookie)
     const { id } = context.query;
-
-    console.log(id)
 
     let result = {
         data: {},
         errors: {}
     }
 
+    let prefix = 'http://web:3000/api/v1'
+    if (process.browser) {
+        prefix = process.env.api_prefix
+    }
+
     await axios({
         method: 'get',
-        url: `${process.env.api_prefix}/posts/${id}`
+        url: `${prefix}/posts/${id}`,
+        headers: {
+            'access-token': cookies['access-token'],
+            'client': cookies['client'],
+            'uid': cookies['uid']
+        }
     }).then(response => {
         const { data } = response.data
         result.data = data
     }).catch(error => {
-
-        console.log(error)
-
-        // setHttpStatus(error.response.status)
-        // const { errors } = error.response.data
-        // result.errors = errors
+        const { errors } = error.response.data
+        result.errors = errors
     })
 
     return result;

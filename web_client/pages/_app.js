@@ -1,16 +1,21 @@
 import React from 'react'
 import App from 'next/app'
 import { UserProvider } from 'contexts/user_context'
+import { CookiesProvider } from 'react-cookie';
 import axios from 'axios'
 import 'semantic-ui-css/semantic.min.css'
 import 'css/application.scss'
 import Router from 'next/router'
+import { useCookies } from 'react-cookie';
 
 // Add a request interceptor
 axios.interceptors.request.use(function (config) {
-    config.headers['access-token'] = localStorage.getItem('access-token')
-    config.headers['client'] = localStorage.getItem('client')
-    config.headers['uid'] = localStorage.getItem('uid')
+
+    if (process.browser) {
+        config.headers['access-token'] = localStorage.getItem('access-token')
+        config.headers['client'] = localStorage.getItem('client')
+        config.headers['uid'] = localStorage.getItem('uid')
+    }
 
     return config
 }, function (error) {
@@ -45,7 +50,11 @@ export default class extends App {
     render() {
         const { Component, pageProps } = this.props
         return (
-            <Component {...pageProps} />
+            <CookiesProvider>
+                <UserProvider>
+                    <Component {...pageProps} />
+                </UserProvider>
+            </CookiesProvider>
         )
     }
 }

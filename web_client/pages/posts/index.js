@@ -21,7 +21,7 @@ const Index = () => {
                             <Item.Content>
                                 <Item.Header>
                                     <Link href={`/posts/${post.id}`}>
-                                        {post.title}
+                                        <a>{post.title}</a>
                                     </Link>
                                 </Item.Header>
                                 <Item.Meta style={{fontSize: 13}}>

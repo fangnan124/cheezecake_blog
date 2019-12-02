@@ -4,8 +4,10 @@ import axios from 'axios'
 import UserContext from 'contexts/user_context'
 import AppLayout from 'layouts/app'
 import Router from 'next/router'
+import { useCookies } from 'react-cookie';
 
 const Login = () => {
+    const [cookies, setCookie] = useCookies(['access-token', 'client', 'uid']);
     const { setUser } = useContext(UserContext)
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -40,6 +42,9 @@ const Login = () => {
             localStorage.setItem('access-token', response.headers['access-token'])
             localStorage.setItem('client', response.headers['client'])
             localStorage.setItem('uid', response.headers['uid'])
+            setCookie('access-token', response.headers['access-token'])
+            setCookie('client', response.headers['client'])
+            setCookie('uid', response.headers['uid'])
 
             if (rememberMe) {
                 localStorage.setItem('user.email', email)
