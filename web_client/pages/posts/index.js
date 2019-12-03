@@ -1,26 +1,24 @@
 import React, {useState, useEffect} from 'react'
 import {Pagination, Item, Label} from 'semantic-ui-react'
-import {useFetchAll} from 'models/post'
 import AppLayout from 'layouts/app'
 import Link from 'next/link'
+import { findAll } from 'models/post1'
+import nextCookie from 'next-cookies'
+import Router from 'next/router'
 
-const Index = () => {
-    const [fetchAllState, fetchAll] = useFetchAll()
-    const [page, setPage] = useState(1)
+const Index = (props) => {
+    const { posts, currentPage, totalPages } = props.data
 
-    useEffect(() => fetchAll(page), [page])
-
-    if (fetchAllState.loading) return null
     return (
         <AppLayout>
             <Item.Group divided>
                 {
-                    fetchAllState.data.posts.map(post => (
+                    posts.map(post => (
                         <Item key={post.id}>
                             <Item.Image src={post.thumb_url}/>
                             <Item.Content>
                                 <Item.Header>
-                                    <Link href={`/posts/${post.id}`}>
+                                    <Link href={`/posts/[id]`} as={`/posts/${post.id}`}>
                                         <a>{post.title}</a>
                                     </Link>
                                 </Item.Header>
@@ -46,16 +44,22 @@ const Index = () => {
             </Item.Group>
             <Pagination
                 boundaryRange={0}
-                defaultActivePage={fetchAllState.data.currentPage}
+                defaultActivePage={currentPage}
                 ellipsisItem={null}
                 firstItem={null}
                 lastItem={null}
                 siblingRange={3}
-                totalPages={fetchAllState.data.totalPages}
-                onPageChange={(_, data) => setPage(data.activePage)}
+                totalPages={totalPages}
+                onPageChange={(_, data) => Router.push(`/posts?page=${data.activePage}`)}
             />
         </AppLayout>
     )
 }
+
+Index.getInitialProps = async function(context) {
+    const cookies = nextCookie(context)
+    const { page } = context.query
+    return await findAll({ cookies, page })
+};
 
 export default Index

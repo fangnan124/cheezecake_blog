@@ -11,11 +11,13 @@ import { useCookies } from 'react-cookie';
 // Add a request interceptor
 axios.interceptors.request.use(function (config) {
 
-    if (process.browser) {
-        config.headers['access-token'] = localStorage.getItem('access-token')
-        config.headers['client'] = localStorage.getItem('client')
-        config.headers['uid'] = localStorage.getItem('uid')
-    }
+    // console.log(config)
+    //
+    // if (process.browser) {
+    //     config.headers['access-token'] = localStorage.getItem('access-token')
+    //     config.headers['client'] = localStorage.getItem('client')
+    //     config.headers['uid'] = localStorage.getItem('uid')
+    // }
 
     return config
 }, function (error) {

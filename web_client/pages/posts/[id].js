@@ -9,8 +9,8 @@ import {useDestroy} from 'models/post'
 import FloatMenu from 'components/float_menu'
 import AppLayout from 'layouts/app'
 import Link from 'next/link'
-import axios from "axios";
-import cookie from 'cookie'
+import { find, findAll } from 'models/post1'
+import nextCookie from "next-cookies";
 
 const Post = (props) => {
     const { post } = props.data
@@ -24,7 +24,7 @@ const Post = (props) => {
                     return user && user.role === 'writer' && (
                         <FloatMenu>
                             <FloatMenu.Item>
-                                <Link href={`/posts/${post.id}/edit`}>
+                                <Link href={`/posts/[id]/edit`} as={`/posts/${post.id}/edit`}>
                                     <a>Edit</a>
                                 </Link>
                             </FloatMenu.Item>
@@ -87,36 +87,9 @@ const Post = (props) => {
 }
 
 Post.getInitialProps = async function(context) {
-    const cookies = cookie.parse(context.req.headers.cookie)
-    const { id } = context.query;
-
-    let result = {
-        data: {},
-        errors: {}
-    }
-
-    let prefix = 'http://web:3000/api/v1'
-    if (process.browser) {
-        prefix = process.env.api_prefix
-    }
-
-    await axios({
-        method: 'get',
-        url: `${prefix}/posts/${id}`,
-        headers: {
-            'access-token': cookies['access-token'],
-            'client': cookies['client'],
-            'uid': cookies['uid']
-        }
-    }).then(response => {
-        const { data } = response.data
-        result.data = data
-    }).catch(error => {
-        const { errors } = error.response.data
-        result.errors = errors
-    })
-
-    return result;
+    const cookies = nextCookie(context)
+    const { id } = context.query
+    return await find({ id, cookies })
 };
 
 export default Post
