@@ -9,10 +9,12 @@ import {useDestroy} from 'models/post'
 import FloatMenu from 'components/float_menu'
 import AppLayout from 'layouts/app'
 import Link from 'next/link'
-import { find, findAll } from 'models/post1'
-import nextCookie from "next-cookies";
+import Posts from 'models/posts'
+import Error from 'next/error'
 
 const Post = (props) => {
+    if (props.meta.status !== '200') return <Error statusCode={props.meta.status} />
+
     const { post } = props.data
     const [destroyState, destroy] = useDestroy(post.id)
     const [modalOpen, setModalOpen] = useState(false)
@@ -81,15 +83,15 @@ const Post = (props) => {
                     escapeHtml={false}
                 />
             </div>
-            <Comments postId={post.id}/>
+            {/*<Comments postId={post.id}/>*/}
         </AppLayout>
     )
 }
 
 Post.getInitialProps = async function(context) {
-    const cookies = nextCookie(context)
     const { id } = context.query
-    return await find({ id, cookies })
+    Posts.setCookies(context)
+    return await Posts.find({ id })
 };
 
 export default Post

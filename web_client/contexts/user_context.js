@@ -16,7 +16,7 @@ export const UserProvider = ({ children }) => {
             setUser(response.data.data.user)
             setLoading(false)
         }).catch(error => {
-            const { errors } = error.response.data
+            // const { errors } = error.response.data
             setLoading(false)
         })
     }, [])

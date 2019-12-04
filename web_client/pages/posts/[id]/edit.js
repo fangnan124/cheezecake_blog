@@ -6,19 +6,19 @@ import {UserConsumer} from 'contexts/user_context'
 import FloatMenu from 'components/float_menu'
 import PostRevisions from 'pages/post_revisions/'
 import AppLayout from 'layouts/app'
-import { useRouter } from 'next/router'
+import Posts from "../../../models/posts";
+import Post from "../[id]";
+import Error from "next/error";
 
-const Edit = () => {
-    const router = useRouter()
-    const { id } = router.query
+const Edit = (props) => {
+    if (props.meta.status !== '200') {
+        return <Error statusCode={props.meta.status} />
+    }
 
-    const [fetchState, fetch] = useFetch(id)
-    const [updateState, update] = useUpdate(id)
+    const { post } = props.data
+    const [updateState, update] = useUpdate(post.id)
     const [modalOpen, setModalOpen] = useState(false)
 
-    useEffect(() => fetch(), [])
-
-    if (fetchState.loading) return null
     return (
         <AppLayout>
             <UserConsumer>
@@ -40,9 +40,15 @@ const Edit = () => {
                     )
                 } }
             </UserConsumer>
-            <_Form submit={update} post={fetchState.data.post} errors={fetchState.errors} />
+            <_Form submit={update} post={post} errors={errors} />
         </AppLayout>
     )
 }
+
+Post.getInitialProps = async function(context) {
+    const { id } = context.query
+    Posts.setCookies(context)
+    return await Posts.find({ id })
+};
 
 export default Edit

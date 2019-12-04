@@ -39,9 +39,9 @@ const Login = () => {
                 password
             }
         }).then(response => {
-            localStorage.setItem('access-token', response.headers['access-token'])
-            localStorage.setItem('client', response.headers['client'])
-            localStorage.setItem('uid', response.headers['uid'])
+            // localStorage.setItem('access-token', response.headers['access-token'])
+            // localStorage.setItem('client', response.headers['client'])
+            // localStorage.setItem('uid', response.headers['uid'])
             setCookie('access-token', response.headers['access-token'])
             setCookie('client', response.headers['client'])
             setCookie('uid', response.headers['uid'])

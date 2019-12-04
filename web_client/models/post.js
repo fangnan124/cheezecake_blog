@@ -3,55 +3,55 @@ import axios from 'axios'
 import Router from 'next/router'
 import objectToFormData from 'object-to-formdata'
 
-export const useFetchAll = () => {
-    const [data, setData] = useState({})
-    const [errors, setErrors] = useState({})
-    const [loading, setLoading] = useState(true)
-
-    const fetchAll = (page) => {
-        setLoading(true)
-        axios({
-            method: 'get',
-            url: `${process.env.api_prefix}/posts`,
-            params: { page: page }
-        }).then(response => {
-            const { data } = response.data
-            setData(data)
-        }).catch(error => {
-            const { errors } = error.response.data
-            setErrors(errors)
-        }).finally(() => {
-            setLoading(false)
-        })
-    }
-
-    return [{ data, errors, loading }, fetchAll]
-}
-
-export const useFetch = (id) => {
-    const [data, setData] = useState({})
-    const [errors, setErrors] = useState({})
-    const [loading, setLoading] = useState(true)
-
-    const fetch = () => {
-        setLoading(true)
-        axios({
-            method: 'get',
-            url: `${process.env.api_prefix}/posts/${id}`
-        }).then(response => {
-            const { data } = response.data
-            setData(data)
-            setLoading(false)
-        }).catch(error => {
-            // setHttpStatus(error.response.status)
-            const { errors } = error.response.data
-            setErrors(errors)
-            setLoading(false)
-        })
-    }
-
-    return [{ data, errors, loading }, fetch]
-}
+// export const useFetchAll = () => {
+//     const [data, setData] = useState({})
+//     const [errors, setErrors] = useState({})
+//     const [loading, setLoading] = useState(true)
+//
+//     const fetchAll = (page) => {
+//         setLoading(true)
+//         axios({
+//             method: 'get',
+//             url: `${process.env.api_prefix}/posts`,
+//             params: { page: page }
+//         }).then(response => {
+//             const { data } = response.data
+//             setData(data)
+//         }).catch(error => {
+//             const { errors } = error.response.data
+//             setErrors(errors)
+//         }).finally(() => {
+//             setLoading(false)
+//         })
+//     }
+//
+//     return [{ data, errors, loading }, fetchAll]
+// }
+//
+// export const useFetch = (id) => {
+//     const [data, setData] = useState({})
+//     const [errors, setErrors] = useState({})
+//     const [loading, setLoading] = useState(true)
+//
+//     const fetch = () => {
+//         setLoading(true)
+//         axios({
+//             method: 'get',
+//             url: `${process.env.api_prefix}/posts/${id}`
+//         }).then(response => {
+//             const { data } = response.data
+//             setData(data)
+//             setLoading(false)
+//         }).catch(error => {
+//             // setHttpStatus(error.response.status)
+//             const { errors } = error.response.data
+//             setErrors(errors)
+//             setLoading(false)
+//         })
+//     }
+//
+//     return [{ data, errors, loading }, fetch]
+// }
 
 export const useCreate = () => {
     const [errors, setErrors] = useState({})
@@ -124,4 +124,4 @@ export const useDestroy = (id) => {
     return [{ errors, loading }, destroy]
 }
 
-export default { useFetchAll, useFetch, useCreate, useUpdate, useDestroy }
+export default { useCreate, useUpdate, useDestroy }

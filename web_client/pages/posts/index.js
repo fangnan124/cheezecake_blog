@@ -2,8 +2,7 @@ import React, {useState, useEffect} from 'react'
 import {Pagination, Item, Label} from 'semantic-ui-react'
 import AppLayout from 'layouts/app'
 import Link from 'next/link'
-import { findAll } from 'models/post1'
-import nextCookie from 'next-cookies'
+import Posts from 'models/posts'
 import Router from 'next/router'
 
 const Index = (props) => {
@@ -57,9 +56,9 @@ const Index = (props) => {
 }
 
 Index.getInitialProps = async function(context) {
-    const cookies = nextCookie(context)
     const { page } = context.query
-    return await findAll({ cookies, page })
+    Posts.setCookies(context)
+    return await Posts.all({ page })
 };
 
 export default Index

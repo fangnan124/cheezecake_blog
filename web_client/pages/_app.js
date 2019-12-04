@@ -1,22 +1,24 @@
 import React from 'react'
 import App from 'next/app'
 import { UserProvider } from 'contexts/user_context'
-import { CookiesProvider } from 'react-cookie';
+import { CookiesProvider } from 'react-cookie'
 import axios from 'axios'
 import 'semantic-ui-css/semantic.min.css'
 import 'css/application.scss'
 import Router from 'next/router'
-import { useCookies } from 'react-cookie';
+import { useCookies } from 'react-cookie'
+import cookie from 'cookie'
+import { Cookies } from 'react-cookie';
+
+const cookies = new Cookies();
 
 // Add a request interceptor
 axios.interceptors.request.use(function (config) {
 
-    // console.log(config)
-    //
     // if (process.browser) {
-    //     config.headers['access-token'] = localStorage.getItem('access-token')
-    //     config.headers['client'] = localStorage.getItem('client')
-    //     config.headers['uid'] = localStorage.getItem('uid')
+    //     config.headers['access-token'] = cookies.get('access-token')
+    //     config.headers['client'] = cookies.get('client')
+    //     config.headers['uid'] = cookies.get('uid')
     // }
 
     return config

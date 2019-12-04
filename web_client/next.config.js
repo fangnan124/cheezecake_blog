@@ -8,6 +8,11 @@ const nextConfig = {
     // exportPathMap: function() {
     //     return { '/': {page: '/posts'} }
     // },
+
+    // `env` or `publicRuntimeConfig`
+    //   publicRuntimeConfig is no longer available only in serverless deployments.
+    //   Recommended approach is to use env in next.config.js
+    //   from: `https://spectrum.chat/next-js/general/publicruntimeconfig~2a5850ac-71a2-48d9-acb3-37e3f10b6a8e`
     env: {
         domain: 'http://localhost:3030',
         api_prefix: 'http://localhost:3030/api/v1',
