@@ -1,127 +1,74 @@
-import { useState } from 'react'
 import axios from 'axios'
-import Router from 'next/router'
+import ServerAccessModel from './server_access_model'
 import objectToFormData from 'object-to-formdata'
 
-// export const useFetchAll = () => {
-//     const [data, setData] = useState({})
-//     const [errors, setErrors] = useState({})
-//     const [loading, setLoading] = useState(true)
-//
-//     const fetchAll = (page) => {
-//         setLoading(true)
-//         axios({
-//             method: 'get',
-//             url: `${process.env.api_prefix}/posts`,
-//             params: { page: page }
-//         }).then(response => {
-//             const { data } = response.data
-//             setData(data)
-//         }).catch(error => {
-//             const { errors } = error.response.data
-//             setErrors(errors)
-//         }).finally(() => {
-//             setLoading(false)
-//         })
-//     }
-//
-//     return [{ data, errors, loading }, fetchAll]
-// }
-//
-// export const useFetch = (id) => {
-//     const [data, setData] = useState({})
-//     const [errors, setErrors] = useState({})
-//     const [loading, setLoading] = useState(true)
-//
-//     const fetch = () => {
-//         setLoading(true)
-//         axios({
-//             method: 'get',
-//             url: `${process.env.api_prefix}/posts/${id}`
-//         }).then(response => {
-//             const { data } = response.data
-//             setData(data)
-//             setLoading(false)
-//         }).catch(error => {
-//             // setHttpStatus(error.response.status)
-//             const { errors } = error.response.data
-//             setErrors(errors)
-//             setLoading(false)
-//         })
-//     }
-//
-//     return [{ data, errors, loading }, fetch]
-// }
+class Post extends ServerAccessModel {
+    static resolved = {
+        all: async (params) => {
+            let data = {}
+            await this.all(params)
+                .then(response => {
+                    data = response.data
+                }).catch(error => {
+                    data = error.response.data
+                })
+            return data
+        },
+        find: async (params) => {
+            let data = {}
+            await this.find(params)
+                .then(response => {
+                    data = response.data
+                }).catch(error => {
+                    data = error.response.data
+            })
+            return data
+        }
+    }
 
-export const useCreate = () => {
-    const [errors, setErrors] = useState({})
-    const [loading, setLoading] = useState(false)
-
-    const create = (params) => {
-        setLoading(true)
+    static all = ({ page }) => (
         axios({
+            method: 'get',
+            url: `${this.prefix()}/posts`,
+            params: {
+                page
+            },
+            headers: this.authHeaders()
+        })
+    )
+
+    static find = ({ id }) => (
+        axios({
+            method: 'get',
+            url: `${this.prefix()}/posts/${id}`,
+            headers: this.authHeaders()
+        })
+    )
+
+    static create = async ({ params }) => {
+        let resolve = {}
+
+        await axios({
             method: 'post',
-            url: `${process.env.api_prefix}/posts`,
+            url: `${this.prefix()}/posts`,
             data: objectToFormData(params),
-            headers: { 'content-type': 'multipart/form-data' }
-        }).then(() => {
-            Router.push('/posts')
+            headers: { 'content-type': 'multipart/form-data', ...this.authHeaders() }
+        }).then(response => {
+            resolve = response.data
         }).catch(error => {
-            const { errors } = error.response.data
-            console.log(errors)
-            setErrors(errors)
-        }).finally(() => {
-            setLoading(false)
+            resolve = error.response.data
         })
+
+        return resolve
     }
 
-    return [{ errors, loading }, create]
-}
+    static update = async ({ params }) => {
 
-export const useUpdate = (id) => {
-    const [errors, setErrors] = useState({})
-    const [loading, setLoading] = useState(false)
-
-    const update = (params) => {
-        setLoading(true)
-        axios({
-            method: 'put',
-            url: `${process.env.api_prefix}/posts/${id}`,
-            data: objectToFormData(params),
-            headers: { 'content-type': 'multipart/form-data' }
-        }).then(() => {
-            Router.push('/posts')
-        }).catch(error => {
-            const { errors } = error.response.data
-            setErrors(errors)
-        }).finally(() => {
-            setLoading(false)
-        })
     }
 
-    return [{ errors, loading }, update]
-}
+    static destroy = async ({ id }) => {
 
-export const useDestroy = (id) => {
-    const [errors, setErrors] = useState({})
-    const [loading, setLoading] = useState(false)
-
-    const destroy = () => {
-        setLoading(true)
-        axios({
-            method: 'delete',
-            url: `${process.env.api_prefix}/posts/${id}`
-        }).then(() => {
-            Router.push('/posts')
-        }).catch(error => {
-            const { errors } = error.response.data
-            setErrors(errors)
-        }).finally(() => {
-            setLoading(false)
-        })
     }
-
-    return [{ errors, loading }, destroy]
 }
 
-export default { useCreate, useUpdate, useDestroy }
+export default Post

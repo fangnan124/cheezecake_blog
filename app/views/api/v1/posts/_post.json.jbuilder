@@ -12,13 +12,13 @@ json.comments_count post.comments.count
 thumb_url = if post.image.attached?
               url_for(post.image.variant(resize: '500x500'))
             else
-              image_path('netherlands.jpg')
+              'netherlands.jpg'
             end
 json.thumb_url thumb_url
 image_url = if post.image.attached?
               url_for(post.image.variant(resize: '1000x1000'))
             else
-              image_path('netherlands.jpg')
+              'netherlands.jpg'
             end
 json.image_url image_url
 json.created_time_ago time_ago_in_words(post.created_at)

@@ -140,7 +140,8 @@ _Form.defaultProps = {
         tags: [],
         status: '',
         errors: {}
-    }
+    },
+    errors: {}
 };
 
 export default _Form

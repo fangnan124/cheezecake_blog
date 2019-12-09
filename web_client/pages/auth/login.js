@@ -5,6 +5,7 @@ import UserContext from 'contexts/user_context'
 import AppLayout from 'layouts/app'
 import Router from 'next/router'
 import { useCookies } from 'react-cookie';
+import Auth from 'models/auth'
 
 const Login = () => {
     const [cookies, setCookie] = useCookies(['access-token', 'client', 'uid']);
@@ -30,35 +31,24 @@ const Login = () => {
     const handleSubmit = (event) => {
         event.preventDefault()
 
-        // this.setState({ loading: true })
-        axios({
-            method: 'post',
-            url: 'http://localhost:3030/auth/sign_in',
-            data: {
-                email,
-                password
-            }
-        }).then(response => {
-            // localStorage.setItem('access-token', response.headers['access-token'])
-            // localStorage.setItem('client', response.headers['client'])
-            // localStorage.setItem('uid', response.headers['uid'])
-            setCookie('access-token', response.headers['access-token'])
-            setCookie('client', response.headers['client'])
-            setCookie('uid', response.headers['uid'])
+        Auth.sign_in({ email, password })
+            .then(response => {
+                setCookie('access-token', response.headers['access-token'])
+                setCookie('client', response.headers['client'])
+                setCookie('uid', response.headers['uid'])
 
-            if (rememberMe) {
-                localStorage.setItem('user.email', email)
-            } else {
-                localStorage.removeItem('user.email')
-            }
+                if (rememberMe) {
+                    localStorage.setItem('user.email', email)
+                } else {
+                    localStorage.removeItem('user.email')
+                }
 
-            setUser(response.data.data.user)
+                setUser(response.data.data.user)
 
-            Router.push('/posts')
-        }).catch(error => {
-            const { errors } = error.response.data
-            this.setState({ errors, loading: false })
-        })
+                Router.push('/posts')
+            }).catch(error => {
+                const { errors } = error.response.data
+            })
     }
 
     return (

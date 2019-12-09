@@ -1,6 +1,6 @@
 import { Cookies } from 'react-cookie'
 
-class BaseModel {
+class ServerAccessModel {
     static cookies;
     static setCookies = context => {
         this.cookies = context.req ? new Cookies(context.req.headers.cookie) : new Cookies()
@@ -12,9 +12,9 @@ class BaseModel {
 
     static authHeaders = () => {
         return {
-            'access-token': this.getCookies().get('access-token'),
-            'client': this.getCookies().get('client'),
-            'uid': this.getCookies().get('uid')
+            'access-token': this.getCookies().get('access-token') || '',
+            'client': this.getCookies().get('client') || '',
+            'uid': this.getCookies().get('uid') || ''
         }
     }
 
@@ -24,4 +24,4 @@ class BaseModel {
 
 }
 
-export default BaseModel
+export default ServerAccessModel

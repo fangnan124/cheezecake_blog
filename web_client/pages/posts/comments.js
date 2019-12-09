@@ -1,6 +1,6 @@
 import {useState, useEffect} from 'react'
 import {Header, Button, Comment, Form} from 'semantic-ui-react'
-import {useFetchAll, useCreate, useUpdate, useDestroy} from 'models/comment'
+import {useFetchAll, useCreate, useUpdate, useDestroy} from 'hooks/comment'
 import FormValidationMessage from 'components/form_validation_message'
 import { errorMessage } from 'helpers/form_helper'
 

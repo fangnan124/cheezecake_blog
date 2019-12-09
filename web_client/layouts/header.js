@@ -1,26 +1,27 @@
 import React, {useContext} from 'react'
 import { Menu, Container, Image, Icon, Dropdown } from 'semantic-ui-react'
 import UserContext from 'contexts/user_context'
-import axios from 'axios'
 import Link from 'next/link'
 import Router from 'next/router'
+import {useCookies} from "react-cookie";
+import Auth from "models/auth";
 
 const Header = () => {
     const { user, setUser } = useContext(UserContext)
+    const [cookies, setCookie, removeCookie] = useCookies(['access-token', 'client', 'uid'])
 
     const logout = () => {
-        axios({
-            method: 'delete',
-            url: `${process.env.domain}/auth/sign_out`
-        }).then(() => {
-            localStorage.removeItem('access-token')
-            localStorage.removeItem('client')
-            localStorage.removeItem('uid')
-            setUser(null)
-            Router.push('/')
-        }).catch(error => {
-            const { errors } = error.response.data
-        })
+        Auth.sign_out()
+            .then(() => {
+                removeCookie('access-token')
+                removeCookie('client')
+                removeCookie('uid')
+                setUser(null)
+                Router.push('/')
+            })
+            .catch(error => {
+                // const { errors } = error.response.data
+            })
     }
 
     return (

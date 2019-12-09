@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import {Pagination, Modal, Table, Form} from 'semantic-ui-react'
-import {useFetchAll} from 'models/post_revision'
+import {useFetchAll} from 'hooks/post_revision'
 
 const RevisionNumber = (props) => {
     const [modalOpen, setModalOpen] = useState(false)

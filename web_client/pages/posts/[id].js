@@ -1,54 +1,51 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 import {Header, Modal, Button, Image} from 'semantic-ui-react'
 import ReactMarkdown from 'react-markdown'
-import {UserConsumer} from 'contexts/user_context'
+import UserContext from 'contexts/user_context'
 import Tag from 'components/tag'
 import CodeBlock from 'components/code_block'
 import Comments from './comments'
-import {useDestroy} from 'models/post'
+import {useDestroy} from 'hooks/post'
 import FloatMenu from 'components/float_menu'
 import AppLayout from 'layouts/app'
 import Link from 'next/link'
-import Posts from 'models/posts'
-import Error from 'next/error'
+import Post from 'models/post'
+import WithError from 'components/with_error'
 
-const Post = (props) => {
-    if (props.meta.status !== '200') return <Error statusCode={props.meta.status} />
-
+const Show = (props) => {
     const { post } = props.data
+    const { user, setUser } = useContext(UserContext)
     const [destroyState, destroy] = useDestroy(post.id)
     const [modalOpen, setModalOpen] = useState(false)
 
     return (
         <AppLayout>
-            <UserConsumer>
-                { ({ user }) => {
-                    return user && user.role === 'writer' && (
-                        <FloatMenu>
-                            <FloatMenu.Item>
-                                <Link href={`/posts/[id]/edit`} as={`/posts/${post.id}/edit`}>
-                                    <a>Edit</a>
-                                </Link>
-                            </FloatMenu.Item>
-                            <FloatMenu.Item>
-                                <a onClick={() => setModalOpen(true)} style={{ color: 'red' }}>
-                                    Delete
-                                </a>
-                                <Modal size={'mini'} open={modalOpen} onClose={() => setModalOpen(false)} centered={false}>
-                                    <Modal.Header>Delete Post</Modal.Header>
-                                    <Modal.Content>
-                                        <p>Are you sure you want to delete this post?</p>
-                                    </Modal.Content>
-                                    <Modal.Actions>
-                                        <Button negative onClick={() => setModalOpen(false)}>No</Button>
-                                        <Button positive icon='checkmark' labelPosition='right' content='Yes' onClick={() => destroy()}/>
-                                    </Modal.Actions>
-                                </Modal>
-                            </FloatMenu.Item>
-                        </FloatMenu>
-                    )
-                }}
-            </UserConsumer>
+            {
+                user && user.role === 'writer' && (
+                    <FloatMenu>
+                        <FloatMenu.Item>
+                            <Link href={`/posts/[id]/edit`} as={`/posts/${post.id}/edit`}>
+                                <a>Edit</a>
+                            </Link>
+                        </FloatMenu.Item>
+                        <FloatMenu.Item>
+                            <a onClick={() => setModalOpen(true)} style={{ color: 'red' }}>
+                                Delete
+                            </a>
+                            <Modal size={'mini'} open={modalOpen} onClose={() => setModalOpen(false)} centered={false}>
+                                <Modal.Header>Delete Post</Modal.Header>
+                                <Modal.Content>
+                                    <p>Are you sure you want to delete this post?</p>
+                                </Modal.Content>
+                                <Modal.Actions>
+                                    <Button negative onClick={() => setModalOpen(false)}>No</Button>
+                                    <Button positive icon='checkmark' labelPosition='right' content='Yes' onClick={() => destroy()}/>
+                                </Modal.Actions>
+                            </Modal>
+                        </FloatMenu.Item>
+                    </FloatMenu>
+                )
+            }
             <Header as='h1' style={{ fontSize: 36 }}>{post.title}</Header>
             <div style={{ margin: 5 }}>
                 <span style={{ fontSize: 13, color: 'grey' }}>
@@ -83,15 +80,15 @@ const Post = (props) => {
                     escapeHtml={false}
                 />
             </div>
-            {/*<Comments postId={post.id}/>*/}
+            <Comments postId={post.id}/>
         </AppLayout>
     )
 }
 
-Post.getInitialProps = async function(context) {
+Show.getInitialProps = async function(context) {
     const { id } = context.query
-    Posts.setCookies(context)
-    return await Posts.find({ id })
-};
+    Post.setCookies(context)
+    return await Post.resolved.find({ id })
+}
 
-export default Post
+export default WithError(Show)

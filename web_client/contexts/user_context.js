@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import axios from 'axios'
+import Auth from 'models/auth'
 
 const UserContext = React.createContext()
 
@@ -9,16 +9,15 @@ export const UserProvider = ({ children }) => {
 
     useEffect(() => {
         setLoading(true)
-        axios({
-            method: 'get',
-            url: `${process.env.domain}/auth/validate_token`
-        }).then(response => {
-            setUser(response.data.data.user)
-            setLoading(false)
-        }).catch(error => {
-            // const { errors } = error.response.data
-            setLoading(false)
-        })
+        Auth.validate_token()
+            .then(response => {
+                setUser(response.data.data.user)
+                setLoading(false)
+            }).catch(error => {
+                console.log(error)
+            }).finally(() => {
+                setLoading(false)
+            })
     }, [])
 
     if (loading) return null

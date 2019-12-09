@@ -1,54 +1,49 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 import {Modal} from 'semantic-ui-react'
 import _Form from '../_form'
-import {useFetch, useUpdate} from 'models/post'
-import {UserConsumer} from 'contexts/user_context'
+import {useFetch, useUpdate} from 'hooks/post'
+import UserContext, {UserConsumer} from 'contexts/user_context'
 import FloatMenu from 'components/float_menu'
 import PostRevisions from 'pages/post_revisions/'
 import AppLayout from 'layouts/app'
-import Posts from "../../../models/posts";
-import Post from "../[id]";
+import Post from "models/post";
 import Error from "next/error";
+import WithError from 'components/with_error'
 
 const Edit = (props) => {
-    if (props.meta.status !== '200') {
-        return <Error statusCode={props.meta.status} />
-    }
-
     const { post } = props.data
+    const { user, setUser } = useContext(UserContext)
     const [updateState, update] = useUpdate(post.id)
     const [modalOpen, setModalOpen] = useState(false)
 
     return (
         <AppLayout>
-            <UserConsumer>
-                { ({ user }) => {
-                    return user && user.role === 'writer' && (
-                        <FloatMenu>
-                            <FloatMenu.Item>
-                                <a onClick={() => setModalOpen(true)}>
-                                    Revisions
-                                </a>
-                                <Modal size={'small'} open={modalOpen} onClose={() => setModalOpen(false)}>
-                                    <Modal.Header>Revisions</Modal.Header>
-                                    <Modal.Content style={{padding: 0}}>
-                                        <PostRevisions postId={id}/>
-                                    </Modal.Content>
-                                </Modal>
-                            </FloatMenu.Item>
-                        </FloatMenu>
-                    )
-                } }
-            </UserConsumer>
-            <_Form submit={update} post={post} errors={errors} />
+            {
+                user && user.role === 'writer' && (
+                    <FloatMenu>
+                        <FloatMenu.Item>
+                            <a onClick={() => setModalOpen(true)}>
+                                Revisions
+                            </a>
+                            <Modal size={'small'} open={modalOpen} onClose={() => setModalOpen(false)}>
+                                <Modal.Header>Revisions</Modal.Header>
+                                <Modal.Content style={{padding: 0}}>
+                                    <PostRevisions postId={post.id}/>
+                                </Modal.Content>
+                            </Modal>
+                        </FloatMenu.Item>
+                    </FloatMenu>
+                )
+            }
+            <_Form submit={update} post={post} errors={props.errors} />
         </AppLayout>
     )
 }
 
-Post.getInitialProps = async function(context) {
+Edit.getInitialProps = async function(context) {
     const { id } = context.query
-    Posts.setCookies(context)
-    return await Posts.find({ id })
+    Post.setCookies(context)
+    return await Post.resolved.find({ id })
 };
 
-export default Edit
+export default WithError(Edit)
