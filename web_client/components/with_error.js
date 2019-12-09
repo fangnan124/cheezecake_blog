@@ -7,17 +7,15 @@ export default Component => {
                 (Component.getInitialProps
                     ? await Component.getInitialProps(ctx)
                     : null) || {}
-            if (props.statusCode && ctx.res) {
-                ctx.res.statusCode = props.statusCode
-            }
-
-            console.log('props: ', props)
+            // if (props.statusCode && ctx.res) {
+            //     ctx.res.statusCode = props.statusCode
+            // }
 
             return props
         }
         render() {
-            if (this.props.statusCode) {
-                return <ErrorPage statusCode={this.props.statusCode} />
+            if (this.props.status) {
+                return <ErrorPage statusCode={this.props.status} />
             }
             return <Component {...this.props} />
         }

@@ -1,20 +1,30 @@
-import React, {useState, useEffect, useContext} from 'react'
+import React, {useState, useContext} from 'react'
 import {Modal} from 'semantic-ui-react'
 import _Form from '../_form'
-import {useFetch, useUpdate} from 'hooks/post'
-import UserContext, {UserConsumer} from 'contexts/user_context'
+import {useUpdate} from 'hooks/post'
+import UserContext from 'contexts/user_context'
 import FloatMenu from 'components/float_menu'
 import PostRevisions from 'pages/post_revisions/'
 import AppLayout from 'layouts/app'
-import Post from "models/post";
-import Error from "next/error";
+import Post from 'models/post'
 import WithError from 'components/with_error'
+import Router from "next/router";
 
 const Edit = (props) => {
-    const { post } = props.data
-    const { user, setUser } = useContext(UserContext)
-    const [updateState, update] = useUpdate(post.id)
+    const {post} = props.data
+    const {user} = useContext(UserContext)
+    const [errors, setErrors] = useState([])
     const [modalOpen, setModalOpen] = useState(false)
+
+    const handleUpdate = (params) => {
+        Post.update({ params })
+            .then(response => {
+                Router.push('/posts')
+            }).catch(error => {
+                const { errors } = error.response.data
+                setErrors(errors)
+            })
+    }
 
     return (
         <AppLayout>
@@ -35,7 +45,7 @@ const Edit = (props) => {
                     </FloatMenu>
                 )
             }
-            <_Form submit={update} post={post} errors={props.errors} />
+            <_Form submit={handleUpdate} post={post} errors={errors} />
         </AppLayout>
     )
 }

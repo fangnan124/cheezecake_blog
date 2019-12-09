@@ -9,7 +9,7 @@ import AppLayout from 'layouts/app'
 import Router from 'next/router'
 
 const SignUp = () => {
-    const { setUser } = useContext(UserContext)
+    const {setUser} = useContext(UserContext)
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [name, setName] = useState('')

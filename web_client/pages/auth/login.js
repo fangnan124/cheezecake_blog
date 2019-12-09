@@ -1,6 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react'
 import { Button, Form, Checkbox } from 'semantic-ui-react'
-import axios from 'axios'
 import UserContext from 'contexts/user_context'
 import AppLayout from 'layouts/app'
 import Router from 'next/router'
@@ -8,8 +7,8 @@ import { useCookies } from 'react-cookie';
 import Auth from 'models/auth'
 
 const Login = () => {
-    const [cookies, setCookie] = useCookies(['access-token', 'client', 'uid']);
-    const { setUser } = useContext(UserContext)
+    const [_cookies, setCookie] = useCookies(['access-token', 'client', 'uid']);
+    const {setUser} = useContext(UserContext)
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [rememberMe, setRememberMe] = useState(false)

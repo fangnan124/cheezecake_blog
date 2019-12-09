@@ -3,11 +3,6 @@ class ApiController < ActionController::API
   include DeviseTokenAuth::Concerns::SetUserByToken
   include LetterAvatar::AvatarHelper
 
-  # # json layout
-  # include ActionController::ImplicitRender
-  # include ActionView::Layouts
-  # layout 'application'
-
   rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity
   rescue_from Pundit::NotAuthorizedError, with: :render_not_authorized_error
 
@@ -15,6 +10,7 @@ class ApiController < ActionController::API
 
   def render_unprocessable_entity(exception)
     render json: {
+      status: 401,
       errors: exception.record.errors.to_hash(true)
     }, status: :unprocessable_entity
   end

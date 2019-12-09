@@ -1,23 +1,25 @@
-import React from 'react'
+import React, {useState} from 'react'
 import _Form from './_form'
-import {useCreate} from 'hooks/post'
 import AppLayout from 'layouts/app'
 import Router from 'next/router'
-import Error from "next/error"
+import Post from "models/post"
 
 const New = () => {
-    const [state, create] = useCreate()
+    const [errors, setErrors] = useState([])
 
-    if (state.meta.status) {
-        switch (state.meta.status) {
-            case '200': Router.push('/posts')
-            default: return <Error statusCode={props.meta.status} />
-        }
+    const handleSubmit = (params) => {
+        Post.create({ params })
+            .then(response => {
+                Router.push('/posts')
+            }).catch(error => {
+                const { errors } = error.response.data
+                setErrors(errors)
+            })
     }
 
     return (
         <AppLayout>
-            <_Form submit={create} errors={state.errors}/>
+            <_Form submit={handleSubmit} errors={errors}/>
         </AppLayout>
     )
 }

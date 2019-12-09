@@ -1,6 +1,7 @@
 import axios from 'axios'
 import ServerAccessModel from './server_access_model'
 import objectToFormData from 'object-to-formdata'
+import Router from "next/router";
 
 class Post extends ServerAccessModel {
     static resolved = {
@@ -21,7 +22,7 @@ class Post extends ServerAccessModel {
                     data = response.data
                 }).catch(error => {
                     data = error.response.data
-            })
+                })
             return data
         }
     }
@@ -45,25 +46,22 @@ class Post extends ServerAccessModel {
         })
     )
 
-    static create = async ({ params }) => {
-        let resolve = {}
-
-        await axios({
+    static create = ({ params }) => (
+        axios({
             method: 'post',
             url: `${this.prefix()}/posts`,
             data: objectToFormData(params),
             headers: { 'content-type': 'multipart/form-data', ...this.authHeaders() }
-        }).then(response => {
-            resolve = response.data
-        }).catch(error => {
-            resolve = error.response.data
         })
+    )
 
-        return resolve
-    }
-
-    static update = async ({ params }) => {
-
+    static update = ({ id, params }) => {
+        axios({
+            method: 'put',
+            url: `${this.prefix()}/posts/${id}`,
+            data: objectToFormData(params),
+            headers: { 'content-type': 'multipart/form-data', ...this.authHeaders() }
+        })
     }
 
     static destroy = async ({ id }) => {

@@ -8,7 +8,7 @@ module Api
         @posts = Post.with_post_tag_rels.with_attached_image
         @posts = policy_scope(@posts)
         @posts = @posts.order(updated_at: :desc)
-        @posts = @posts.page(params[:page] || 1).per(2)
+        @posts = @posts.page(params[:page] || 1).per(10)
       end
 
       def show
