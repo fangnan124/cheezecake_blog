@@ -11,6 +11,10 @@ module Api
         @posts = @posts.page(params[:page] || 1).per(10)
       end
 
+      def new
+        authorize Post
+      end
+
       def show
         authorize @post
       end

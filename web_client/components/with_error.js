@@ -3,20 +3,16 @@ import ErrorPage from 'next/error'
 export default Component => {
     return class WithError extends React.Component {
         static async getInitialProps(ctx) {
-            const props =
-                (Component.getInitialProps
-                    ? await Component.getInitialProps(ctx)
-                    : null) || {}
+            // const props = (Component.getInitialProps ? await Component.getInitialProps(ctx) : null) || {}
             // if (props.statusCode && ctx.res) {
             //     ctx.res.statusCode = props.statusCode
             // }
 
-            return props
+            return (Component.getInitialProps ? await Component.getInitialProps(ctx) : null) || {}
         }
         render() {
-            if (this.props.status) {
-                return <ErrorPage statusCode={this.props.status} />
-            }
+            console.log(this.props)
+            if (this.props.status) return <ErrorPage statusCode={this.props.status} title={this.props.status_title}/>
             return <Component {...this.props} />
         }
     }

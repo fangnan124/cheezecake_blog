@@ -3,18 +3,15 @@ import _Form from './_form'
 import AppLayout from 'layouts/app'
 import Router from 'next/router'
 import Post from "models/post"
+import WithError from 'components/with_error'
 
 const New = () => {
     const [errors, setErrors] = useState([])
 
     const handleSubmit = (params) => {
-        Post.create({ params })
-            .then(response => {
-                Router.push('/posts')
-            }).catch(error => {
-                const { errors } = error.response.data
-                setErrors(errors)
-            })
+        Post.create({params})
+            .then(() => Router.push('/posts'))
+            .catch(error => setErrors(error.response.data.errors))
     }
 
     return (
@@ -24,4 +21,9 @@ const New = () => {
     )
 }
 
-export default New
+New.getInitialProps = async function(context) {
+    Post.setCookies(context)
+    return await Post.resolved.new()
+}
+
+export default WithError(New)

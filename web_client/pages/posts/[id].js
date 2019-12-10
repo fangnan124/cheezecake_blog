@@ -13,9 +13,9 @@ import Post from 'models/post'
 import WithError from 'components/with_error'
 
 const Show = (props) => {
-    const { post } = props.data
-    const { user, setUser } = useContext(UserContext)
-    const [destroyState, destroy] = useDestroy(post.id)
+    const {post} = props.data
+    const {user} = useContext(UserContext)
+    const [_destroyState, destroy] = useDestroy(post.id)
     const [modalOpen, setModalOpen] = useState(false)
 
     return (
@@ -50,17 +50,15 @@ const Show = (props) => {
             <div style={{ margin: 5 }}>
                 <span style={{ fontSize: 13, color: 'grey' }}>
                     <span>
-                        { post.views } views
+                        {post.views} views
                     </span>
                     <span style={{ marginLeft: 10 }}>
-                        { post.created_time_ago }
+                        {post.created_time_ago}
                     </span>
                 </span>
             </div>
             <div>
-                {
-                    post.tags.map(tag => <Tag key={tag.id} label={tag.name} color={tag.color}/>)
-                }
+                {post.tags.map(tag => <Tag key={tag.id} label={tag.name} color={tag.color}/>)}
             </div>
             <div style={{ marginTop: 10 }}>
                 <Image src={post.image_url} fluid/>
@@ -86,9 +84,9 @@ const Show = (props) => {
 }
 
 Show.getInitialProps = async function(context) {
-    const { id } = context.query
+    const {id} = context.query
     Post.setCookies(context)
-    return await Post.resolved.find({ id })
+    return await Post.resolved.find({id})
 }
 
 export default WithError(Show)

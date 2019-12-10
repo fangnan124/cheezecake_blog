@@ -24,7 +24,18 @@ const _Form = (props) => {
 
     const submit = (event) => {
         event.preventDefault()
+        props.submit(params())
+    }
 
+    const validate = (name) => {
+        // console.log(name)
+        //
+        // data
+        //
+        // setErrors[name] = data
+    }
+
+    const params = () => {
         let post_tag_rels_attributes = []
         let original_tag_ids = []
 
@@ -54,8 +65,6 @@ const _Form = (props) => {
         if (image) {
             params['image'] = image
         }
-
-        props.submit(params)
     }
 
     return (
@@ -67,6 +76,7 @@ const _Form = (props) => {
                     type="text"
                     value={title}
                     onChange={e => setTitle(e.target.value)}
+                    onBlur={() => validate('title')}
                     error={errorMessage({ errors: props.errors, property: 'title' })}
                 />
             </Form.Field>

@@ -1,31 +1,26 @@
 import axios from 'axios'
 import ServerAccessModel from './server_access_model'
 import objectToFormData from 'object-to-formdata'
-import Router from "next/router";
 
 class Post extends ServerAccessModel {
-    static resolved = {
-        all: async (params) => {
-            let data = {}
-            await this.all(params)
-                .then(response => {
-                    data = response.data
-                }).catch(error => {
-                    data = error.response.data
-                })
-            return data
-        },
-        find: async (params) => {
-            let data = {}
-            await this.find(params)
-                .then(response => {
-                    data = response.data
-                }).catch(error => {
-                    data = error.response.data
-                })
-            return data
+    // The Proxy object is used to define custom behavior for fundamental operations
+    // (e.g. property lookup, assignment, enumeration, function invocation, etc).
+    //
+    // Post.resolved.find({ id: 1 }) -> { status: .., data: .., errors: .. }
+    static resolved = new Proxy(this, {
+        get: function(target, name) {
+            return async (params) => {
+                let data = {}
+                await target[name](params)
+                    .then(response => {
+                        data = response.data
+                    }).catch(error => {
+                        data = error.response.data
+                    })
+                return data
+            }
         }
-    }
+    })
 
     static all = ({ page }) => (
         axios({
@@ -46,6 +41,14 @@ class Post extends ServerAccessModel {
         })
     )
 
+    static new = () => (
+        axios({
+            method: 'get',
+            url: `${this.prefix()}/posts/new`,
+            headers: this.authHeaders()
+        })
+    )
+
     static create = ({ params }) => (
         axios({
             method: 'post',
@@ -55,14 +58,14 @@ class Post extends ServerAccessModel {
         })
     )
 
-    static update = ({ id, params }) => {
+    static update = ({ id, params }) => (
         axios({
             method: 'put',
             url: `${this.prefix()}/posts/${id}`,
             data: objectToFormData(params),
             headers: { 'content-type': 'multipart/form-data', ...this.authHeaders() }
         })
-    }
+    )
 
     static destroy = async ({ id }) => {
 

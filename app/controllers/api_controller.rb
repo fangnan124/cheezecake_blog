@@ -49,10 +49,8 @@ class ApiController < ActionController::API
 
   def render_not_authorized_error
     render json: {
-      meta: {
-          status: '401'
-      },
-      errors: ['Not authorized']
+      status: 401,
+      status_title: 'Not authorized'
     }, status: :unauthorized
   end
 
