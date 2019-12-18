@@ -10,13 +10,13 @@ end
 json.description truncate(post.content_plain_text, length: 150, escape: false)
 # json.comments_count post.comments.count
 thumb_url = if post.image.attached?
-              url_for(post.image.variant(resize: '500x500'))
+              rails_representation_url(post.image.variant(resize: '500x500'))
             else
               'netherlands.jpg'
             end
 json.thumb_url thumb_url
 image_url = if post.image.attached?
-              url_for(post.image.variant(resize: '1000x1000'))
+              rails_representation_url(post.image.variant(resize: '1000x1000'))
             else
               'netherlands.jpg'
             end

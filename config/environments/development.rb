@@ -79,4 +79,7 @@ Rails.application.configure do
     Bullet.enable = true
     Bullet.rails_logger = true
   end
+
+  # set host and port for url helpers.
+  config.action_controller.default_url_options = { host: 'localhost', port: '3030' }
 end

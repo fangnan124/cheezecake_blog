@@ -65,4 +65,9 @@ class User < ActiveRecord::Base
   before_create do
     self.role = :reader
   end
+
+  def avatar_full_url
+    # TODO
+    "#{'http://localhost:3030'}#{avatar_url(300)}"
+  end
 end

@@ -18,6 +18,8 @@ const Show = (props) => {
     const [_destroyState, destroy] = useDestroy(post.id)
     const [modalOpen, setModalOpen] = useState(false)
 
+    console.log('post.image_url: ', post.image_url)
+
     return (
         <AppLayout>
             {
