@@ -30,21 +30,21 @@ jobs:
           paths:
             - vendor/bundle
 
-      - restore_cache:
-          name: Restore yarn cache
-          keys:
-            - cheezecake-is-good-v3-{{ checksum "./web_client/yarn.lock" }} # to clear the cache, upgrade the version
-
-      - run:
-          name: Yarn install
-          working_directory: ./web_client
-          command: yarn install --cache-folder ~/.cache/yarn
-
-      - save_cache:
-          name: Save yarn cache
-          key: cheezecake-is-good-v3-{{ checksum "./web_client/yarn.lock" }}
-          paths:
-            - ~/.cache/yarn
+#      - restore_cache:
+#          name: Restore yarn cache
+#          keys:
+#            - cheezecake-is-good-v3-{{ checksum "./web_client/yarn.lock" }} # to clear the cache, upgrade the version
+#
+#      - run:
+#          name: Yarn install
+#          working_directory: ./web_client
+#          command: yarn install --cache-folder ~/.cache/yarn
+#
+#      - save_cache:
+#          name: Save yarn cache
+#          key: cheezecake-is-good-v3-{{ checksum "./web_client/yarn.lock" }}
+#          paths:
+#            - ~/.cache/yarn
 
       - run:
           name: Wait for Database
@@ -60,10 +60,10 @@ jobs:
           command: |
             bundle exec rubocop -c .rubocop.yml
 
-      - run:
-          name: ESlint
-          command: |
-            ./web_client/node_modules/.bin/eslint "web_client/**"
+#      - run:
+#          name: ESlint
+#          command: |
+#            ./web_client/node_modules/.bin/eslint "web_client/**"
 
       - run:
           name: Rspec
