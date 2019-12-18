@@ -32,6 +32,7 @@ jobs:
 
       - restore_cache:
           name: Restore yarn cache
+          working_directory: ./web_client
           keys:
             - cheezecake-is-good-v3-{{ checksum "yarn.lock" }} # to clear the cache, upgrade the version
 
@@ -42,6 +43,7 @@ jobs:
 
       - save_cache:
           name: Save yarn cache
+          working_directory: ./web_client
           key: cheezecake-is-good-v3-{{ checksum "yarn.lock" }}
           paths:
             - ~/.cache/yarn
