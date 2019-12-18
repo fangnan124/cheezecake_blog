@@ -17,6 +17,7 @@ const Edit = (props) => {
             setData(data)
         }).catch(error => {
             const { errors } = error.response.data
+            setErrors(errors)
         }).finally(() => {
             setLoading(false)
         })
@@ -31,6 +32,7 @@ const Edit = (props) => {
             props.onSuccess()
         }).catch(error => {
             const { errors } = error.response.data
+            setErrors(errors)
         })
     }
 

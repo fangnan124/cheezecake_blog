@@ -1,6 +1,6 @@
-import {Button, Form} from "semantic-ui-react"
-import {useState} from "react"
-import Comment from "models/comment"
+import {Button, Form} from 'semantic-ui-react'
+import {useState} from 'react'
+import Comment from 'models/comment'
 
 const Edit = (props) => {
     const { comment, setEditing, setIndexEditing, onSuccess } = props

@@ -8,7 +8,7 @@ import Edit from './edit'
 const Index = () => {
     const [data, setData] = useState({})
     const [loading, setLoading] = useState(true)
-    const [errors, setErrors] = useState({})
+    const [_errors, setErrors] = useState({})
 
     useEffect(() => {
         fetch()
@@ -24,6 +24,7 @@ const Index = () => {
             setData(data)
         }).catch(error => {
             const { errors } = error.response.data
+            setErrors(errors)
         }).finally(() => {
             setLoading(false)
         })
@@ -39,6 +40,7 @@ const Index = () => {
             setData(data)
         }).catch(error => {
             const { errors } = error.response.data
+            setErrors(errors)
         }).finally(() => {
             setLoading(false)
         })

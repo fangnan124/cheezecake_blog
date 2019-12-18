@@ -7,7 +7,7 @@ const Profile = () => {
     const { user, setUser } = useContext(UserContext)
     const [data, setData] = useState({})
     const [loading, setLoading] = useState(true)
-    const [errors, setErrors] = useState(true)
+    const [_errors, setErrors] = useState(true)
 
     useEffect(() => {
         setLoading(true)
@@ -19,6 +19,7 @@ const Profile = () => {
             setData(data)
         }).catch(error => {
             const { errors } = error.response.data
+            setErrors(errors)
         }).finally(() => {
             setLoading(false)
         })
@@ -36,6 +37,7 @@ const Profile = () => {
             setUser(data.user)
         }).catch(error => {
             const { errors } = error.response.data
+            setErrors(errors)
         }).finally(() => {
             setLoading(false)
         })

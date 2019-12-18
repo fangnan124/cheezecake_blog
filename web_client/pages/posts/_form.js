@@ -1,10 +1,10 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 import {Button, Form, Message, Select, Tab, Table} from 'semantic-ui-react'
 import ReactMarkdown from 'react-markdown'
 import TagsSelect from 'components/tags_select'
 import CodeBlock from 'components/code_block'
 import Previews from 'components/previews'
-import { errorMessage } from 'helpers/form_helper'
+// import { errorMessage } from 'helpers/form_helper'
 
 const options = [
     { key: 'pub', text: 'Published', value: 'published' },
@@ -15,9 +15,9 @@ const _Form = (props) => {
     const [title, setTitle] = useState(props.post.title)
     const [content, setContent] = useState(props.post.content)
     const [status, setStatus] = useState(props.post.status)
-    const [tags, setTags] = useState(props.post.tags)
+    const [tags, _setTags] = useState(props.post.tags)
     const [tagIds, setTagIds] = useState(props.post.tags.map(tag => tag.id))
-    const [imageUrl, setImageUrl] = useState(props.post.image_url)
+    const [imageUrl, _setImageUrl] = useState(props.post.image_url)
     const [image, setImage] = useState(null)
     const [imageDescription, setImageDescription] = useState(props.post.image_description)
 
@@ -145,6 +145,6 @@ _Form.defaultProps = {
         errors: []
     },
     errors: {}
-};
+}
 
 export default _Form

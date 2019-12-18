@@ -54,6 +54,6 @@ _Form.defaultProps = {
         name: '',
         color: ''
     }
-};
+}
 
 export default _Form

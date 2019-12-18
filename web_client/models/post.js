@@ -67,9 +67,9 @@ class Post extends ServerAccessModel {
         })
     )
 
-    static destroy = async ({ id }) => {
-
-    }
+    // static destroy = async ({ id }) => {
+    //
+    // }
 }
 
 export default Post

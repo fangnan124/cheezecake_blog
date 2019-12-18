@@ -3,15 +3,16 @@ import { Button, Form, Checkbox } from 'semantic-ui-react'
 import UserContext from 'contexts/user_context'
 import AppLayout from 'layouts/app'
 import Router from 'next/router'
-import {useCookies} from 'react-cookie';
+import {useCookies} from 'react-cookie'
 import Auth from 'models/auth'
 
 const Login = () => {
-    const [_cookies, setCookie] = useCookies(['access-token', 'client', 'uid']);
+    const [_cookies, setCookie] = useCookies(['access-token', 'client', 'uid'])
     const {setUser} = useContext(UserContext)
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [rememberMe, setRememberMe] = useState(false)
+    const [_errors, setErrors] = useState({})
 
     useEffect(() => {
         let email = localStorage.getItem('user.email')
@@ -46,6 +47,7 @@ const Login = () => {
                 Router.push(Router.query.from || '/')
             }).catch(error => {
                 const { errors } = error.response.data
+                setErrors(errors)
             })
     }
 

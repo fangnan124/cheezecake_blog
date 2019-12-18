@@ -1,7 +1,7 @@
-import {Comment} from "semantic-ui-react";
-import {useState} from "react";
+import {Comment} from 'semantic-ui-react'
+import {useState} from 'react'
 import Edit from './edit'
-import CommentModel from "models/comment"
+import CommentModel from 'models/comment'
 
 const Show = (props) => {
     const { comment, indexEditing, setIndexEditing, onSuccess } = props
@@ -27,7 +27,7 @@ const Show = (props) => {
                                 {
                                     comment.policy.edit && (
                                         <Comment.Action onClick={() => {
-                                            setEditing(true);
+                                            setEditing(true)
                                             setIndexEditing(true)
                                         }}>
                                             Edit

@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import _Form from './_form'
 import AppLayout from 'layouts/app'
 import Router from 'next/router'
-import Post from "models/post"
+import Post from 'models/post'
 import WithError from 'components/with_error'
 
 const New = () => {

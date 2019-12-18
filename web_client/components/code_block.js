@@ -13,10 +13,10 @@ const CodeBlock = ({ language, value }) => (
 CodeBlock.propTypes = {
     value: PropTypes.string.isRequired,
     language: PropTypes.string
-};
+}
 
 CodeBlock.defaultProps = {
     language: null
-};
+}
 
 export default CodeBlock

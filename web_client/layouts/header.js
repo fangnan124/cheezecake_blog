@@ -3,8 +3,8 @@ import {Menu, Container, Image, Icon, Dropdown} from 'semantic-ui-react'
 import UserContext from 'contexts/user_context'
 import Link from 'next/link'
 import Router from 'next/router'
-import {useCookies} from "react-cookie";
-import Auth from "models/auth";
+import {useCookies} from 'react-cookie'
+import Auth from 'models/auth'
 
 const Header = () => {
     const { user, setUser } = useContext(UserContext)
@@ -19,7 +19,7 @@ const Header = () => {
                 setUser(null)
                 Router.push('/')
             })
-            .catch(error => {
+            .catch(() => {
                 // const { errors } = error.response.data
             })
     }

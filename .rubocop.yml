@@ -12,6 +12,7 @@ AllCops:
     - Gemfile
     - Rakefile
     - config.ru
+    - web_client/**/*
 
 Style/Documentation:
   Enabled: false

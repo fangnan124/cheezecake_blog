@@ -5,8 +5,8 @@ import New from 'pages/admin/invitation_requests/new'
 import AppLayout from 'layouts/app'
 import Router from 'next/router'
 import Auth from 'models/auth'
-import {useCookies} from "react-cookie";
-import {errorMessage} from "helpers/form_helper";
+import {useCookies} from 'react-cookie'
+// import {errorMessage} from 'helpers/form_helper'
 
 const SignUp = () => {
     const {setUser} = useContext(UserContext)
@@ -17,7 +17,7 @@ const SignUp = () => {
     const [errors, setErrors] = useState('')
     const [requestModalOpen, setRequestModalOpen] = useState(false)
 
-    const [_cookies, setCookie] = useCookies(['access-token', 'client', 'uid']);
+    const [_cookies, setCookie] = useCookies(['access-token', 'client', 'uid'])
 
     useEffect(() => {
         const email = localStorage.getItem('user.email')
@@ -28,11 +28,11 @@ const SignUp = () => {
         event.preventDefault()
 
         Auth.sing_up({ params: {
-                email,
-                password,
-                name,
-                invitation_code: invitationCode
-            } })
+            email,
+            password,
+            name,
+            invitation_code: invitationCode
+        } })
             .then(response => {
                 setCookie('access-token', response.headers['access-token'])
                 setCookie('client', response.headers['client'])

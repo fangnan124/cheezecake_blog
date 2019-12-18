@@ -32,9 +32,9 @@ const Index = ({ postId }) => {
                             <Comment.Avatar src={comment.user.avatar_url} className='ui circular image'/>
                             <Comment.Content>
                                 <Comment.Author as='a'>
-                                <span>
-                                    {comment.user.name}
-                                </span>
+                                    <span>
+                                        {comment.user.name}
+                                    </span>
                                 </Comment.Author>
                                 <Comment.Metadata>
                                     <span>{comment.created_time_ago}</span>

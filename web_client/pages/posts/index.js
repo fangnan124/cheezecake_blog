@@ -1,4 +1,3 @@
-import React, {useState, useEffect} from 'react'
 import {Pagination, Item, Label} from 'semantic-ui-react'
 import AppLayout from 'layouts/app'
 import Link from 'next/link'
@@ -17,7 +16,7 @@ const Index = (props) => {
                             <Item.Image src={post.thumb_url}/>
                             <Item.Content>
                                 <Item.Header>
-                                    <Link href={`/posts/[id]`} as={`/posts/${post.id}`}>
+                                    <Link href={'/posts/[id]'} as={`/posts/${post.id}`}>
                                         <a>{post.title}</a>
                                     </Link>
                                 </Item.Header>
@@ -59,6 +58,6 @@ Index.getInitialProps = async function(context) {
     const { page } = context.query
     Post.setCookies(context)
     return await Post.resolved.all({ page })
-};
+}
 
 export default Index

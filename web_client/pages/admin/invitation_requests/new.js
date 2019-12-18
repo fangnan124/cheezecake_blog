@@ -16,6 +16,7 @@ const New = () => {
             setSuccess(true)
         }).catch(error => {
             const { errors } = error.response.data
+            setErrors(errors)
         })
     }
 

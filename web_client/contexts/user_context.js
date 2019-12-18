@@ -13,8 +13,8 @@ export const UserProvider = ({ children }) => {
             .then(response => {
                 setUser(response.data.data.user)
                 setLoading(false)
-            }).catch(error => {
-                console.log(error)
+            }).catch(() => {
+                // console.log(error)
             }).finally(() => {
                 setLoading(false)
             })

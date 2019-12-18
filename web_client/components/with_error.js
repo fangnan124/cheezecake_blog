@@ -11,7 +11,6 @@ export default Component => {
             return (Component.getInitialProps ? await Component.getInitialProps(ctx) : null) || {}
         }
         render() {
-            console.log(this.props)
             if (this.props.status) return <ErrorPage statusCode={this.props.status} title={this.props.status_title}/>
             return <Component {...this.props} />
         }

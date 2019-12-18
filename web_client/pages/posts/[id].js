@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from 'react'
+import React, {useState, useContext} from 'react'
 import {Header, Modal, Button, Image} from 'semantic-ui-react'
 import ReactMarkdown from 'react-markdown'
 import UserContext from 'contexts/user_context'
@@ -24,7 +24,7 @@ const Show = (props) => {
                 user && user.role === 'writer' && (
                     <FloatMenu>
                         <FloatMenu.Item>
-                            <Link href={`/posts/[id]/edit`} as={`/posts/${post.id}/edit`}>
+                            <Link href={'/posts/[id]/edit'} as={`/posts/${post.id}/edit`}>
                                 <a>Edit</a>
                             </Link>
                         </FloatMenu.Item>

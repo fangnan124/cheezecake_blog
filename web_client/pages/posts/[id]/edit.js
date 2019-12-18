@@ -6,7 +6,7 @@ import PostRevisions from 'pages/post_revisions/'
 import AppLayout from 'layouts/app'
 import Post from 'models/post'
 import WithError from 'components/with_error'
-import Router from "next/router";
+import Router from 'next/router'
 
 const Edit = (props) => {
     const {post} = props.data
@@ -43,6 +43,6 @@ Edit.getInitialProps = async function(context) {
     const { id } = context.query
     Post.setCookies(context)
     return await Post.resolved.find({ id })
-};
+}
 
 export default WithError(Edit)
