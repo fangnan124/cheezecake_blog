@@ -3,7 +3,7 @@ import { Button, Form, Checkbox } from 'semantic-ui-react'
 import UserContext from 'contexts/user_context'
 import AppLayout from 'layouts/app'
 import Router from 'next/router'
-import { useCookies } from 'react-cookie';
+import {useCookies} from 'react-cookie';
 import Auth from 'models/auth'
 
 const Login = () => {
@@ -43,8 +43,7 @@ const Login = () => {
                 }
 
                 setUser(response.data.data.user)
-
-                Router.push('/posts')
+                Router.push(Router.query.from || '/')
             }).catch(error => {
                 const { errors } = error.response.data
             })

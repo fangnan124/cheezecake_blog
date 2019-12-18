@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react'
-import { Button, Form, Select, Tab, Table } from 'semantic-ui-react'
+import {Button, Form, Message, Select, Tab, Table} from 'semantic-ui-react'
 import ReactMarkdown from 'react-markdown'
-import FormValidationMessage from 'components/form_validation_message'
 import TagsSelect from 'components/tags_select'
 import CodeBlock from 'components/code_block'
 import Previews from 'components/previews'
@@ -22,17 +21,9 @@ const _Form = (props) => {
     const [image, setImage] = useState(null)
     const [imageDescription, setImageDescription] = useState(props.post.image_description)
 
-    const submit = (event) => {
+    const handleSubmit = (event) => {
         event.preventDefault()
         props.submit(params())
-    }
-
-    const validate = (name) => {
-        // console.log(name)
-        //
-        // data
-        //
-        // setErrors[name] = data
     }
 
     const params = () => {
@@ -65,10 +56,13 @@ const _Form = (props) => {
         if (image) {
             params['image'] = image
         }
+
+        return params
     }
 
     return (
-        <Form onSubmit={submit}>
+        <Form onSubmit={handleSubmit}>
+            { props.errors.length > 0 && <Message negative list={props.errors}/> }
             <Form.Field>
                 <Form.Input
                     fluid
@@ -76,8 +70,7 @@ const _Form = (props) => {
                     type="text"
                     value={title}
                     onChange={e => setTitle(e.target.value)}
-                    onBlur={() => validate('title')}
-                    error={errorMessage({ errors: props.errors, property: 'title' })}
+                    // error={errorMessage({ errors: props.errors, property: 'title' })}
                 />
             </Form.Field>
             <Form.Field>
@@ -85,7 +78,7 @@ const _Form = (props) => {
                     label='Tag'
                     selected_tags={tags}
                     onChange={(tag_ids) => setTagIds(tag_ids)}
-                    error={errorMessage({ errors: props.errors, property: 'post_tag_rels' })}
+                    // error={errorMessage({ errors: props.errors, property: 'post_tag_rels' })}
                 />
             </Form.Field>
             <Form.Field>
@@ -99,7 +92,7 @@ const _Form = (props) => {
                     type="text"
                     value={imageDescription}
                     onChange={e => setImageDescription(e.target.value)}
-                    error={errorMessage({ errors: props.errors, property: 'image_description' })}
+                    // error={errorMessage({ errors: props.errors, property: 'image_description' })}
                 />
             </Form.Field>
             <Form.Field>
@@ -112,7 +105,7 @@ const _Form = (props) => {
                                 onChange={(e, {value}) => { setContent(value) }}
                                 defaultValue={content}
                                 style={{ height: 500 }}
-                                error={errorMessage({ errors: props.errors, property: 'content', pointing: 'below' })}
+                                // error={errorMessage({ errors: props.errors, property: 'content', pointing: 'below' })}
                             />
                         )
                     },
@@ -136,7 +129,7 @@ const _Form = (props) => {
                 width={4}
                 defaultValue={status}
                 onChange={(e, { value }) => setStatus(value)}
-                error={errorMessage({ errors: props.errors, property: 'status' })}
+                // error={errorMessage({ errors: props.errors, property: 'status' })}
             />
             <Button type='submit' primary>Save</Button>
         </Form>
@@ -149,7 +142,7 @@ _Form.defaultProps = {
         content: '',
         tags: [],
         status: '',
-        errors: {}
+        errors: []
     },
     errors: {}
 };

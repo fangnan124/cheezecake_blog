@@ -21,9 +21,13 @@ class Auth extends ServerAccessModel {
         })
     )
 
-    // static sing_up = () => {
-    //     // TODO
-    // }
+    static sing_up = ({ params }) => (
+        axios({
+            method: 'post',
+            url: `${process.env.domain}/auth`,
+            data: params
+        })
+    )
 
     static validate_token = () => (
         axios({

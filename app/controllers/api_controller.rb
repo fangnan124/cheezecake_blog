@@ -11,7 +11,7 @@ class ApiController < ActionController::API
   def render_unprocessable_entity(exception)
     render json: {
       status: 401,
-      errors: exception.record.errors.to_hash(true)
+      errors: exception.record.errors.full_messages
     }, status: :unprocessable_entity
   end
 

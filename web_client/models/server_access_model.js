@@ -21,7 +21,6 @@ class ServerAccessModel {
     static prefix = () => {
         return process.browser ? process.env.api_prefix : 'http://web:3000/api/v1'
     }
-
 }
 
 export default ServerAccessModel

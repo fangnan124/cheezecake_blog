@@ -1,12 +1,12 @@
 import React, {useState, useEffect, useContext} from 'react'
-import { Button, Form } from 'semantic-ui-react'
-import axios from 'axios'
+import {Button, Form, Message, Modal} from 'semantic-ui-react'
 import UserContext from 'contexts/user_context'
-import { Modal } from 'semantic-ui-react'
 import New from 'pages/admin/invitation_requests/new'
-import FormValidationMessage from 'components/form_validation_message'
 import AppLayout from 'layouts/app'
 import Router from 'next/router'
+import Auth from 'models/auth'
+import {useCookies} from "react-cookie";
+import {errorMessage} from "helpers/form_helper";
 
 const SignUp = () => {
     const {setUser} = useContext(UserContext)
@@ -17,83 +17,79 @@ const SignUp = () => {
     const [errors, setErrors] = useState('')
     const [requestModalOpen, setRequestModalOpen] = useState(false)
 
+    const [_cookies, setCookie] = useCookies(['access-token', 'client', 'uid']);
+
     useEffect(() => {
         const email = localStorage.getItem('user.email')
         setEmail(email)
     }, [])
 
-    const sign_up = (event) => {
+    const handleSubmit = (event) => {
         event.preventDefault()
 
-        axios({
-            method: 'post',
-            url: '/auth',
-            data: {
+        Auth.sing_up({ params: {
                 email,
                 password,
                 name,
                 invitation_code: invitationCode
-            }
-        }).then(response => {
-            localStorage.setItem('access-token', response.headers['access-token'])
-            localStorage.setItem('client', response.headers['client'])
-            localStorage.setItem('uid', response.headers['uid'])
+            } })
+            .then(response => {
+                setCookie('access-token', response.headers['access-token'])
+                setCookie('client', response.headers['client'])
+                setCookie('uid', response.headers['uid'])
 
-            setUser(response.data.data)
-            Router.push('/posts')
-        }).catch(error => {
-            const { errors } = error.response.data
-            setErrors(errors)
-        })
+                setUser(response.data.data.user)
+                Router.push(Router.query.from || '/')
+            })
+            .catch(error => {
+                const { errors } = error.response.data
+                setErrors(errors)
+            })
     }
-
-    // pathname = () => {
-    //     const { location } = this.props
-    //     if (location.state !== undefined) {
-    //         return location.state.from.pathname
-    //     } else {
-    //         return '/'
-    //     }
-    // };
 
     return (
         <AppLayout>
-            <Form onSubmit={sign_up}>
+            <Form onSubmit={handleSubmit}>
+                { errors.length > 0 && <Message negative list={errors}/> }
                 <Form.Field>
-                    <label>Email</label>
-                    <input
+                    <Form.Input
+                        fluid
+                        label='Email'
                         type="text"
                         value={email}
                         onChange={e => setEmail(e.target.value)}
+                        // error={errorMessage({ errors, property: 'email' })}
                     />
-                    <FormValidationMessage errors={errors} property={'email'}/>
                 </Form.Field>
                 <Form.Field>
-                    <label>Password</label>
-                    <input
-                        type="password"
+                    <Form.Input
+                        fluid
+                        label='Password'
+                        type="text"
                         value={password}
                         onChange={e => setPassword(e.target.value)}
+                        // error={errorMessage({ errors, property: 'password' })}
                     />
-                    <FormValidationMessage errors={errors} property={'password'}/>
                 </Form.Field>
                 <Form.Field>
-                    <label>Name</label>
-                    <input
+                    <Form.Input
+                        fluid
+                        label='Name'
                         type="text"
                         value={name}
                         onChange={e => setName(e.target.value)}
+                        // error={errorMessage({ errors, property: 'name' })}
                     />
-                    <FormValidationMessage errors={errors} property={'name'}/>
                 </Form.Field>
                 <Form.Field>
-                    <label>Invitation Code</label>
-                    <input
+                    <Form.Input
+                        fluid
+                        label='Invitation Code'
                         type="text"
                         value={invitationCode}
                         onChange={e => setInvitationCode(e.target.value)}
+                        // error={errorMessage({ errors, property: 'invitation_code' })}
                     />
-                    <FormValidationMessage errors={errors} property={'invitation_code'}/>
                     <div style={{ fontSize: 12, marginTop: 3 }}>
                         Don&#39;t have an invitation code?
                         <span style={{ marginLeft: 5, fontWeight: 'bold', cursor: 'pointer' }} onClick={() => setRequestModalOpen(true)}>request</span>

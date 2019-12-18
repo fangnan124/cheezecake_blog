@@ -8,7 +8,7 @@ json.tags do
   end
 end
 json.description truncate(post.content_plain_text, length: 150, escape: false)
-json.comments_count post.comments.count
+#json.comments_count post.comments.count
 thumb_url = if post.image.attached?
               url_for(post.image.variant(resize: '500x500'))
             else

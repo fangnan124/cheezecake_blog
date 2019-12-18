@@ -1,5 +1,5 @@
 import React, {useContext} from 'react'
-import { Menu, Container, Image, Icon, Dropdown } from 'semantic-ui-react'
+import {Menu, Container, Image, Icon, Dropdown} from 'semantic-ui-react'
 import UserContext from 'contexts/user_context'
 import Link from 'next/link'
 import Router from 'next/router'
@@ -8,7 +8,7 @@ import Auth from "models/auth";
 
 const Header = () => {
     const { user, setUser } = useContext(UserContext)
-    const [cookies, setCookie, removeCookie] = useCookies(['access-token', 'client', 'uid'])
+    const [_cookies, _setCookie, removeCookie] = useCookies(['access-token', 'client', 'uid'])
 
     const logout = () => {
         Auth.sign_out()
@@ -80,11 +80,11 @@ const Header = () => {
                             </Menu.Item>
                         ) : (
                             <Menu.Item active={false}>
-                                <Link href={'/auth/sign_up'}>
+                                <Link href={`/auth/sign_up?from=${Router.asPath}`}>
                                     <a>Sign up</a>
                                 </Link>
                                 <span style={{ margin: '0 10px', color: 'lightgray' }}>|</span>
-                                <Link href={'/auth/login'}>
+                                <Link href={`/auth/login?from=${Router.asPath}`}>
                                     <a>Login</a>
                                 </Link>
                             </Menu.Item>

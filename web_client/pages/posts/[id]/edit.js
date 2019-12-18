@@ -13,7 +13,7 @@ const Edit = (props) => {
     const [errors, setErrors] = useState([])
     const [modalOpen, setModalOpen] = useState(false)
 
-    const handleUpdate = (params) => {
+    const handleSubmit = (params) => {
         Post.update({id: post.id, params})
             .then(() => Router.push('/posts'))
             .catch(error => setErrors(error.response.data.errors))
@@ -34,7 +34,7 @@ const Edit = (props) => {
                     </Modal>
                 </FloatMenu.Item>
             </FloatMenu>
-            <_Form submit={handleUpdate} post={post} errors={errors} />
+            <_Form submit={handleSubmit} post={post} errors={errors} />
         </AppLayout>
     )
 }
