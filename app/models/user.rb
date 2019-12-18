@@ -49,7 +49,7 @@ class User < ActiveRecord::Base
   attr_accessor :invitation_code
 
   validates :name, presence: true
-  # validates :invitation_code, presence: true, on: :create
+  validates :invitation_code, presence: true, on: :create
   # validate :valid_invitation_code?, on: :create
   #
   # def valid_invitation_code?

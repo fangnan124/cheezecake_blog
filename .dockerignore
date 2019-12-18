@@ -2,15 +2,16 @@
 .git
 .idea
 
-node_modules
 public/assets
-public/packs
 log
 tmp
 
 docker/kafka
 docker/postgres/data
 docker/certbot/data
-yarn-debug.log*
-yarn-error.log*
-.yarn-integrity
+
+web_client/.next
+web_client/node_modules
+web_client/yarn-debug.log*
+web_client/yarn-error.log*
+web_client/.yarn-integrity

@@ -4,13 +4,13 @@ set -e
 if [ $RAILS_ENV = "production" ] || [ $RAILS_ENV = "staging" ]; then
   bundle install --without development test
   bundle exec rails assets:precompile
-  yarn install --production
+#  yarn install --production
   # bundle exec rails webpacker:compile
   bundle exec rails db:migrate
 else
   bundle install
-  yarn install
-  bundle exec rails webpacker:clobber
+#  yarn install
+#  bundle exec rails webpacker:clobber
 fi
 
 if [ -f /cheezecake_blog/tmp/pids/server.pid ]; then

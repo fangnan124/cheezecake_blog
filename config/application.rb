@@ -29,5 +29,15 @@ module CheezecakeBlog
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+
+    config.middleware.insert_before 0, Rack::Cors do
+      allow do
+        origins '*'
+        resource '*',
+                 headers: :any,
+                 methods: [:get, :post, :put, :delete, :options],
+                 expose: ['uid', 'client', 'access-token'] # Headers allowed to expose
+      end
+    end
   end
 end

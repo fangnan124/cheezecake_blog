@@ -4,4 +4,4 @@ json.email            user.email
 json.role             user.role
 json.created_time_ago time_ago_in_words(user.created_at)
 json.updated_time_ago time_ago_in_words(user.updated_at)
-json.avatar_url       user.avatar_url(300)
+json.avatar_url       "http://localhost:3030#{user.avatar_url(300)}"

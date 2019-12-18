@@ -11,6 +11,10 @@ module Api
         @posts = @posts.page(params[:page] || 1).per(10)
       end
 
+      def new
+        authorize Post
+      end
+
       def show
         authorize @post
       end
@@ -60,7 +64,7 @@ module Api
 
         @post.views += 1
         # (touch: false) Not to update updated_at
-        @post.save!(touch: false)
+        @post.save!(validate: false, touch: false)
       end
     end
   end

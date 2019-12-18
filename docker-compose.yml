@@ -9,9 +9,32 @@ services:
     env_file: .env
     volumes:
       - .:/cheezecake_blog
+      - bundle_path:/bundle
+    environment:
+      - BUNDLE_PATH=/bundle/vendor
+    ports:
+      - 3030:3000
+    depends_on:
+      - postgres
+    stdin_open: true
+    tty: true
+
+  client:
+    build:
+      context: .
+      dockerfile: ./docker/web_client/Dockerfile
+#    command: tail -f /dev/null
+    volumes:
+      - ./web_client:/webapp
+
+      # This is important when you want use HMR with docker, but don't know WHY.
+      # Don't use host volumes, like ./node_modules:/webapp/node_modules, it slows down reloading.
+      - next:/webapp/.next
+      - node_modules:/webapp/node_modules
     ports:
       - 3000:3000
-      - 3035:3035
+    depends_on:
+      - web
     stdin_open: true
     tty: true
 
@@ -23,3 +46,8 @@ services:
       - 5432:5432
     volumes:
       - ./docker/postgres/data:/var/lib/postgresql/data
+
+volumes:
+  bundle_path:
+  next:
+  node_modules:
