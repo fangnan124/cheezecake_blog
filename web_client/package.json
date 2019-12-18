@@ -8,6 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@case/eslint-config": "^0.3.3",
     "@zeit/next-css": "^1.0.1",
     "@zeit/next-sass": "^1.0.1",
     "axios": "latest",
