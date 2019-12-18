@@ -62,7 +62,7 @@ jobs:
       - run:
           name: ESlint
           command: |
-            ./node_modules/.bin/eslint "app/javascript/**"
+            ./web_client/node_modules/.bin/eslint "web_client/**"
 
       - run:
           name: Rspec
