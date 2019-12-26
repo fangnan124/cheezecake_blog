@@ -5,7 +5,7 @@ class Auth extends ServerAccessModel {
     static sign_in = ({ email, password }) => (
         axios({
             method: 'post',
-            url: `${process.env.domain}/auth/sign_in`,
+            url: `${this.base_url}/auth/sign_in`,
             data: {
                 email,
                 password
@@ -16,7 +16,7 @@ class Auth extends ServerAccessModel {
     static sign_out = () => (
         axios({
             method: 'delete',
-            url: `${process.env.domain}/auth/sign_out`,
+            url: `${this.base_url}/auth/sign_out`,
             headers: this.authHeaders()
         })
     )
@@ -24,7 +24,7 @@ class Auth extends ServerAccessModel {
     static sing_up = ({ params }) => (
         axios({
             method: 'post',
-            url: `${process.env.domain}/auth`,
+            url: `${this.base_url}/auth`,
             data: params
         })
     )
@@ -32,7 +32,7 @@ class Auth extends ServerAccessModel {
     static validate_token = () => (
         axios({
             method: 'get',
-            url: `${process.env.domain}/auth/validate_token`,
+            url: `${this.base_url}/auth/validate_token`,
             headers: this.authHeaders()
         })
     )

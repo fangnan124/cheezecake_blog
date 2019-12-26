@@ -14,8 +14,10 @@ const nextConfig = {
     //   Recommended approach is to use env in next.config.js
     //   from: `https://spectrum.chat/next-js/general/publicruntimeconfig~2a5850ac-71a2-48d9-acb3-37e3f10b6a8e`
     env: {
-        domain: 'http://localhost:3030',
-        api_prefix: 'http://localhost:3030/api/v1',
+        base_url: 'http://localhost:3030',
+        dev_base_url: 'http://web:3000',
+        api_url: 'http://localhost:3030/api/v1',
+        dev_api_url: 'http://web:3000/api/v1'
     },
     webpackDevMiddleware: config => {
         // This is important when you want use HMR with docker

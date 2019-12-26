@@ -25,7 +25,7 @@ class Post extends ServerAccessModel {
     static all = ({ page }) => (
         axios({
             method: 'get',
-            url: `${this.prefix()}/posts`,
+            url: `${this.api_url}/posts`,
             params: {
                 page
             },
@@ -36,7 +36,7 @@ class Post extends ServerAccessModel {
     static find = ({ id }) => (
         axios({
             method: 'get',
-            url: `${this.prefix()}/posts/${id}`,
+            url: `${this.api_url}/posts/${id}`,
             headers: this.authHeaders()
         })
     )
@@ -44,7 +44,7 @@ class Post extends ServerAccessModel {
     static new = () => (
         axios({
             method: 'get',
-            url: `${this.prefix()}/posts/new`,
+            url: `${this.api_url}/posts/new`,
             headers: this.authHeaders()
         })
     )
@@ -52,7 +52,7 @@ class Post extends ServerAccessModel {
     static create = ({ params }) => (
         axios({
             method: 'post',
-            url: `${this.prefix()}/posts`,
+            url: `${this.api_url}/posts`,
             data: objectToFormData(params),
             headers: { 'content-type': 'multipart/form-data', ...this.authHeaders() }
         })
@@ -61,7 +61,7 @@ class Post extends ServerAccessModel {
     static update = ({ id, params }) => (
         axios({
             method: 'put',
-            url: `${this.prefix()}/posts/${id}`,
+            url: `${this.api_url}/posts/${id}`,
             data: objectToFormData(params),
             headers: { 'content-type': 'multipart/form-data', ...this.authHeaders() }
         })

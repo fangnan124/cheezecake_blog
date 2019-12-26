@@ -5,7 +5,7 @@ class Comment extends ServerAccessModel {
     static all = ({ postId, page }) => (
         axios({
             method: 'get',
-            url: `${this.prefix()}/posts/${postId}/comments`,
+            url: `${this.api_url}/posts/${postId}/comments`,
             params: { page },
             headers: this.authHeaders()
         })
@@ -14,7 +14,7 @@ class Comment extends ServerAccessModel {
     static create = ({ postId, params }) => (
         axios({
             method: 'post',
-            url: `${this.prefix()}/posts/${postId}/comments`,
+            url: `${this.api_url}/posts/${postId}/comments`,
             data: params,
             headers: this.authHeaders()
         })
@@ -23,7 +23,7 @@ class Comment extends ServerAccessModel {
     static update = ({ id, params }) => (
         axios({
             method: 'put',
-            url: `${this.prefix()}/comments/${id}`,
+            url: `${this.api_url}/comments/${id}`,
             data: params,
             headers: this.authHeaders()
         })
@@ -32,7 +32,7 @@ class Comment extends ServerAccessModel {
     static destroy = ({ id }) => (
         axios({
             method: 'delete',
-            url: `${this.prefix()}/comments/${id}`,
+            url: `${this.api_url}/comments/${id}`,
             headers: this.authHeaders()
         })
     )
