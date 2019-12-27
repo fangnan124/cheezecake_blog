@@ -4,14 +4,14 @@ import UserContext from 'contexts/user_context'
 import Link from 'next/link'
 import Router from 'next/router'
 import {useCookies} from 'react-cookie'
-import Auth from 'models/auth'
+import AuthModel from 'models/auth_model'
 
 const Header = () => {
     const { user, setUser } = useContext(UserContext)
     const [_cookies, _setCookie, removeCookie] = useCookies(['access-token', 'client', 'uid'])
 
     const logout = () => {
-        Auth.sign_out()
+        AuthModel.sign_out()
             .then(() => {
                 removeCookie('access-token')
                 removeCookie('client')

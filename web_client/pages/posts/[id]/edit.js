@@ -2,9 +2,9 @@ import React, {useState} from 'react'
 import {Modal} from 'semantic-ui-react'
 import _Form from '../_form'
 import FloatMenu from 'components/float_menu'
-import PostRevisions from 'pages/post_revisions/'
-import AppLayout from 'layouts/app'
-import Post from 'models/post'
+import PostRevisions from 'components/post_revisions/'
+import AppLayout from 'layouts/app_layout'
+import PostModel from 'models/post_model'
 import WithError from 'components/with_error'
 import Router from 'next/router'
 
@@ -14,7 +14,7 @@ const Edit = (props) => {
     const [modalOpen, setModalOpen] = useState(false)
 
     const handleSubmit = (params) => {
-        Post.update({id: post.id, params})
+        PostModel.update({id: post.id, params})
             .then(() => Router.push('/posts'))
             .catch(error => setErrors(error.response.data.errors))
     }
@@ -41,8 +41,8 @@ const Edit = (props) => {
 
 Edit.getInitialProps = async function(context) {
     const { id } = context.query
-    Post.setCookies(context)
-    return await Post.resolved.find({ id })
+    PostModel.setCookies(context)
+    return await PostModel.resolved.find({ id })
 }
 
 export default WithError(Edit)

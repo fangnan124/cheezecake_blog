@@ -1,10 +1,10 @@
 import React, {useState, useEffect, useContext} from 'react'
-import { Button, Form, Checkbox } from 'semantic-ui-react'
+import {Button, Form, Checkbox, Message} from 'semantic-ui-react'
 import UserContext from 'contexts/user_context'
-import AppLayout from 'layouts/app'
+import AppLayout from 'layouts/app_layout'
 import Router from 'next/router'
 import {useCookies} from 'react-cookie'
-import Auth from 'models/auth'
+import AuthModel from 'models/auth_model'
 
 const Login = () => {
     const [_cookies, setCookie] = useCookies(['access-token', 'client', 'uid'])
@@ -12,7 +12,7 @@ const Login = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [rememberMe, setRememberMe] = useState(false)
-    const [_errors, setErrors] = useState({})
+    const [errors, setErrors] = useState({})
 
     useEffect(() => {
         let email = localStorage.getItem('user.email')
@@ -31,7 +31,7 @@ const Login = () => {
     const handleSubmit = (event) => {
         event.preventDefault()
 
-        Auth.sign_in({ email, password })
+        AuthModel.sign_in({ email, password })
             .then(response => {
                 setCookie('access-token', response.headers['access-token'])
                 setCookie('client', response.headers['client'])
@@ -53,18 +53,21 @@ const Login = () => {
 
     return (
         <AppLayout>
+            { errors.length > 0 && <Message negative list={errors}/> }
             <Form onSubmit={handleSubmit}>
                 <Form.Field>
-                    <label>Email</label>
-                    <input
+                    <Form.Input
+                        fluid
+                        label='Email'
                         type="text"
                         value={email}
                         onChange={e => setEmail(e.target.value)}
                     />
                 </Form.Field>
                 <Form.Field>
-                    <label>Password</label>
-                    <input
+                    <Form.Input
+                        fluid
+                        label='Password'
                         type="password"
                         value={password}
                         onChange={e => setPassword(e.target.value)}
@@ -72,7 +75,7 @@ const Login = () => {
                 </Form.Field>
                 <Form.Field>
                     <Checkbox
-                        label='remember me'
+                        label='Remember me'
                         checked={rememberMe}
                         onChange={() => setRememberMe(!this.state.rememberMe)}
                     />

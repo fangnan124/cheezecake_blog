@@ -1,7 +1,7 @@
 import axios from 'axios'
 import ServerAccessModel from './server_access_model'
 
-class Comment extends ServerAccessModel {
+class Comment_model extends ServerAccessModel {
     static all = ({ postId, page }) => (
         axios({
             method: 'get',
@@ -38,4 +38,4 @@ class Comment extends ServerAccessModel {
     )
 }
 
-export default Comment
+export default Comment_model

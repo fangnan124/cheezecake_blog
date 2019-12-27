@@ -1,7 +1,7 @@
 import React from 'react'
 import { Tab } from 'semantic-ui-react'
 import Profile from './profile'
-import AppLayout from 'layouts/app'
+import AppLayout from 'layouts/app_layout'
 
 const Index = () => {
     return (

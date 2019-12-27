@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import Auth from 'models/auth'
+import AuthModel from 'models/auth_model'
 
 const UserContext = React.createContext()
 
@@ -9,7 +9,7 @@ export const UserProvider = ({ children }) => {
 
     useEffect(() => {
         setLoading(true)
-        Auth.validate_token()
+        AuthModel.validate_token()
             .then(response => {
                 setUser(response.data.data.user)
                 setLoading(false)

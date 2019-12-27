@@ -2,9 +2,9 @@ import React, {useState, useEffect, useContext} from 'react'
 import {Button, Form, Message, Modal} from 'semantic-ui-react'
 import UserContext from 'contexts/user_context'
 import New from 'pages/admin/invitation_requests/new'
-import AppLayout from 'layouts/app'
+import AppLayout from 'layouts/app_layout'
 import Router from 'next/router'
-import Auth from 'models/auth'
+import Auth_model from 'models/auth_model'
 import {useCookies} from 'react-cookie'
 // import {errorMessage} from 'helpers/form_helper'
 
@@ -14,7 +14,7 @@ const SignUp = () => {
     const [password, setPassword] = useState('')
     const [name, setName] = useState('')
     const [invitationCode, setInvitationCode] = useState('')
-    const [errors, setErrors] = useState('')
+    const [errors, setErrors] = useState([])
     const [requestModalOpen, setRequestModalOpen] = useState(false)
 
     const [_cookies, setCookie] = useCookies(['access-token', 'client', 'uid'])
@@ -27,7 +27,7 @@ const SignUp = () => {
     const handleSubmit = (event) => {
         event.preventDefault()
 
-        Auth.sing_up({ params: {
+        Auth_model.sing_up({ params: {
             email,
             password,
             name,
@@ -43,14 +43,15 @@ const SignUp = () => {
             })
             .catch(error => {
                 const { errors } = error.response.data
+                console.log(errors)
                 setErrors(errors)
             })
     }
 
     return (
         <AppLayout>
+            { errors.length > 0 && <Message negative list={errors}/> }
             <Form onSubmit={handleSubmit}>
-                { errors.length > 0 && <Message negative list={errors}/> }
                 <Form.Field>
                     <Form.Input
                         fluid

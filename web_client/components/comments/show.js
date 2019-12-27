@@ -1,7 +1,7 @@
 import {Comment} from 'semantic-ui-react'
 import {useState} from 'react'
 import Edit from './edit'
-import CommentModel from 'models/comment'
+import CommentModel from 'models/comment_model'
 
 const Show = (props) => {
     const { comment, indexEditing, setIndexEditing, onSuccess } = props

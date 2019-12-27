@@ -10,7 +10,7 @@ class ApiController < ActionController::API
 
   def render_unprocessable_entity(exception)
     render json: {
-      status: 401,
+      status: 422,
       errors: exception.record.errors.full_messages
     }, status: :unprocessable_entity
   end
@@ -21,6 +21,13 @@ class ApiController < ActionController::API
 
   def render_create_success
     puts 'render_create_success'
+  end
+
+  def render_create_error(exception)
+    render json: {
+        status: 422,
+        errors: exception.record.errors.full_messages
+    }, status: :unprocessable_entity
   end
 
   def render_create_error_not_confirmed

@@ -1,6 +1,6 @@
 import {Form} from 'semantic-ui-react'
 import {useState} from 'react'
-import CommentModel from 'models/comment'
+import CommentModel from 'models/comment_model'
 
 const New = ({ postId, onSuccess }) => {
     const [text, setText] = useState('')

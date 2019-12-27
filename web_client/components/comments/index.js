@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import {Header, Comment} from 'semantic-ui-react'
-import CommentModel from 'models/comment'
+import CommentModel from 'models/comment_model'
 import New from './new'
 import Show from './show'
 

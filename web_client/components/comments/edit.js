@@ -1,6 +1,6 @@
 import {Button, Form} from 'semantic-ui-react'
 import {useState} from 'react'
-import Comment from 'models/comment'
+import CommentModel from 'models/comment_model'
 
 const Edit = (props) => {
     const { comment, setEditing, setIndexEditing, onSuccess } = props
@@ -8,7 +8,7 @@ const Edit = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault()
-        Comment
+        CommentModel
             .update({id: comment.id, params: { text }})
             .then(() => {
                 onSuccess()

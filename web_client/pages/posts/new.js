@@ -1,15 +1,15 @@
 import React, {useState} from 'react'
 import _Form from './_form'
-import AppLayout from 'layouts/app'
+import AppLayout from 'layouts/app_layout'
 import Router from 'next/router'
-import Post from 'models/post'
+import PostModel from 'models/post_model'
 import WithError from 'components/with_error'
 
 const New = () => {
     const [errors, setErrors] = useState([])
 
     const handleSubmit = (params) => {
-        Post.create({params})
+        PostModel.create({params})
             .then(() => Router.push('/posts'))
             .catch(error => setErrors(error.response.data.errors))
     }
@@ -22,8 +22,8 @@ const New = () => {
 }
 
 New.getInitialProps = async function(context) {
-    Post.setCookies(context)
-    return await Post.resolved.new()
+    PostModel.setCookies(context)
+    return await PostModel.resolved.new()
 }
 
 export default WithError(New)

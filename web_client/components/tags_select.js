@@ -3,6 +3,7 @@ import axios from 'axios'
 import Select from 'react-select'
 import chroma from 'chroma-js'
 import classnames from 'classnames'
+import TagModel from 'models/tag_model'
 
 // Make this similar usage with From.Input
 class TagsSelect extends React.Component {
@@ -21,16 +22,15 @@ class TagsSelect extends React.Component {
 
     componentDidMount() {
         this.setState({ loading: true })
-        axios({
-            method: 'get',
-            url: `${process.env.api_prefix}/tags`
-        }).then(response => {
-            const { data } = response.data
-            this.setState({ data, loading: false })
-        }).catch(error => {
-            const { errors } = error.response.data
-            this.setState({ errors, loading: false })
-        })
+        TagModel.all()
+            .then(response => {
+                const { data } = response.data
+                this.setState({ data, loading: false })
+            })
+            .catch(error => {
+                const { errors } = error.response.data
+                this.setState({ errors, loading: false })
+            })
     }
 
     get options() {

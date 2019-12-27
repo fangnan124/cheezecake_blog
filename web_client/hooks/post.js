@@ -2,7 +2,7 @@ import { useState } from 'react'
 import axios from 'axios'
 import Router from 'next/router'
 import objectToFormData from 'object-to-formdata'
-import Post from 'models/post'
+import PostModel from 'models/post_model'
 
 // export const useFetchAll = () => {
 //     const [data, setData] = useState({})
@@ -83,7 +83,7 @@ export const useCreate = () => {
     const [data, setData] = useState({ meta: {}, data: {}, errors: {} })
 
     const create = (params) => {
-        Post.create({ params })
+        PostModel.create({ params })
             .then(data => setData(data))
     }
 

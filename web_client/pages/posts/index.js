@@ -1,7 +1,7 @@
 import {Pagination, Item, Label} from 'semantic-ui-react'
-import AppLayout from 'layouts/app'
+import AppLayout from 'layouts/app_layout'
 import Link from 'next/link'
-import Post from 'models/post'
+import PostModel from 'models/post_model'
 import Router from 'next/router'
 
 const Index = (props) => {
@@ -56,8 +56,8 @@ const Index = (props) => {
 
 Index.getInitialProps = async function(context) {
     const { page } = context.query
-    Post.setCookies(context)
-    return await Post.resolved.all({ page })
+    PostModel.setCookies(context)
+    return await PostModel.resolved.all({ page })
 }
 
 export default Index

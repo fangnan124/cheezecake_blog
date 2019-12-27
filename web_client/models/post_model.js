@@ -2,25 +2,8 @@ import axios from 'axios'
 import ServerAccessModel from './server_access_model'
 import objectToFormData from 'object-to-formdata'
 
-class Post extends ServerAccessModel {
-    // The Proxy object is used to define custom behavior for fundamental operations
-    // (e.g. property lookup, assignment, enumeration, function invocation, etc).
-    //
-    // Post.resolved.find({ id: 1 }) -> { status: .., data: .., errors: .. }
-    static resolved = new Proxy(this, {
-        get: function(target, name) {
-            return async (params) => {
-                let data = {}
-                await target[name](params)
-                    .then(response => {
-                        data = response.data
-                    }).catch(error => {
-                        data = error.response.data
-                    })
-                return data
-            }
-        }
-    })
+class PostModel extends ServerAccessModel {
+    static resolved = super.resolved(this)
 
     static all = ({ page }) => (
         axios({
@@ -72,4 +55,4 @@ class Post extends ServerAccessModel {
     // }
 }
 
-export default Post
+export default PostModel

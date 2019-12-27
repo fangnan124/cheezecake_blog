@@ -7,9 +7,9 @@ import CodeBlock from 'components/code_block'
 import Comments from 'components/comments'
 import {useDestroy} from 'hooks/post'
 import FloatMenu from 'components/float_menu'
-import AppLayout from 'layouts/app'
+import AppLayout from 'layouts/app_layout'
 import Link from 'next/link'
-import Post from 'models/post'
+import PostModel from 'models/post_model'
 import WithError from 'components/with_error'
 
 const Show = (props) => {
@@ -87,8 +87,8 @@ const Show = (props) => {
 
 Show.getInitialProps = async function(context) {
     const {id} = context.query
-    Post.setCookies(context)
-    return await Post.resolved.find({id})
+    PostModel.setCookies(context)
+    return await PostModel.resolved.find({id})
 }
 
 export default WithError(Show)

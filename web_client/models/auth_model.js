@@ -1,7 +1,7 @@
 import axios from 'axios'
 import ServerAccessModel from './server_access_model'
 
-class Auth extends ServerAccessModel {
+class AuthModel extends ServerAccessModel {
     static sign_in = ({ email, password }) => (
         axios({
             method: 'post',
@@ -38,4 +38,4 @@ class Auth extends ServerAccessModel {
     )
 }
 
-export default Auth
+export default AuthModel
